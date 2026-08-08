@@ -1,0 +1,36 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // User avatars
+    match /avatars/{userId}/{fileName} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isOwner(userId);
+    }
+
+    // Course content (videos, PDFs)
+    match /courses/{courseId}/{fileName} {
+      allow read: if isAuthenticated(); // Any logged in user
+      allow write: if isAuthenticated() && 
+                   get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Evidence uploads (High security)
+    match /evidence/{userId}/{evidenceId}/{fileName} {
+      allow read: if isAuthenticated() && 
+                   (isOwner(userId) || 
+                    get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'instructor']);
+      allow write: if isAuthenticated() && isOwner(userId);
+    }
+  }
+}

@@ -1,0 +1,94 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/staticfiles/
+/media/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+env.local
+*.pem
+*.p12
+*.key
+serviceAccountKey.json
+**/serviceAccountKey.json
+**/firebase-adminsdk*.json
+**/credentials.json
+**/google-services.json
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+*-debug.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node (never commit)
+node_modules/
+**/node_modules/
+.npm
+.svelte-kit/
+frontend/build/
+frontend/.svelte-kit/
+build/
+.output/
+.vercel/
+.netlify/
+
+# Backend local artifacts
+backend/venv/
+backend/.venv/
+**/__pycache__/
+backend/migrations_scripts/firebase_export.json
+backend/_price_check.txt
+backend/_test_out.txt
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Misc
+*.bak
+*.tmp
+.cache/
+.claude/

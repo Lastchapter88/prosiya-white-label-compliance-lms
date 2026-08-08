@@ -1,0 +1,348 @@
+/* ProSiya LMS Global Styles */
+
+:root {
+	/* Brand Colors - Updated to match mockup design */
+	--color-primary: #1a2332;        /* Navy blue - primary brand color */
+	--color-secondary: #2d3748;      /* Lighter navy - secondary elements */
+	--color-accent: #FDB913;         /* Yellow/gold - CTAs and highlights */
+	--color-accent-dark: #d99b0f;    /* Darker yellow - hover states */
+	
+	/* Navy variations */
+	--color-navy-dark: #1a2332;      /* Primary navy */
+	--color-navy: #2d3748;           /* Medium navy */
+	--color-navy-light: #4a5568;     /* Light navy */
+	
+	/* Semantic colors */
+	--color-success: #10b981;        /* Green - success states */
+	--color-warning: #f59e0b;        /* Orange - warnings */
+	--color-error: #ef4444;          /* Red - errors */
+	--color-live: #ef4444;           /* Red - live indicators */
+	
+	/* Neutrals */
+	--color-bg: #ffffff;             /* White background */
+	--color-bg-light: #F5F5F5;       /* Light gray background */
+	--color-surface: #ffffff;        /* Card surfaces */
+	--color-border: #e5e7eb;         /* Borders and dividers */
+	--color-text: #1a1a1a;           /* Primary text */
+	--color-text-secondary: #6b7280; /* Secondary text */
+	
+	/* Dark theme (for sidebars, modals) */
+	--color-bg-dark: #1a2332;        /* Navy background */
+	--color-surface-dark: #2d3748;   /* Navy surface */
+	--color-border-dark: #4a5568;    /* Navy border */
+	--color-text-dark: #ffffff;      /* White text on dark */
+	--color-text-dark-secondary: #cbd5e0; /* Gray text on dark */
+	
+	/* Spacing */
+	--spacing-xs: 0.25rem;
+	--spacing-sm: 0.5rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-xl: 2rem;
+	--spacing-2xl: 3rem;
+	--spacing-3xl: 4rem;
+	
+	/* Typography */
+	--font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-mono: 'Fira Code', 'Courier New', monospace;
+	
+	/* Borders */
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 0.75rem;
+	--radius-xl: 1rem;
+	--radius-full: 9999px;
+	
+	/* Shadows - Enhanced for mockup design */
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+	--shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+	--shadow-xl: 0 10px 40px rgba(0, 0, 0, 0.2);
+	--shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+	--shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+	--shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Reset */
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-family: var(--font-sans);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	background: var(--color-bg);
+	color: var(--color-text);
+	line-height: 1.6;
+	font-size: 16px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: var(--spacing-md);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+	margin-bottom: var(--spacing-md);
+}
+
+a {
+	color: var(--color-primary);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	color: var(--color-secondary);
+}
+
+/* Utilities */
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 var(--spacing-lg);
+}
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+.mt-4 { margin-top: var(--spacing-xl); }
+
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+.mb-4 { margin-bottom: var(--spacing-xl); }
+
+.p-1 { padding: var(--spacing-sm); }
+.p-2 { padding: var(--spacing-md); }
+.p-3 { padding: var(--spacing-lg); }
+.p-4 { padding: var(--spacing-xl); }
+
+/* Buttons */
+.btn {
+	display: inline-block;
+	padding: var(--spacing-sm) var(--spacing-lg);
+	border-radius: var(--radius-md);
+	font-weight: 600;
+	text-align: center;
+	cursor: pointer;
+	border: none;
+	transition: all 0.2s ease;
+}
+
+.btn:hover {
+	transform: translateY(-1px);
+	box-shadow: var(--shadow-md);
+}
+
+.btn-primary {
+	background: var(--color-primary);
+	color: white;
+}
+
+.btn-secondary {
+	background: var(--color-secondary);
+	color: white;
+}
+
+.btn-success {
+	background: var(--color-success);
+	color: white;
+}
+
+.btn-warning {
+	background: var(--color-warning);
+	color: white;
+}
+
+.btn-error {
+	background: var(--color-error);
+	color: white;
+}
+
+/* Cards */
+.card {
+	background: var(--color-surface);
+	border-radius: var(--radius-lg);
+	padding: var(--spacing-lg);
+	box-shadow: var(--shadow-sm);
+	border: 1px solid var(--color-border);
+}
+
+.card:hover {
+	box-shadow: var(--shadow-md);
+}
+
+/* Forms */
+input, textarea, select {
+	width: 100%;
+	padding: var(--spacing-sm) var(--spacing-md);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	font-family: inherit;
+	font-size: 1rem;
+	transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px rgba(26, 35, 50, 0.1);
+}
+
+label {
+	display: block;
+	margin-bottom: var(--spacing-xs);
+	font-weight: 600;
+	color: var(--color-text);
+}
+
+/* Animations */
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.fade-in {
+	animation: fadeIn 0.3s ease;
+}
+
+.slide-up {
+	animation: slideUp 0.4s ease;
+}
+
+/* Additional Utility Classes for Mockup Design */
+
+/* Yellow accent button (primary CTA) */
+.btn-accent {
+	background: var(--color-accent);
+	color: var(--color-navy-dark);
+	font-weight: 700;
+}
+
+.btn-accent:hover {
+	background: var(--color-accent-dark);
+	color: var(--color-navy-dark);
+}
+
+/* Navy button */
+.btn-navy {
+	background: var(--color-navy-dark);
+	color: white;
+}
+
+.btn-navy:hover {
+	background: var(--color-navy);
+}
+
+/* Outline button */
+.btn-outline {
+	background: transparent;
+	color: var(--color-navy-dark);
+	border: 2px solid var(--color-navy-dark);
+}
+
+.btn-outline:hover {
+	background: var(--color-navy-dark);
+	color: white;
+}
+
+/* Background utilities */
+.bg-navy-dark { background: var(--color-navy-dark); }
+.bg-navy { background: var(--color-navy); }
+.bg-light { background: var(--color-bg-light); }
+.bg-white { background: var(--color-bg); }
+.bg-accent { background: var(--color-accent); }
+
+/* Text color utilities */
+.text-navy { color: var(--color-navy-dark); }
+.text-white { color: white; }
+.text-accent { color: var(--color-accent); }
+.text-gray { color: var(--color-text-secondary); }
+
+/* Checkmark list style (for course features) */
+.feature-list {
+	list-style: none;
+	padding: 0;
+}
+
+.feature-list li {
+	padding-left: 1.5rem;
+	position: relative;
+	margin-bottom: 0.5rem;
+}
+
+.feature-list li::before {
+	content: '✓';
+	position: absolute;
+	left: 0;
+	color: var(--color-accent);
+	font-weight: bold;
+}
+
+/* Live indicator */
+.live-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: var(--color-live);
+	color: white;
+	padding: 0.25rem 0.75rem;
+	border-radius: var(--radius-full);
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.live-badge::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	background: white;
+	border-radius: 50%;
+	animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+	.hide-mobile { display: none; }
+}
+
+@media (min-width: 641px) {
+	.show-mobile { display: none; }
+}
