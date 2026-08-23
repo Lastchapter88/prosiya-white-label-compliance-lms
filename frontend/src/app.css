@@ -63,6 +63,81 @@
 	--shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.25);
 }
 
+/* Automatic night mode (18:00–05:59 local time) */
+html[data-theme='night'] {
+	color-scheme: dark;
+
+	--color-bg: #0a0a0a;
+	--color-bg-light: #111111;
+	--color-surface: #1a1a1a;
+	--color-border: #2e2e2e;
+	--color-text: #f3f4f6;
+	--color-text-secondary: #9ca3af;
+
+	--color-primary: #f3f4f6;
+	--color-secondary: #d1d5db;
+	--color-navy-dark: #f9fafb;
+	--color-navy: #e5e7eb;
+	--color-navy-light: #cbd5e1;
+
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+	--shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45);
+	--shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+	--shadow-xl: 0 10px 40px rgba(0, 0, 0, 0.55);
+	--shadow-card: 0 2px 8px rgba(0, 0, 0, 0.45);
+	--shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.55);
+	--shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.65);
+}
+
+html[data-theme='night'] body {
+	background: var(--color-bg);
+	color: var(--color-text);
+}
+
+/* Patch common hardcoded light surfaces (matches scoped Svelte class names) */
+html[data-theme='night'] [class*='card'],
+html[data-theme='night'] [class*='panel'],
+html[data-theme='night'] [class*='form'],
+html[data-theme='night'] [class*='table'],
+html[data-theme='night'] [class*='stat'],
+html[data-theme='night'] [class*='login'],
+html[data-theme='night'] [class*='register'],
+html[data-theme='night'] [class*='enroll'],
+html[data-theme='night'] [class*='contact'],
+html[data-theme='night'] [class*='payment'],
+html[data-theme='night'] [class*='user-list'],
+html[data-theme='night'] header[class*='header'] {
+	background-color: var(--color-surface);
+	color: var(--color-text);
+	border-color: var(--color-border);
+}
+
+html[data-theme='night'] [class*='hero'] {
+	background-color: var(--color-bg-light);
+}
+
+html[data-theme='night'] input,
+html[data-theme='night'] textarea,
+html[data-theme='night'] select {
+	background: var(--color-surface);
+	color: var(--color-text);
+	border-color: var(--color-border);
+}
+
+html[data-theme='night'] input::placeholder,
+html[data-theme='night'] textarea::placeholder {
+	color: var(--color-text-secondary);
+}
+
+html[data-theme='night'] th {
+	background: #141414;
+	color: var(--color-text);
+}
+
+html[data-theme='night'] tr:hover {
+	background-color: #1f1f1f;
+}
+
 /* Reset */
 *, *::before, *::after {
 	box-sizing: border-box;

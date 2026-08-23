@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Header, Footer, Badge, Button, Modal } from '$lib/components';
+	import { Header, Footer, Badge, Button, Modal, PaymentInstructions } from '$lib/components';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { courseService } from '$lib/services/courses';
 	import { courseCatalogue } from '$lib/data/courses';
 	import { auth } from '$lib/stores/auth';
+	import { studyMaterialService } from '$lib/services/studyMaterial';
 	import { fade } from 'svelte/transition';
 	
 	let course: any = null;
@@ -55,7 +56,23 @@
 
 		enrollLoading = true;
 		try {
-			await courseService.enroll(course.id);
+			try {
+				await courseService.enroll(course.id);
+			} catch {
+				// Backend may be offline on Firebase hosting — still queue study material access
+			}
+
+			const user = $auth.user;
+			if (user?.id) {
+				await studyMaterialService.requestAccess({
+					userId: user.id,
+					userEmail: user.email || '',
+					userName: `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email || 'Student',
+					courseSlug: course.slug,
+					courseTitle: course.title
+				});
+			}
+
 			showEnrollSuccess = true;
 		} catch (e: any) {
 			alert(e.message || 'Failed to enroll in course');
@@ -125,7 +142,7 @@
 						
 						<div class="hero-sidebar">
 							<div class="enrollment-card">
-								<img src={course.cover_image || '/images/courses/security-training.png'} alt={course.title} class="course-image" />
+								<img src={course.cover_image || '/images/courses/grade-c-security.jpg'} alt={course.title} class="course-image" />
 								
 								<div class="enrollment-content">
 									<div class="price-section">
@@ -142,6 +159,11 @@
                                     >
                                         {enrollLoading ? 'Enrolling...' : 'Enroll Now'}
                                     </Button>
+
+									<div class="payment-note">
+										<p class="payment-note-title">After enrolling</p>
+										<PaymentInstructions variant="compact" showHeading={false} />
+									</div>
 									
 									<div class="includes">
 										<h4>This course includes:</h4>
@@ -233,10 +255,15 @@
         <div class="success-message">
             <div class="success-icon">🎉</div>
             <p>You have successfully enrolled in <strong>{course?.title}</strong>.</p>
-            <p>You can now start your learning journey from your dashboard.</p>
+            <p>
+                To unlock study materials, complete your course payment and send proof of payment as
+                shown below. Your account will be activated once payment is verified.
+            </p>
+            <PaymentInstructions variant="compact" showHeading={false} />
         </div>
         <div slot="footer">
-            <Button on:click={() => window.location.href = '/student/dashboard'} variant="accent">Go to Dashboard</Button>
+            <Button on:click={() => window.location.href = '/student/study-material'} variant="accent">Study Material</Button>
+            <Button on:click={() => window.location.href = '/student/dashboard'} variant="outline">Dashboard</Button>
         </div>
     </Modal>
 </div>
@@ -352,6 +379,23 @@
 		font-size: 2.5rem;
 		font-weight: 800;
 		color: var(--color-navy-dark);
+	}
+
+	.payment-note {
+		margin-bottom: 1.5rem;
+		padding: 1rem;
+		background: #f8fafc;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+	}
+
+	.payment-note-title {
+		margin: 0 0 0.75rem;
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: var(--color-navy-dark);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
 	}
 	
 	.includes h4 {

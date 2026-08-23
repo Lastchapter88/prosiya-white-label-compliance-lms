@@ -10,6 +10,7 @@
 		student: [
 			{ icon: '📊', label: 'Dashboard', href: '/student/dashboard' },
 			{ icon: '📚', label: 'My Courses', href: '/student/courses' },
+			{ icon: '📄', label: 'Study Material', href: '/student/study-material' },
 			{ icon: '🎥', label: 'Live Classes', href: '/student/live' },
 			{ icon: '📝', label: 'Assessments', href: '/student/assessments' },
 			{ icon: '🎓', label: 'Certificates', href: '/student/certificates' },
@@ -27,6 +28,7 @@
 			{ icon: '📊', label: 'Dashboard', href: '/admin/dashboard' },
 			{ icon: '👥', label: 'Users', href: '/admin/users' },
 			{ icon: '📚', label: 'Courses', href: '/admin/courses' },
+			{ icon: '📄', label: 'Study Material', href: '/admin/study-material' },
 			{ icon: '🏢', label: 'Tenants', href: '/admin/tenants' },
 			{ icon: '🎓', label: 'Certificates', href: '/admin/certificates' },
 			{ icon: '📋', label: 'Audit Logs', href: '/admin/audit' },

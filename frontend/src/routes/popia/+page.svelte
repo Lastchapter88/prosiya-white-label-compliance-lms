@@ -18,7 +18,7 @@
 				</p>
 				<p>
 					To exercise your information rights, contact
-					<a href="mailto:info@prosiya.co.za">info@prosiya.co.za</a>
+					<a href="mailto:dladla.siya@gmail.com">dladla.siya@gmail.com</a>
 					or <a href="tel:+27785236606">+27 78 523 6606</a> (Durban).
 				</p>
 			</div>

@@ -3,7 +3,7 @@ export const courseCatalogue = [
 	{
 		title: 'Combined Grade E, D & C',
 		slug: 'combined-grade-e-d-c',
-		image: '/images/courses/security-training.png',
+		image: '/images/courses/combined-grade-e-d-c.png',
 		price: 1950,
 		currency: 'ZAR',
 		short_description: 'Entry-to-intermediate security officer training covering Grades E, D and C.',
@@ -14,7 +14,7 @@ export const courseCatalogue = [
 	{
 		title: 'Grade C Security Officer',
 		slug: 'grade-c-security',
-		image: '/images/courses/security-training.png',
+		image: '/images/courses/grade-c-security.jpg',
 		price: 1050,
 		currency: 'ZAR',
 		short_description: 'Individual Grade C security officer training.',
@@ -25,7 +25,7 @@ export const courseCatalogue = [
 	{
 		title: 'Grade B Security Officer',
 		slug: 'grade-b-security',
-		image: '/images/courses/security-training.png',
+		image: '/images/courses/grade-b-security.jpg',
 		price: 1500,
 		currency: 'ZAR',
 		short_description: 'Grade B supervisory-level security officer training.',
@@ -36,7 +36,7 @@ export const courseCatalogue = [
 	{
 		title: 'Grade A Security Officer',
 		slug: 'grade-a-security',
-		image: '/images/courses/security-training.png',
+		image: '/images/courses/grade-a-security.jpg',
 		price: 1500,
 		currency: 'ZAR',
 		short_description: 'Grade A advanced security officer training.',
@@ -58,7 +58,7 @@ export const courseCatalogue = [
 	{
 		title: 'CIT',
 		slug: 'cit',
-		image: '/images/courses/armed-response.png',
+		image: '/images/courses/cit.jpg',
 		price: 1600,
 		currency: 'ZAR',
 		short_description: 'Cash-in-transit (CIT) training for the security industry.',
@@ -69,7 +69,7 @@ export const courseCatalogue = [
 	{
 		title: 'CPO',
 		slug: 'cpo',
-		image: '/images/courses/armed-response.png',
+		image: '/images/courses/cpo.jpg',
 		price: 16750,
 		currency: 'ZAR',
 		short_description: 'Close Protection Officer (CPO) training.',
@@ -80,7 +80,7 @@ export const courseCatalogue = [
 	{
 		title: 'Handgun Business Purpose',
 		slug: 'handgun-business-purpose',
-		image: '/images/courses/firearm-training.png',
+		image: '/images/courses/handgun-business-purpose.jpg',
 		price: 2650,
 		currency: 'ZAR',
 		short_description: 'Firearm competency for handgun use for business purposes.',

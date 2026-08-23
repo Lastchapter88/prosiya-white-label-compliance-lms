@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Header, Footer } from '$lib/components';
+	import { Header, Footer, PaymentInstructions } from '$lib/components';
+	import { companyContact } from '$lib/data/companyProfile';
 </script>
 
 <svelte:head>
 	<title>Contact - ProSiya LMS</title>
-	<meta name="description" content="Contact ProSiya Academy in Durban. Call +27 78 523 6606 or email info@prosiya.co.za." />
+	<meta name="description" content="Contact ProSiya Group at 30 Wills Road, Durban. Call +27 78 523 6606 or email dladla.siya@gmail.com." />
 </svelte:head>
 
 <div class="page">
@@ -15,7 +16,7 @@
 			<div class="container">
 				<h1 class="page-title">Contact Us</h1>
 				<p class="page-subtitle">
-					Get in touch with ProSiya Academy for course enquiries, bookings, and support.
+					Get in touch with ProSiya Group for training enrolments, security services, and general enquiries.
 				</p>
 			</div>
 		</section>
@@ -25,16 +26,24 @@
 				<div class="contact-grid">
 					<div class="contact-card">
 						<h2>Phone</h2>
-						<p><a href="tel:+27785236606">+27 78 523 6606</a></p>
+						<p><a href="tel:{companyContact.phoneTel}">{companyContact.phone}</a></p>
 					</div>
 					<div class="contact-card">
 						<h2>Email</h2>
-						<p><a href="mailto:info@prosiya.co.za">info@prosiya.co.za</a></p>
+						<p><a href="mailto:{companyContact.email}">{companyContact.email}</a></p>
 					</div>
 					<div class="contact-card">
-						<h2>Location</h2>
-						<p>Durban, South Africa</p>
+						<h2>Address</h2>
+						<p>{companyContact.streetAddress}<br />{companyContact.city}, {companyContact.postalCode}<br />{companyContact.country}</p>
 					</div>
+				</div>
+
+				<div class="payment-card">
+					<h2>Course payment</h2>
+					<p class="payment-intro">
+						Complete your course fees, then send proof of payment so we can unlock your study materials.
+					</p>
+					<PaymentInstructions showHeading={false} />
 				</div>
 
 				<div class="contact-cta">
@@ -108,6 +117,28 @@
 	}
 	.contact-card a:hover {
 		color: var(--color-accent-dark);
+	}
+	.payment-card {
+		background: white;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg, 12px);
+		padding: 1.75rem;
+		margin-bottom: 2.5rem;
+		max-width: 720px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.payment-card h2 {
+		margin: 0 0 0.5rem;
+		font-size: 1.25rem;
+		color: var(--color-navy-dark);
+		text-align: center;
+	}
+	.payment-intro {
+		margin: 0 0 1.25rem;
+		color: var(--color-text-secondary);
+		text-align: center;
+		line-height: 1.6;
 	}
 	.contact-cta {
 		display: flex;

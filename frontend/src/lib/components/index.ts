@@ -6,3 +6,4 @@ export { default as CourseCard } from './CourseCard.svelte';
 export { default as Button } from './Button.svelte';
 export { default as Badge } from './Badge.svelte';
 export { default as Modal } from './Modal.svelte';
+export { default as PaymentInstructions } from './PaymentInstructions.svelte';

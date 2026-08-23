@@ -1,5 +1,5 @@
 <script lang="ts">
-	// Footer component with partner logos - all from /images/badges
+	import { companyContact, companyOverview } from '$lib/data/companyProfile';
 </script>
 
 <footer class="footer">
@@ -20,13 +20,14 @@
 		<div class="footer-content">
 			<div class="footer-section">
 				<h4>About ProSiya</h4>
-				<p>Professional Security & Firearms Training Academy providing compliance-grade training for the security industry.</p>
+				<p>{companyOverview.positioning}</p>
 			</div>
 			
 			<div class="footer-section">
 				<h4>Quick Links</h4>
 				<ul>
 					<li><a href="/courses">Courses</a></li>
+					<li><a href="/services">Security Services</a></li>
 					<li><a href="/accreditation">Accreditation</a></li>
 					<li><a href="/about">About Us</a></li>
 					<li><a href="/contact">Contact</a></li>
@@ -36,9 +37,9 @@
 			<div class="footer-section">
 				<h4>Contact</h4>
 				<ul>
-					<li>📧 info@prosiya.co.za</li>
-					<li>📞 <a href="tel:+27785236606">+27 78 523 6606</a></li>
-					<li>📍 Durban, South Africa</li>
+					<li>📧 <a href="mailto:{companyContact.email}">{companyContact.email}</a></li>
+					<li>📞 <a href="tel:{companyContact.phoneTel}">{companyContact.phone}</a></li>
+					<li>📍 {companyContact.fullAddress}</li>
 				</ul>
 			</div>
 			

@@ -92,3 +92,4 @@ htmlcov/
 *.tmp
 .cache/
 .claude/
+docs/Study Material/*.pdf

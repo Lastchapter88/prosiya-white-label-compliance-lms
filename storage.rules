@@ -2,14 +2,21 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-    
-    // Helper functions
+
     function isAuthenticated() {
       return request.auth != null;
     }
-    
+
     function isOwner(userId) {
       return request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isPaidUser() {
+      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.paymentStatus == 'paid';
     }
 
     // User avatars
@@ -18,18 +25,23 @@ service firebase.storage {
       allow write: if isAuthenticated() && isOwner(userId);
     }
 
-    // Course content (videos, PDFs)
+    // Course study material PDFs — admin upload; paid learners may download
+    match /courses/{courseId}/study-material/{fileName} {
+      allow read: if isAuthenticated() && (isAdmin() || isPaidUser());
+      allow write: if isAuthenticated() && isAdmin();
+    }
+
+    // Other course content (videos, legacy uploads)
     match /courses/{courseId}/{fileName} {
-      allow read: if isAuthenticated(); // Any logged in user
-      allow write: if isAuthenticated() && 
-                   get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isAdmin();
     }
 
     // Evidence uploads (High security)
     match /evidence/{userId}/{evidenceId}/{fileName} {
-      allow read: if isAuthenticated() && 
-                   (isOwner(userId) || 
-                    get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'instructor']);
+      allow read: if isAuthenticated() &&
+                   (isOwner(userId) ||
+                    firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role in ['admin', 'instructor']);
       allow write: if isAuthenticated() && isOwner(userId);
     }
   }

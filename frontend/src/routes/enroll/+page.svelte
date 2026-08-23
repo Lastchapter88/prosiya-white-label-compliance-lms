@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Header, Footer } from '$lib/components';
+	import { Header, Footer, PaymentInstructions } from '$lib/components';
 </script>
 
 <svelte:head>
@@ -22,10 +22,11 @@
 					<a href="/login" class="btn btn-outline">Sign In</a>
 					<a href="/courses" class="btn btn-outline">Browse Courses</a>
 				</div>
-				<p class="help">
-					Questions? Call <a href="tel:+27785236606">+27 78 523 6606</a>
-					or email <a href="mailto:info@prosiya.co.za">info@prosiya.co.za</a>
-				</p>
+
+				<div class="payment-box">
+					<h2>Payment instructions</h2>
+					<PaymentInstructions showHeading={false} variant="full" />
+				</div>
 			</div>
 		</section>
 	</main>
@@ -81,11 +82,19 @@
 		border: 2px solid var(--color-navy-dark);
 		color: var(--color-navy-dark);
 	}
-	.help {
-		color: var(--color-text-secondary);
+	.payment-box {
+		max-width: 640px;
+		margin: 0 auto;
+		padding: 1.5rem;
+		background: white;
+		border-radius: var(--radius-lg, 12px);
+		border: 1px solid var(--color-border);
+		text-align: left;
 	}
-	.help a {
+	.payment-box h2 {
+		margin: 0 0 1rem;
+		font-size: 1.25rem;
 		color: var(--color-navy-dark);
-		font-weight: 600;
+		text-align: center;
 	}
 </style>

@@ -18,6 +18,7 @@
 			<!-- Desktop Navigation -->
 			<nav class="nav-desktop">
 				<a href="/courses" class="nav-link">Courses</a>
+				<a href="/services" class="nav-link">Services</a>
 				<a href="/accreditation" class="nav-link">Accreditation</a>
 				<a href="/about" class="nav-link">About</a>
 				<a href="/contact" class="nav-link">Contact</a>
@@ -39,6 +40,7 @@
 		{#if mobileMenuOpen}
 			<nav class="nav-mobile">
 				<a href="/courses" class="nav-link-mobile">Courses</a>
+				<a href="/services" class="nav-link-mobile">Services</a>
 				<a href="/accreditation" class="nav-link-mobile">Accreditation</a>
 				<a href="/about" class="nav-link-mobile">About</a>
 				<a href="/contact" class="nav-link-mobile">Contact</a>
@@ -53,7 +55,7 @@
 
 <style>
 	.header {
-		background: white;
+		background: var(--color-surface);
 		box-shadow: var(--shadow-sm);
 		position: sticky;
 		top: 0;

@@ -37,7 +37,7 @@
 			if (Array.isArray(results) && results.length > 0) {
 				courses = results.map((c: Course) => ({
 					title: c.title,
-					image: c.cover_image || '/images/courses/security-training.png',
+					image: c.cover_image || '/images/courses/grade-c-security.jpg',
 					features: [
 						c.category,
 						`Level: ${c.level}`,
@@ -72,7 +72,7 @@
 				<div class="hero-content">
 					<div class="hero-text">
 						<h1 class="hero-title">Professional Security & Firearm Training</h1>
-						<p class="hero-subtitle">Compliance-grade training for the security industry</p>
+						<p class="hero-subtitle">Integrated security solutions and accredited training for South Africa</p>
 						
 						<!-- Accreditation Badges -->
 						<div class="accreditation-badges">

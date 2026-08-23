@@ -214,7 +214,7 @@ def init_data():
         tenant = Tenant.objects.create(
             name=tenant_name,
             slug="prosiya",
-            email="info@prosiya.co.za",
+            email="dladla.siya@gmail.com",
             phone="+27785236606",
             street_address="Durban",
             city="Durban",
@@ -227,7 +227,7 @@ def init_data():
     else:
         tenant = Tenant.objects.get(name=tenant_name)
         tenant.phone = "+27785236606"
-        tenant.email = tenant.email or "info@prosiya.co.za"
+        tenant.email = tenant.email or "dladla.siya@gmail.com"
         if hasattr(tenant, "city"):
             tenant.city = "Durban"
         if hasattr(tenant, "province"):

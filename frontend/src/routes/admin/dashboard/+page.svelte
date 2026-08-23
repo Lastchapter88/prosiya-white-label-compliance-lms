@@ -1,20 +1,21 @@
 <script lang="ts">
 	import { Sidebar, Badge, Button } from '$lib/components';
 	import { onMount } from 'svelte';
-	import { auth } from '$lib/stores/auth';
+	import { auth, isAppAdmin } from '$lib/stores/auth';
+	import { firestoreUserService } from '$lib/services/firestoreUsers';
 	import { fade } from 'svelte/transition';
 
 	let stats = {
 		totalUsers: 0,
-		activeCourses: 0,
-		totalEnrollments: 0,
-		certificatesIssued: 0
+		paidUsers: 0,
+		unpaidUsers: 0,
+		activeCourses: 10
 	};
 	let isLoading = true;
 
 	onMount(async () => {
-		if (!$auth.isAuthenticated || !($auth.user as any)?.is_staff) {
-			window.location.href = '/login';
+		if (!$auth.isAuthenticated || !isAppAdmin($auth.user)) {
+			window.location.href = '/login?redirect=/admin/dashboard';
 			return;
 		}
 		await loadData();
@@ -23,12 +24,12 @@
 	async function loadData() {
 		isLoading = true;
 		try {
-			// In a real app, fetch from admin stats endpoint
+			const users = await firestoreUserService.listRegisteredUsers();
 			stats = {
-				totalUsers: 156,
-				activeCourses: 12,
-				totalEnrollments: 342,
-				certificatesIssued: 89
+				totalUsers: users.length,
+				paidUsers: users.filter((u) => u.paymentStatus === 'paid').length,
+				unpaidUsers: users.filter((u) => u.paymentStatus !== 'paid').length,
+				activeCourses: 10
 			};
 		} catch (e: any) {
 			console.error(e);
@@ -83,16 +84,16 @@
 				<div class="stat-card">
 					<div class="stat-icon">✅</div>
 					<div class="stat-content">
-						<h3>{stats.totalEnrollments}</h3>
-						<p>Total Enrollments</p>
+						<h3>{stats.paidUsers}</h3>
+						<p>Paid Learners</p>
 					</div>
 				</div>
 				
 				<div class="stat-card">
-					<div class="stat-icon">🎓</div>
+					<div class="stat-icon">⏳</div>
 					<div class="stat-content">
-						<h3>{stats.certificatesIssued}</h3>
-						<p>Certificates Issued</p>
+						<h3>{stats.unpaidUsers}</h3>
+						<p>Awaiting Payment</p>
 					</div>
 				</div>
 			</div>
@@ -100,9 +101,11 @@
 			<div class="admin-sections" in:fade>
 				<div class="section">
 					<h2>User Management</h2>
+					<p class="section-desc">
+						View registered learners and toggle paid/unpaid status to control study material access.
+					</p>
 					<div class="section-actions">
-						<Button href="/admin/users" variant="navy">Manage Users</Button>
-						<Button href="/admin/users/create" variant="outline">Add New User</Button>
+						<Button href="/admin/users" variant="navy">Manage Registered Users</Button>
 					</div>
 				</div>
 
@@ -218,7 +221,13 @@
 		font-size: 1.25rem;
 		font-weight: 700;
 		color: var(--color-navy-dark);
-		margin-bottom: 1.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.section-desc {
+		color: var(--color-text-secondary);
+		margin: 0 0 1.25rem;
+		line-height: 1.5;
 	}
 
 	.section-actions {

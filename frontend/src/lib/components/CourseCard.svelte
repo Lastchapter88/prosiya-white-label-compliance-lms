@@ -41,7 +41,7 @@
 
 <style>
 	.course-card {
-		background: white;
+		background: var(--color-surface);
 		border-radius: var(--radius-lg);
 		overflow: hidden;
 		box-shadow: var(--shadow-card);

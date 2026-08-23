@@ -1,380 +1,474 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { userService } from '$lib/services/users';
-    import Button from '$lib/components/Button.svelte';
-    import Modal from '$lib/components/Modal.svelte';
-    import Badge from '$lib/components/Badge.svelte';
+	import { onMount } from 'svelte';
+	import { Sidebar, Badge } from '$lib/components';
+	import { auth } from '$lib/stores/auth';
+	import {
+		firestoreUserService,
+		type FirestoreUser
+	} from '$lib/services/firestoreUsers';
 
-    let users: any[] = [];
-    let showModal = false;
-    let isEditing = false;
-    let loading = false;
+	let users: FirestoreUser[] = [];
+	let loading = true;
+	let error: string | null = null;
+	let togglingId: string | null = null;
+	let searchQuery = '';
 
-    let formData = {
-        id: 0,
-        email: '',
-        password: '',
-        first_name: '',
-        last_name: '',
-        role: 'student',
-        is_active: true
-    };
+	$: filteredUsers = users.filter((user) => {
+		const q = searchQuery.trim().toLowerCase();
+		if (!q) return true;
+		const name = `${user.firstName} ${user.lastName}`.toLowerCase();
+		return (
+			name.includes(q) ||
+			user.email.toLowerCase().includes(q) ||
+			user.role.toLowerCase().includes(q)
+		);
+	});
 
-    onMount(async () => {
-        await loadUsers();
-    });
+	$: paidCount = users.filter((u) => u.paymentStatus === 'paid').length;
+	$: unpaidCount = users.filter((u) => u.paymentStatus !== 'paid').length;
 
-    async function loadUsers() {
-        try {
-            const response = await userService.getUsers();
-            if (response.results) {
-                users = response.results;
-            } else if (Array.isArray(response)) {
-                users = response;
-            } else {
-                users = [];
-            }
-        } catch (e) {
-            console.error('Failed to load users', e);
-        }
-    }
+	onMount(async () => {
+		await loadUsers();
+	});
 
-    function openCreate() {
-        formData = {
-            id: 0,
-            email: '',
-            password: '',
-            first_name: '',
-            last_name: '',
-            role: 'student',
-            is_active: true
-        };
-        isEditing = false;
-        showModal = true;
-    }
+	async function loadUsers() {
+		loading = true;
+		error = null;
+		try {
+			users = await firestoreUserService.listRegisteredUsers();
+		} catch (e: any) {
+			error = e.message || 'Failed to load registered users';
+		} finally {
+			loading = false;
+		}
+	}
 
-    function openEdit(user: any) {
-        formData = { ...user, password: '' }; // Don't show hash, empty means no change
-        isEditing = true;
-        showModal = true;
-    }
+	async function togglePayment(user: FirestoreUser) {
+		const adminUid = $auth.user?.id;
+		if (!adminUid) return;
 
-    async function handleSubmit() {
-        loading = true;
-        try {
-            const data = { ...formData };
-            if (data.password === '') {
-                delete data.password;
-            }
+		const nextStatus = user.paymentStatus === 'paid' ? 'unpaid' : 'paid';
+		const label = nextStatus === 'paid' ? 'mark as paid' : 'mark as unpaid';
+		const name = `${user.firstName} ${user.lastName}`.trim() || user.email;
 
-            if (isEditing) {
-                await userService.updateUser(data.id, data);
-            } else {
-                await userService.createUser(data);
-            }
-            showModal = false;
-            await loadUsers();
-        } catch (e: any) {
-            alert('Error saving user: ' + (e.message || 'Unknown error'));
-        } finally {
-            loading = false;
-        }
-    }
+		if (!confirm(`Are you sure you want to ${label} for ${name}?`)) return;
 
-    async function handleDelete(id: number) {
-        if (!confirm('Are you sure you want to delete this user?')) return;
-        try {
-            await userService.deleteUser(id);
-            await loadUsers();
-        } catch (e) {
-            alert('Error deleting user');
-        }
-    }
+		togglingId = user.id;
+		try {
+			await firestoreUserService.setPaymentStatus(user.id, nextStatus, adminUid);
+			user.paymentStatus = nextStatus;
+			users = [...users];
+		} catch (e: any) {
+			alert(e.message || 'Could not update payment status');
+		} finally {
+			togglingId = null;
+		}
+	}
+
+	function formatDate(iso: string) {
+		if (!iso) return '—';
+		try {
+			return new Date(iso).toLocaleDateString('en-ZA', {
+				day: 'numeric',
+				month: 'short',
+				year: 'numeric'
+			});
+		} catch {
+			return '—';
+		}
+	}
 </script>
 
-<div class="admin-page">
-    <div class="header-actions">
-        <div>
-            <h1>User Management</h1>
-            <p class="subtitle">Manage students, instructors, and administrators</p>
-        </div>
-        <Button variant="accent" on:click={openCreate}>+ Add User</Button>
-    </div>
+<svelte:head>
+	<title>Registered Users - ProSiya Admin</title>
+</svelte:head>
 
-    <div class="user-list-container">
-        {#if users.length === 0}
-            <div class="empty-state">
-                <p>No users found.</p>
-            </div>
-        {:else}
-            <table class="user-table">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Email</th>
-                        <th class="text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each users as user}
-                        <tr>
-                            <td>
-                                <div class="user-cell">
-                                    <div class="user-avatar-placeholder">
-                                        {user.first_name?.[0] || 'U'}{user.last_name?.[0] || 'N'}
-                                    </div>
-                                    <div class="user-info">
-                                        <div class="font-medium">{user.first_name} {user.last_name}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="role-badge role-{user.role}">{user.role}</span>
-                            </td>
-                            <td>
-                                <Badge variant={user.is_active ? 'success' : 'error'}>
-                                    {user.is_active ? 'Active' : 'Inactive'}
-                                </Badge>
-                            </td>
-                            <td>{user.email}</td>
-                            <td class="text-right">
-                                <button class="action-btn edit" on:click={() => openEdit(user)}>Edit</button>
-                                <button class="action-btn delete" on:click={() => handleDelete(user.id)}>Delete</button>
-                            </td>
-                        </tr>
-                    {/each}
-                </tbody>
-            </table>
-        {/if}
-    </div>
+<div class="dashboard-layout">
+	<Sidebar
+		userRole="admin"
+		userName="{$auth.user?.first_name} {$auth.user?.last_name}"
+		userAvatar={$auth.user?.avatar || '/images/instructors/instructor-1.png'}
+	/>
 
-    <Modal bind:isOpen={showModal} title={isEditing ? 'Edit User' : 'Add New User'}>
-        <form on:submit|preventDefault={handleSubmit} class="user-form">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input id="first_name" type="text" bind:value={formData.first_name} required />
-                </div>
-                <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input id="last_name" type="text" bind:value={formData.last_name} required />
-                </div>
-            </div>
+	<main class="dashboard-main">
+		<div class="page-header">
+			<div>
+				<h1>Registered Users</h1>
+				<p class="subtitle">
+					View everyone who has signed up and control study material access with payment status.
+				</p>
+			</div>
+			<button class="refresh-btn" type="button" on:click={loadUsers} disabled={loading}>
+				{loading ? 'Refreshing…' : 'Refresh'}
+			</button>
+		</div>
 
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input id="email" type="email" bind:value={formData.email} required disabled={isEditing && false /* Allow email edit for now */} />
-            </div>
+		<div class="stats-row">
+			<div class="stat-card">
+				<span class="stat-label">Total registered</span>
+				<strong class="stat-value">{users.length}</strong>
+			</div>
+			<div class="stat-card paid">
+				<span class="stat-label">Paid (material access)</span>
+				<strong class="stat-value">{paidCount}</strong>
+			</div>
+			<div class="stat-card unpaid">
+				<span class="stat-label">Awaiting payment</span>
+				<strong class="stat-value">{unpaidCount}</strong>
+			</div>
+		</div>
 
-            <div class="form-group">
-                <label for="password">Password {isEditing ? '(Leave blank to keep current)' : ''}</label>
-                <input id="password" type="password" bind:value={formData.password} required={!isEditing} />
-            </div>
+		<div class="toolbar">
+			<input
+				type="search"
+				placeholder="Search by name, email, or role…"
+				bind:value={searchQuery}
+				aria-label="Search users"
+			/>
+		</div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select id="role" bind:value={formData.role}>
-                        <option value="student">Student</option>
-                        <option value="instructor">Instructor</option>
-                        <option value="admin">Admin</option>
-                        <option value="assessor">Assessor</option>
-                        <option value="moderator">Moderator</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <select id="status" bind:value={formData.is_active}>
-                        <option value={true}>Active</option>
-                        <option value={false}>Inactive</option>
-                    </select>
-                </div>
-            </div>
+		<div class="user-list-container">
+			{#if loading}
+				<div class="empty-state">Loading registered users…</div>
+			{:else if error}
+				<div class="empty-state error">{error}</div>
+			{:else if filteredUsers.length === 0}
+				<div class="empty-state">
+					<p>{searchQuery ? 'No users match your search.' : 'No registered users yet.'}</p>
+				</div>
+			{:else}
+				<table class="user-table">
+					<thead>
+						<tr>
+							<th>Learner</th>
+							<th>Email</th>
+							<th>Registered</th>
+							<th>Role</th>
+							<th>Payment</th>
+							<th class="text-right">Material access</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each filteredUsers as user (user.id)}
+							<tr>
+								<td>
+									<div class="user-cell">
+										<div class="user-avatar-placeholder">
+											{user.firstName?.[0] || 'U'}{user.lastName?.[0] || 'N'}
+										</div>
+										<div class="user-info">
+											<div class="font-medium">
+												{user.firstName || '—'} {user.lastName || ''}
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>{user.email || '—'}</td>
+								<td>{formatDate(user.createdAt)}</td>
+								<td>
+									<span class="role-badge role-{user.role}">{user.role}</span>
+								</td>
+								<td>
+									<Badge variant={user.paymentStatus === 'paid' ? 'success' : 'warning'}>
+										{user.paymentStatus === 'paid' ? 'Paid' : 'Unpaid'}
+									</Badge>
+								</td>
+								<td class="text-right">
+									<label class="toggle" title={user.paymentStatus === 'paid' ? 'Revoke access' : 'Grant access'}>
+										<input
+											type="checkbox"
+											checked={user.paymentStatus === 'paid'}
+											disabled={togglingId === user.id || user.role === 'admin'}
+											on:change={() => togglePayment(user)}
+										/>
+										<span class="toggle-slider"></span>
+										<span class="toggle-label">
+											{user.role === 'admin'
+												? 'Admin'
+												: user.paymentStatus === 'paid'
+													? 'Enabled'
+													: 'Locked'}
+										</span>
+									</label>
+								</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			{/if}
+		</div>
 
-            <div class="form-actions">
-                <Button variant="primary" type="button" on:click={() => showModal = false}>Cancel</Button>
-                <Button variant="accent" type="submit" disabled={loading}>
-                    {loading ? 'Saving...' : (isEditing ? 'Update User' : 'Create User')}
-                </Button>
-            </div>
-        </form>
-    </Modal>
+		<p class="help-text">
+			Toggle <strong>Paid</strong> after confirming course payment. Paid learners can download study
+			materials immediately; unpaid learners will see instructions to complete payment first.
+		</p>
+	</main>
 </div>
 
 <style>
-    .admin-page {
-        padding: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+	.dashboard-layout {
+		display: flex;
+		min-height: 100vh;
+		background: var(--color-bg-light);
+	}
 
-    .header-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
+	.dashboard-main {
+		margin-left: 280px;
+		flex: 1;
+		padding: 2rem;
+		max-width: 1400px;
+	}
 
-    h1 {
-        margin: 0;
-        font-size: 1.8rem;
-        color: var(--color-navy-dark);
-    }
+	.page-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
 
-    .subtitle {
-        margin: 0.5rem 0 0;
-        color: var(--color-text-light);
-    }
+	h1 {
+		margin: 0;
+		font-size: 1.8rem;
+		color: var(--color-navy-dark);
+	}
 
-    .user-list-container {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
+	.subtitle {
+		margin: 0.5rem 0 0;
+		color: var(--color-text-light);
+		max-width: 42rem;
+	}
 
-    .user-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+	.refresh-btn {
+		background: white;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		padding: 0.625rem 1rem;
+		font-weight: 600;
+		color: var(--color-navy);
+		cursor: pointer;
+	}
 
-    th, td {
-        padding: 1rem 1.5rem;
-        text-align: left;
-        border-bottom: 1px solid #f3f4f6;
-    }
+	.refresh-btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
 
-    th {
-        background: #f9fafb;
-        font-weight: 600;
-        color: var(--color-navy);
-        font-size: 0.875rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
+	.stats-row {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
 
-    tr:last-child td {
-        border-bottom: none;
-    }
+	.stat-card {
+		background: white;
+		border-radius: 10px;
+		padding: 1rem 1.25rem;
+		box-shadow: var(--shadow-card);
+	}
 
-    tr:hover {
-        background-color: #f9fafb;
-    }
+	.stat-card.paid {
+		border-left: 4px solid #16a34a;
+	}
 
-    .user-cell {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
+	.stat-card.unpaid {
+		border-left: 4px solid #d97706;
+	}
 
-    .user-avatar-placeholder {
-        width: 36px;
-        height: 36px;
-        background: var(--color-navy);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.875rem;
-        font-weight: 600;
-    }
+	.stat-label {
+		display: block;
+		font-size: 0.875rem;
+		color: var(--color-text-secondary);
+		margin-bottom: 0.35rem;
+	}
 
-    .font-medium {
-        font-weight: 500;
-        color: var(--color-navy-dark);
-    }
+	.stat-value {
+		font-size: 1.75rem;
+		color: var(--color-navy-dark);
+	}
 
-    .role-badge {
-        display: inline-block;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        text-transform: capitalize;
-    }
+	.toolbar {
+		margin-bottom: 1rem;
+	}
 
-    .role-student { background: #e0f2fe; color: #0369a1; }
-    .role-instructor { background: #fef3c7; color: #d97706; }
-    .role-admin { background: #e1effe; color: #1e40af; border: 1px solid #bfdbfe; }
+	.toolbar input {
+		width: 100%;
+		max-width: 420px;
+		padding: 0.75rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		background: white;
+	}
 
-    .text-right {
-        text-align: right;
-    }
+	.user-list-container {
+		background: white;
+		border-radius: 8px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+		overflow: hidden;
+	}
 
-    .action-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        transition: color 0.15s;
-    }
+	.user-table {
+		width: 100%;
+		border-collapse: collapse;
+	}
 
-    .action-btn.edit { color: var(--color-navy); }
-    .action-btn.edit:hover { color: var(--color-accent); }
-    .action-btn.delete { color: #ef4444; margin-left: 0.5rem; }
-    .action-btn.delete:hover { color: #dc2626; }
+	th,
+	td {
+		padding: 1rem 1.25rem;
+		text-align: left;
+		border-bottom: 1px solid #f3f4f6;
+		vertical-align: middle;
+	}
 
-    .empty-state {
-        padding: 3rem;
-        text-align: center;
-        color: var(--color-text-light);
-    }
+	th {
+		background: #f9fafb;
+		font-weight: 600;
+		color: var(--color-navy);
+		font-size: 0.875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
 
-    .user-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-        padding: 0.5rem;
-    }
+	tr:last-child td {
+		border-bottom: none;
+	}
 
-    .form-row {
-        display: flex;
-        gap: 1rem;
-    }
+	tr:hover {
+		background-color: #f9fafb;
+	}
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        flex: 1;
-    }
+	.user-cell {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
 
-    label {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--color-navy);
-    }
+	.user-avatar-placeholder {
+		width: 36px;
+		height: 36px;
+		background: var(--color-navy);
+		color: white;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.875rem;
+		font-weight: 600;
+		flex-shrink: 0;
+	}
 
-    input, select {
-        padding: 0.75rem;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        width: 100%;
-        box-sizing: border-box;
-    }
+	.font-medium {
+		font-weight: 500;
+		color: var(--color-navy-dark);
+	}
 
-    input:focus, select:focus {
-        outline: none;
-        border-color: var(--color-navy);
-        box-shadow: 0 0 0 2px rgba(26, 35, 50, 0.1);
-    }
+	.role-badge {
+		display: inline-block;
+		padding: 0.25rem 0.5rem;
+		border-radius: 4px;
+		font-size: 0.75rem;
+		font-weight: 500;
+		text-transform: capitalize;
+	}
 
-    .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid #f3f4f6;
-    }
+	.role-student {
+		background: #e0f2fe;
+		color: #0369a1;
+	}
+	.role-admin {
+		background: #e1effe;
+		color: #1e40af;
+		border: 1px solid #bfdbfe;
+	}
 
-    @media (max-width: 640px) {
-        .form-row { flex-direction: column; }
-    }
+	.text-right {
+		text-align: right;
+	}
+
+	.toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.toggle input {
+		position: absolute;
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	.toggle-slider {
+		position: relative;
+		width: 44px;
+		height: 24px;
+		background: #d1d5db;
+		border-radius: 999px;
+		transition: background 0.2s;
+	}
+
+	.toggle-slider::after {
+		content: '';
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		width: 18px;
+		height: 18px;
+		background: white;
+		border-radius: 50%;
+		transition: transform 0.2s;
+	}
+
+	.toggle input:checked + .toggle-slider {
+		background: #16a34a;
+	}
+
+	.toggle input:checked + .toggle-slider::after {
+		transform: translateX(20px);
+	}
+
+	.toggle input:disabled + .toggle-slider {
+		opacity: 0.5;
+	}
+
+	.toggle-label {
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--color-text-secondary);
+		min-width: 4.5rem;
+		text-align: left;
+	}
+
+	.empty-state {
+		padding: 3rem;
+		text-align: center;
+		color: var(--color-text-light);
+	}
+
+	.empty-state.error {
+		color: var(--color-error);
+	}
+
+	.help-text {
+		margin-top: 1rem;
+		color: var(--color-text-secondary);
+		font-size: 0.9rem;
+	}
+
+	@media (max-width: 1024px) {
+		.dashboard-main {
+			margin-left: 0;
+		}
+
+		.stats-row {
+			grid-template-columns: 1fr;
+		}
+
+		.user-list-container {
+			overflow-x: auto;
+		}
+	}
 </style>

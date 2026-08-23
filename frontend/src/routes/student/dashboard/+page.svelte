@@ -142,7 +142,7 @@
 					<div class="courses-grid">
 						{#each enrolledCourses as enrollment}
 							<div class="course-enrollment-card">
-								<img src={enrollment.course_details.cover_image || '/images/courses/security-training.png'} alt={enrollment.course_details.title} class="course-image" />
+								<img src={enrollment.course_details.cover_image || '/images/courses/grade-c-security.jpg'} alt={enrollment.course_details.title} class="course-image" />
 								
 								<div class="course-info">
 									<Badge variant="accent" size="sm" className="mb-2">{enrollment.course_details.category}</Badge>
