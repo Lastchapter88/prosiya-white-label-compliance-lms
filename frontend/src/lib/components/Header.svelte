@@ -1,9 +1,25 @@
 <script lang="ts">
-	// Header navigation component matching mockup design
+	import { onMount } from 'svelte';
+	import {
+		cycleThemePreference,
+		getStoredThemePreference,
+		themePreferenceLabel,
+		type ThemePreference
+	} from '$lib/theme';
+
 	let mobileMenuOpen = false;
-	
+	let themePreference: ThemePreference = 'auto';
+
+	onMount(() => {
+		themePreference = getStoredThemePreference();
+	});
+
 	function toggleMobileMenu() {
 		mobileMenuOpen = !mobileMenuOpen;
+	}
+
+	function toggleTheme() {
+		themePreference = cycleThemePreference();
 	}
 </script>
 
@@ -26,6 +42,15 @@
 			
 			<!-- CTA Button -->
 			<div class="header-actions">
+				<button
+					type="button"
+					class="theme-toggle"
+					on:click={toggleTheme}
+					title={themePreferenceLabel(themePreference)}
+					aria-label={themePreferenceLabel(themePreference)}
+				>
+					{themePreference === 'night' ? '🌙' : themePreference === 'day' ? '☀️' : '🌓'}
+				</button>
 				<a href="/login" class="btn btn-outline">Login</a>
 				<a href="/enroll" class="btn btn-accent">Enroll Now</a>
 			</div>
@@ -45,6 +70,9 @@
 				<a href="/about" class="nav-link-mobile">About</a>
 				<a href="/contact" class="nav-link-mobile">Contact</a>
 				<div class="mobile-actions">
+					<button type="button" class="btn btn-outline theme-toggle-mobile" on:click={toggleTheme}>
+						{themePreferenceLabel(themePreference)}
+					</button>
 					<a href="/login" class="btn btn-outline">Login</a>
 					<a href="/enroll" class="btn btn-accent">Enroll Now</a>
 				</div>
@@ -117,6 +145,35 @@
 		display: none;
 		gap: 1rem;
 		align-items: center;
+	}
+
+	.theme-toggle,
+	.theme-toggle-mobile {
+		background: transparent;
+		border: 2px solid var(--color-border);
+		border-radius: var(--radius-md);
+		width: 42px;
+		height: 42px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.1rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.theme-toggle-mobile {
+		width: 100%;
+		height: auto;
+		padding: 0.75rem 1rem;
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--color-navy-dark);
+	}
+	
+	.theme-toggle:hover,
+	.theme-toggle-mobile:hover {
+		border-color: var(--color-accent);
 	}
 	
 	.btn {
