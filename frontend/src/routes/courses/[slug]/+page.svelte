@@ -5,7 +5,7 @@
 	import { courseService } from '$lib/services/courses';
 	import { courseCatalogue } from '$lib/data/courses';
 	import { auth } from '$lib/stores/auth';
-	import { studyMaterialService } from '$lib/services/studyMaterial';
+	import { enrollmentService } from '$lib/services/enrollments';
 	import { fade } from 'svelte/transition';
 	
 	let course: any = null;
@@ -64,7 +64,7 @@
 
 			const user = $auth.user;
 			if (user?.id) {
-				await studyMaterialService.requestAccess({
+				await enrollmentService.enroll({
 					userId: user.id,
 					userEmail: user.email || '',
 					userName: `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email || 'Student',
@@ -262,7 +262,7 @@
             <PaymentInstructions variant="compact" showHeading={false} />
         </div>
         <div slot="footer">
-            <Button on:click={() => window.location.href = '/student/study-material'} variant="accent">Study Material</Button>
+            <Button on:click={() => window.location.href = '/student/courses'} variant="accent">Open study portal</Button>
             <Button on:click={() => window.location.href = '/student/dashboard'} variant="outline">Dashboard</Button>
         </div>
     </Modal>

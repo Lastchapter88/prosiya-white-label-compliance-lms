@@ -1,6 +1,17 @@
 /**
  * Upload study material PDFs to Firebase Storage and seed Firestore metadata.
  * Usage: node scripts/seed-study-materials.mjs
+ *
+ * Source files live in docs/Study Material/. Mapping:
+ *   Security grades  → matching PSIRA grade courses
+ *   Firearm manuals  → matching firearm competency courses
+ *   Legal test       → every gun / firearm course
+ *
+ *   Business combination → Armed Response, CIT, CPO
+ *
+ * Unmapped (no matching catalogue course):
+ *   Handgun private only.pdf
+ *   Hangun,Shotgun & Rifle Private only.pdf
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { homedir } from 'node:os';
@@ -11,7 +22,22 @@ const BUCKET = 'prosiya-e751a.firebasestorage.app';
 const CONFIG_PATH = join(homedir(), '.config', 'configstore', 'firebase-tools.json');
 const SOURCE_DIR = join(process.cwd(), 'docs', 'Study Material');
 
-const materials = [
+const LEGAL_TEST_FILE = 'Legal test knowledge of firearm.pdf';
+const BUSINESS_COMBINATION_FILE = 'Handgun,rifle & shotgun Business combination only.pdf';
+
+const GUN_COURSES = [
+	{ slug: 'handgun-business-purpose', title: 'Handgun Business Purpose' },
+	{ slug: 'rifle-slr-carbine', title: 'Rifle SLR or Carbine' },
+	{ slug: 'shotgun-business-purpose', title: 'Shotgun for Business Purpose' }
+];
+
+const ARMED_SPECIALIST_COURSES = [
+	{ slug: 'armed-response', title: 'Armed Response' },
+	{ slug: 'cit', title: 'CIT' },
+	{ slug: 'cpo', title: 'CPO' }
+];
+
+const courseMaterials = [
 	{
 		id: 'grade-c-individual',
 		courseSlug: 'grade-c-security',
@@ -47,8 +73,66 @@ const materials = [
 		grade: 'E',
 		file: 'Grade E.pdf',
 		order: 3
+	},
+	{
+		id: 'handgun-business',
+		courseSlug: 'handgun-business-purpose',
+		courseTitle: 'Handgun Business Purpose',
+		title: 'Handgun Business Purpose Study Material',
+		grade: '',
+		file: 'Handgun busines purpose only.pdf',
+		order: 2
+	},
+	{
+		id: 'rifle-slr-carbine',
+		courseSlug: 'rifle-slr-carbine',
+		courseTitle: 'Rifle SLR or Carbine',
+		title: 'Rifle SLR / Carbine Study Material',
+		grade: '',
+		file: 'Rifle private only.pdf',
+		order: 2
+	},
+	{
+		id: 'shotgun-business',
+		courseSlug: 'shotgun-business-purpose',
+		courseTitle: 'Shotgun for Business Purpose',
+		title: 'Shotgun Pump Action Business Purpose',
+		grade: '',
+		file: 'Shotgun pump action business purpose.pdf',
+		order: 2
+	},
+	{
+		id: 'shotgun-combination',
+		courseSlug: 'shotgun-business-purpose',
+		courseTitle: 'Shotgun for Business Purpose',
+		title: 'Shotgun Combination (Private & Business)',
+		grade: '',
+		file: 'Shotgun Combination private & Business.pdf',
+		order: 3
 	}
 ];
+
+const legalMaterials = GUN_COURSES.map((course) => ({
+	id: `legal-test-${course.slug}`,
+	courseSlug: course.slug,
+	courseTitle: course.title,
+	title: 'Legal Test Knowledge of Firearms',
+	grade: '',
+	file: LEGAL_TEST_FILE,
+	order: 1
+}));
+
+const businessCombinationMaterials = ARMED_SPECIALIST_COURSES.map((course) => ({
+	id: `business-combination-${course.slug}`,
+	courseSlug: course.slug,
+	courseTitle: course.title,
+	title: 'Handgun, Rifle & Shotgun Business Combination',
+	grade: '',
+	file: BUSINESS_COMBINATION_FILE,
+	order: 1
+}));
+
+const materials = [...courseMaterials, ...legalMaterials, ...businessCombinationMaterials];
 
 function toFirestoreValue(value) {
 	if (value === null || value === undefined) return { nullValue: null };
@@ -84,7 +168,7 @@ async function getAccessToken() {
 
 	const body = new URLSearchParams({
 		client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
-		client_secret: 'jEQ6QVS93sf-AIlOYFjBFMms',
+		client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
 		grant_type: 'refresh_token',
 		refresh_token: tokens.refresh_token
 	});

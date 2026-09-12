@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components';
 	import { onMount } from 'svelte';
+	import { friendlyAuthError } from '$lib/utils/authErrors';
 
 	let formData = {
 		first_name: '',
@@ -23,9 +24,7 @@
 	onMount(async () => {
 		const result = await authService.handleGoogleRedirect();
 		if (result.error) {
-			globalError = result.error.includes('invalid') || result.error.includes('INVALID')
-				? 'Google sign-up could not be completed. Use email/password or try again in a new tab.'
-				: result.error;
+			globalError = friendlyAuthError({ message: result.error });
 			return;
 		}
 		if (result.user) {
@@ -60,11 +59,11 @@
 		
 		try {
 			await authService.register(formData);
-			// After registration, redirect to login
-			await goto('/login?registered=true');
+			const redirect = $page.url.searchParams.get('redirect') || '/student/dashboard';
+			await goto(redirect);
 		} catch (err: any) {
 			console.error('Registration error:', err);
-			globalError = err.message || 'Registration failed. Please try again.';
+			globalError = friendlyAuthError(err);
 		} finally {
 			isLoading = false;
 		}
@@ -78,7 +77,7 @@
 			await authService.loginWithGoogle(redirect);
 		} catch (err: any) {
 			console.error('Google sign-up error:', err);
-			globalError = err?.message || 'Google sign-up failed. Please try again.';
+			globalError = friendlyAuthError(err);
 			googleLoading = false;
 		}
 	}

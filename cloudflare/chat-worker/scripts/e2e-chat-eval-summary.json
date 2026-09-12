@@ -1,0 +1,223 @@
+{
+  "passed": 103,
+  "failed": 3,
+  "total": 106,
+  "rate": 97,
+  "cats": [
+    {
+      "name": "security",
+      "pass": 17,
+      "fail": 1,
+      "total": 18,
+      "rate": 94
+    },
+    {
+      "name": "training",
+      "pass": 15,
+      "fail": 0,
+      "total": 15,
+      "rate": 100
+    },
+    {
+      "name": "prices",
+      "pass": 8,
+      "fail": 0,
+      "total": 8,
+      "rate": 100
+    },
+    {
+      "name": "contact",
+      "pass": 9,
+      "fail": 0,
+      "total": 9,
+      "rate": 100
+    },
+    {
+      "name": "accreditation",
+      "pass": 8,
+      "fail": 0,
+      "total": 8,
+      "rate": 100
+    },
+    {
+      "name": "employment",
+      "pass": 7,
+      "fail": 0,
+      "total": 7,
+      "rate": 100
+    },
+    {
+      "name": "quotes",
+      "pass": 9,
+      "fail": 0,
+      "total": 9,
+      "rate": 100
+    },
+    {
+      "name": "enrolment",
+      "pass": 6,
+      "fail": 0,
+      "total": 6,
+      "rate": 100
+    },
+    {
+      "name": "handoff",
+      "pass": 7,
+      "fail": 0,
+      "total": 7,
+      "rate": 100
+    },
+    {
+      "name": "no_guess",
+      "pass": 8,
+      "fail": 0,
+      "total": 8,
+      "rate": 100
+    },
+    {
+      "name": "informal",
+      "pass": 9,
+      "fail": 2,
+      "total": 11,
+      "rate": 82
+    }
+  ],
+  "failures": [
+    {
+      "id": 102,
+      "category": "security",
+      "q": "Niyabahlinzeka onogada?",
+      "fails": [
+        "guarding"
+      ],
+      "message": "Yebo, sibahlinzeka ngokuthula — sibonakalisa ukuthi siyabahlinzeka ngokuthula kanye nokuthembekile.  \n\nUngafuna ukuthola izindlela zokubhlinzeka? Ngokwesikhathi (intake), i-price, noma ukuthi ungafuna ukubhlinzeka ngokufanayo (e.g. Grade C, Grade B, etc.)? Ngiyakusiza ngokusho kw",
+      "lead": {
+        "service": "Physical Guarding"
+      }
+    },
+    {
+      "id": 309,
+      "category": "informal",
+      "q": "ngifuna umsebenzi",
+      "fails": [
+        "contact"
+      ],
+      "message": "Sawubona! Ukuthanda ukufuna umsebenzi — ngiyakuthandaza.\n\nProSiya Security Group *ayisebenzi ngezinqumo zokufunda* (ayikho iziqhelo zokufunda okwenzekayo kule ndlela), kodwa sithandaza abantu ukuba bafunde imibono yezifundo eziqinisekisiwe (accredited training) esikhundleni sokuf",
+      "lead": {
+        "requirements": "ngifuna umsebenzi"
+      }
+    },
+    {
+      "id": 311,
+      "category": "informal",
+      "q": "ngicela umuntu angishayele",
+      "fails": [
+        "contact"
+      ],
+      "message": "Siyabonga kakhulu ngokubiza! 😊  \nUfuna ukuthi umuntu angishayele — ngifuna ukuvakasha (book) umsebenzi wokuphatha isikhungo, noma uqasha isikhungo esithile?  \n\nNgingafunda ngokuthi:  \n- **Ubani** (name)  \n- **Igama lomkhakha / indawo** (company or site name)  \n- **Indawo eyisise",
+      "lead": {
+        "preferredContactMethod": "Phone"
+      }
+    }
+  ],
+  "samples": [
+    {
+      "id": 21,
+      "category": "training",
+      "q": "How much is the combined Grade E, D and C course?",
+      "pass": true,
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoff": false,
+      "msg": "The **Combined Grade E, D & C** course at ProSiya Academy costs **R1,950** (ZAR).  \n\nThis is an entry-to-intermediate security officer training programme, PSIRA-aligned and compliance-ready.\n\nWould you like help enrollin"
+    },
+    {
+      "id": 40,
+      "category": "prices",
+      "q": "Where do I send my proof of payment?",
+      "pass": true,
+      "lead": null,
+      "handoff": false,
+      "msg": "You can send your proof of payment (e.g., bank slip, EFT receipt, or screenshot) **via WhatsApp to +27 78 523 6606**.\n\n✅ This applies to both local and international learners — just make sure to include your name and cou"
+    },
+    {
+      "id": 61,
+      "category": "employment",
+      "q": "Are you hiring security guards?",
+      "pass": true,
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoff": true,
+      "msg": "I don’t have verified information about current vacancies or hiring for security guard positions at ProSiya Security Group.\n\nIf you're interested in employment opportunities, please contact ProSiya directly on **+27 78 5"
+    },
+    {
+      "id": 69,
+      "category": "quotes",
+      "q": "I need security guards for my company. Can I get a quote?",
+      "pass": true,
+      "lead": {
+        "service": "Physical Guarding",
+        "requirements": "I need security guards for my company. Can I get a quote?"
+      },
+      "handoff": true,
+      "msg": "Yes, absolutely — ProSiya Security Group provides professional guarding services for companies across South Africa, including warehouses, factories, construction sites, and commercial properties.\n\nTo prepare a tailored q"
+    },
+    {
+      "id": 200,
+      "category": "quotes",
+      "q": "I need 4 guards for my shop in Durban",
+      "pass": true,
+      "lead": {
+        "location": "Durban",
+        "service": "Physical Guarding",
+        "requirements": "I need 4 guards for my shop in Durban"
+      },
+      "handoff": true,
+      "msg": "Thanks for your enquiry — we’d be happy to help secure your shop in Durban with professional guarding services.\n\nTo provide you with an accurate quotation and the right service plan, could you please share a few quick de"
+    },
+    {
+      "id": 85,
+      "category": "handoff",
+      "q": "Can I speak to a real person?",
+      "pass": true,
+      "lead": null,
+      "handoff": true,
+      "msg": "Yes, absolutely — you can speak to a real person from ProSiya Security Group.\n\nPlease contact our team directly on:  \n📞 **+27 78 523 6606** (WhatsApp or call)  \n📧 **dladla.siya@gmail.com**\n\nOur Managing Director, Siyab"
+    },
+    {
+      "id": 93,
+      "category": "no_guess",
+      "q": "When exactly is the next Grade C class?",
+      "pass": true,
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoff": false,
+      "msg": "I don’t have the exact start date for the next Grade C Security Officer class — ProSiya doesn’t publish fixed intake dates publicly.  \n\nHowever, once you register and confirm payment (R1,050), the team will contact you t"
+    },
+    {
+      "id": 100,
+      "category": "no_guess",
+      "q": "Can you guarantee that I will get a security job after training?",
+      "pass": true,
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoff": true,
+      "msg": "I don’t have verified information stating that ProSiya guarantees job placement after training — this is not mentioned in their official materials.\n\nWhat *is* confirmed is that ProSiya Academy offers **PSIRA-aligned, acc"
+    },
+    {
+      "id": 301,
+      "category": "informal",
+      "q": "hi how much grade c",
+      "pass": true,
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoff": false,
+      "msg": "Hi there! 😊  \nThe **Grade C Security Officer** course at ProSiya Academy costs **R1,050** (ZAR).\n\nIt’s an entry-to-intermediate level qualification aligned with PSIRA requirements — ideal for those starting or advancing"
+    }
+  ]
+}

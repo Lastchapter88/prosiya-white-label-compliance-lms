@@ -46,7 +46,11 @@ export const authService = {
 	async login(credentials: any) {
 		const { email, password } = credentials;
 		const result = await signInWithEmailAndPassword(firebaseAuth, email, password);
-		await ensureFirestoreUser(result.user);
+		try {
+			await ensureFirestoreUser(result.user);
+		} catch (profileErr) {
+			console.error('Profile sync after login failed:', profileErr);
+		}
 		return result.user;
 	},
 
@@ -63,7 +67,11 @@ export const authService = {
 		try {
 			const result = await getRedirectResult(firebaseAuth);
 			if (result?.user) {
-				await ensureFirestoreUser(result.user);
+				try {
+					await ensureFirestoreUser(result.user);
+				} catch (profileErr) {
+					console.error('Profile sync after Google sign-in failed:', profileErr);
+				}
 				return { user: result.user, redirectUrl: storedRedirect || undefined };
 			}
 			return {};
@@ -84,21 +92,38 @@ export const authService = {
 		const result = await createUserWithEmailAndPassword(firebaseAuth, email, password);
 
 		if (first_name && last_name) {
-			await updateProfile(result.user, {
-				displayName: `${first_name} ${last_name}`
-			});
+			try {
+				await updateProfile(result.user, {
+					displayName: `${first_name} ${last_name}`
+				});
+			} catch (profileUpdateErr) {
+				console.error('Display name update failed:', profileUpdateErr);
+			}
 		}
 
-		await setDoc(doc(db, 'users', result.user.uid), {
-			firstName: first_name,
-			lastName: last_name,
-			email: normalizedEmail,
-			role: isAdminEmail(normalizedEmail) ? 'admin' : 'student',
-			paymentStatus: 'unpaid',
-			createdAt: new Date().toISOString(),
-			isActive: true,
-			updatedAt: new Date().toISOString()
-		});
+		try {
+			await setDoc(doc(db, 'users', result.user.uid), {
+				firstName: first_name,
+				lastName: last_name,
+				email: normalizedEmail,
+				role: isAdminEmail(normalizedEmail) ? 'admin' : 'student',
+				paymentStatus: 'unpaid',
+				createdAt: new Date().toISOString(),
+				isActive: true,
+				updatedAt: new Date().toISOString()
+			});
+		} catch (profileErr) {
+			// Auth account already exists — do not fail registration for profile write issues.
+			console.error('Profile create after register failed:', profileErr);
+			try {
+				await ensureFirestoreUser({
+					...result.user,
+					displayName: `${first_name || ''} ${last_name || ''}`.trim()
+				});
+			} catch (retryErr) {
+				console.error('Profile retry after register failed:', retryErr);
+			}
+		}
 
 		return result.user;
 	},

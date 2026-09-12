@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Header, Button, Badge, Modal } from '$lib/components';
+	import { Button, Badge, Modal } from '$lib/components';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { api } from '$lib/services/api';
@@ -102,7 +102,6 @@
 </svelte:head>
 
 <div class="assessment-layout">
-	<Header />
 	
 	<main class="assessment-container">
 		{#if isLoading}

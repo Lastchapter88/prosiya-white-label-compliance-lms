@@ -19,10 +19,18 @@ export interface StudyMaterial {
 	courseSlug: string;
 	courseTitle: string;
 	title: string;
-	grade: string;
+	grade?: string;
 	fileName: string;
 	storagePath: string;
 	order: number;
+}
+
+export function materialSubtitle(material: StudyMaterial): string {
+	const parts = [
+		material.grade ? `Grade ${material.grade}` : null,
+		material.fileName
+	].filter(Boolean);
+	return parts.join(' · ');
 }
 
 export interface MaterialAccess {

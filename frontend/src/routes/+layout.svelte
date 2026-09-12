@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { initAutoTheme } from '$lib/theme';
+	import { ChatWidget } from '$lib/components';
 
 	let { children } = $props();
 
@@ -13,6 +14,7 @@
 
 <div class="app">
 	{@render children()}
+	<ChatWidget />
 </div>
 
 <style>

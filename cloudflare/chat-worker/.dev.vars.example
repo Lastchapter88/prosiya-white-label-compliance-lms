@@ -1,0 +1,4 @@
+# Local wrangler secrets (never commit)
+QWEN_API_KEY=
+QWEN_MODEL=qwen-plus
+QWEN_API_BASE_URL=https://dashscope-intl.aliyuncs.com/compatible-mode/v1

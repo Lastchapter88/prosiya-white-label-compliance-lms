@@ -1,453 +1,383 @@
 <script lang="ts">
-	import { Sidebar, Badge, Button } from '$lib/components';
+	import { Badge, Button, PaymentInstructions, ProgressRing } from '$lib/components';
 	import { onMount } from 'svelte';
-	import { auth } from '$lib/stores/auth';
-	import { courseService } from '$lib/services/courses';
-	import { fade } from 'svelte/transition';
-	
-	let enrolledCourses: any[] = [];
+	import { auth, hasPaidAccess } from '$lib/stores/auth';
+	import { enrollmentService, type LearnerCourse } from '$lib/services/enrollments';
+
+	let courses: LearnerCourse[] = [];
 	let isLoading = true;
 	let error: string | null = null;
-    
-    // Derived stats (mocked for now until backend provides full reporting)
-	let stats = {
-		coursesEnrolled: 0,
-		coursesCompleted: 0,
-		certificatesEarned: 0,
-		hoursLearned: 0
-	};
+
+	$: paid = hasPaidAccess($auth.user);
+	$: studyCount = courses.reduce((sum, course) => sum + course.materials.length, 0);
+	$: nextCourse = courses[0] || null;
+	$: firearmCourse = courses.find((course) => course.category === 'Firearm') || nextCourse;
 
 	onMount(async () => {
-		if (!$auth.isAuthenticated) {
-			window.location.href = '/login';
-			return;
-		}
-
 		try {
-			const data = await courseService.getMyEnrollments();
-            // Handle pagination if necessary
-            enrolledCourses = data.results || data;
-            
-            stats.coursesEnrolled = enrolledCourses.length;
-            stats.coursesCompleted = enrolledCourses.filter(e => e.status === 'completed').length;
-            // More complex stats would come from a dedicated stats endpoint
+			if ($auth.user?.id) {
+				courses = await enrollmentService.getMyCourses($auth.user.id);
+			}
 		} catch (e: any) {
-			error = e.message || "Failed to load dashboard data";
+			error = e.message || 'Could not load your study portal';
 		} finally {
 			isLoading = false;
 		}
 	});
-
-    // Mock upcoming live classes - keep for visual premium feel as per docs
-	const upcomingClasses = [
-		{
-			id: 1,
-			title: 'Firearm Handling Basics',
-			instructor: 'Mike Johnson',
-			date: '2026-02-15',
-			time: '14:00',
-			duration: '2 hours',
-			isLive: false
-		},
-		{
-			id: 2,
-			title: 'Pertaining Firearms',
-			instructor: 'Sarah Williams',
-			date: 'Tomorrow',
-			time: '10:00',
-			duration: '1.5 hours',
-			isLive: true
-		}
-	];
 </script>
 
 <svelte:head>
-	<title>Student Dashboard - ProSiya LMS</title>
+	<title>Study portal - ProSiya Academy</title>
 </svelte:head>
 
-<div class="dashboard-layout">
-	<Sidebar 
-		userRole={$auth.user?.role as 'student' | 'instructor' | 'admin' || 'student'}
-		userName="{$auth.user?.first_name} {$auth.user?.last_name}"
-		userAvatar={$auth.user?.avatar || '/images/instructors/instructor-1.png'}
-	/>
-	
-	<main class="dashboard-main">
-		<div class="dashboard-header">
+{#if isLoading}
+	<div class="panel muted">Loading your courses…</div>
+{:else if error}
+	<div class="panel error">{error}</div>
+{:else}
+	{#if nextCourse}
+		<section class="hero">
+			<p class="live-label">{paid ? 'Study pack ready' : 'Enrolled · payment pending'}</p>
+			<h2>{nextCourse.courseTitle}</h2>
+			<p class="hero-meta">
+				{nextCourse.category}
+				· {nextCourse.materials.length || 0} study
+				{nextCourse.materials.length === 1 ? 'file' : 'files'}
+			</p>
+			<div class="hero-actions">
+				<Button href="/student/courses/{nextCourse.courseSlug}" variant="accent">
+					{paid ? 'Continue studying' : 'Open course'}
+				</Button>
+				<Button href="/student/study-material" variant="outline" className="hero-outline">
+					Study packs
+				</Button>
+			</div>
+		</section>
+	{:else}
+		<section class="hero">
+			<p class="live-label">Start here</p>
+			<h2>Enrol to unlock your study portal</h2>
+			<p class="hero-meta">Your courses, PDFs and legal test packs will appear here after enrolment.</p>
+			<div class="hero-actions">
+				<Button href="/courses" variant="accent">Browse courses</Button>
+			</div>
+		</section>
+	{/if}
+
+	<div class="stats">
+		<article class="stat">
+			<div class="stat-icon" aria-hidden="true">
+				<svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 5h7v14H4V5Zm9 0h7v14h-7V5Z" /></svg>
+			</div>
+			<strong>{courses.length}</strong>
+			<span>Courses</span>
+		</article>
+		<article class="stat">
+			<div class="stat-icon" aria-hidden="true">
+				<svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5Z" /></svg>
+			</div>
+			<strong>{studyCount}</strong>
+			<span>Study files</span>
+		</article>
+		<article class="stat">
+			<div class="stat-icon" aria-hidden="true">
+				<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 9 8H3l5 4-2 8 6-4 6 4-2-8 5-4h-6l-3-6Z" /></svg>
+			</div>
+			<strong>0</strong>
+			<span>Certificates</span>
+		</article>
+	</div>
+
+	{#if !paid}
+		<section class="insight">
 			<div>
-				<h1>Welcome back, {$auth.user?.first_name || 'Student'}! 👋</h1>
-				<p class="subtitle">Continue your learning journey</p>
+				<strong>Unlock your study packs</strong>
+				<p>
+					Payment confirmation opens your PDFs, including legal test knowledge for firearm courses.
+				</p>
 			</div>
+			<Button href="/student/study-material" variant="navy" size="sm">Payment steps</Button>
+		</section>
+	{:else if firearmCourse}
+		<section class="insight">
+			<div>
+				<strong>Study tip</strong>
+				<p>
+					Start with legal test knowledge, then the weapon-specific pack for {firearmCourse.courseTitle}.
+				</p>
+			</div>
+			<Button href="/student/courses/{firearmCourse.courseSlug}" variant="navy" size="sm">
+				Open pack
+			</Button>
+		</section>
+	{/if}
+
+	<section class="continue">
+		<div class="section-head">
+			<h3>Continue learning</h3>
+			<a href="/student/courses">All courses</a>
 		</div>
-		
-		<!-- Stats Cards -->
-		<div class="stats-grid">
-			<div class="stat-card">
-				<div class="stat-icon">📚</div>
-				<div class="stat-content">
-					<h3>{stats.coursesEnrolled}</h3>
-					<p>Courses Enrolled</p>
-				</div>
-			</div>
-			
-			<div class="stat-card">
-				<div class="stat-icon">✅</div>
-				<div class="stat-content">
-					<h3>{stats.coursesCompleted}</h3>
-					<p>Courses Completed</p>
-				</div>
-			</div>
-			
-			<div class="stat-card">
-				<div class="stat-icon">🎓</div>
-				<div class="stat-content">
-					<h3>{stats.certificatesEarned}</h3>
-					<p>Certificates Earned</p>
-				</div>
-			</div>
-			
-			<div class="stat-card">
-				<div class="stat-icon">⏱️</div>
-				<div class="stat-content">
-					<h3>{stats.hoursLearned}</h3>
-					<p>Hours Learned</p>
-				</div>
-			</div>
-		</div>
-		
-		{#if isLoading}
-			<div class="loading-container">
-				<div class="loader"></div>
-				<p>Loading your dashboard...</p>
-			</div>
-		{:else if error}
-			<div class="error-container">
-				<p>Error: {error}</p>
-				<Button variant="outline" on:click={() => window.location.reload()}>Retry</Button>
+
+		{#if courses.length === 0}
+			<div class="panel muted">
+				<p>No enrolled courses yet.</p>
+				<Button href="/courses" variant="accent">Browse catalogue</Button>
 			</div>
 		{:else}
-			<!-- My Courses Section -->
-			<section class="section" in:fade>
-				<div class="section-header">
-					<h2>My Courses</h2>
-					<a href="/student/courses" class="view-all">View All →</a>
-				</div>
-				
-				{#if enrolledCourses.length === 0}
-					<div class="empty-state">
-						<p>You haven't enrolled in any courses yet.</p>
-						<Button href="/courses" variant="accent">Browse Courses</Button>
-					</div>
-				{:else}
-					<div class="courses-grid">
-						{#each enrolledCourses as enrollment}
-							<div class="course-enrollment-card">
-								<img src={enrollment.course_details.cover_image || '/images/courses/grade-c-security.jpg'} alt={enrollment.course_details.title} class="course-image" />
-								
-								<div class="course-info">
-									<Badge variant="accent" size="sm" className="mb-2">{enrollment.course_details.category}</Badge>
-									<h3>{enrollment.course_details.title}</h3>
-									
-									<div class="progress-section">
-										<div class="progress-header">
-											<span class="progress-label">Progress</span>
-											<span class="progress-percent">{enrollment.progress_percentage}%</span>
-										</div>
-										<div class="progress-bar">
-											<div class="progress-fill" style="width: {enrollment.progress_percentage}%"></div>
-										</div>
-									</div>
-									
-									<div class="course-footer">
-										<Button href="/student/courses/{enrollment.course}" variant="navy" size="sm" className="w-full">
-											{enrollment.progress_percentage > 0 ? 'Continue' : 'Start'} Course
-										</Button>
-									</div>
-								</div>
-							</div>
-						{/each}
-					</div>
-				{/if}
-			</section>
-
-			<!-- Upcoming Live Classes -->
-			<section class="section" in:fade>
-				<div class="section-header">
-					<h2>Upcoming Live Classes</h2>
-					<a href="/student/live" class="view-all">View All →</a>
-				</div>
-				
-				<div class="live-classes-list">
-					{#each upcomingClasses as liveClass}
-						<div class="live-class-card">
-							{#if liveClass.isLive}
-								<Badge variant="live">LIVE NOW</Badge>
-							{/if}
-							
-							<div class="live-class-info">
-								<h3>{liveClass.title}</h3>
-								<p class="instructor">👨‍🏫 {liveClass.instructor}</p>
-								<div class="live-class-meta">
-									<span>📅 {liveClass.date}</span>
-									<span>🕐 {liveClass.time}</span>
-									<span>⏱️ {liveClass.duration}</span>
-								</div>
-							</div>
-							
-							<div class="live-class-actions">
-								{#if liveClass.isLive}
-									<Button variant="accent">Join Now</Button>
-								{:else}
-									<Button variant="outline">Set Reminder</Button>
-								{/if}
-							</div>
+			<div class="course-row">
+				{#each courses as course}
+					<a class="course-card" href="/student/courses/{course.courseSlug}">
+						<div class="course-card-top">
+							<img src={course.image} alt="" />
+							<ProgressRing value={course.progress} size={52} stroke={5} />
 						</div>
-					{/each}
-				</div>
-			</section>
+						<Badge variant="accent" size="sm">{course.category}</Badge>
+						<h4>{course.courseTitle}</h4>
+						<p>
+							{course.materials.length} file{course.materials.length === 1 ? '' : 's'}
+							· {course.progress || 0}% complete
+						</p>
+						<div class="bar"><span style="width: {course.progress || 4}%"></span></div>
+					</a>
+				{/each}
+			</div>
 		{/if}
-	</main>
-</div>
+	</section>
+
+	{#if !paid && courses.length}
+		<section class="pay-note">
+			<PaymentInstructions variant="compact" />
+		</section>
+	{/if}
+{/if}
 
 <style>
-	.dashboard-layout {
-		display: flex;
-		min-height: 100vh;
-		background: var(--color-bg-light);
+	.hero {
+		background: linear-gradient(145deg, #1a2332 0%, #2d3748 58%, #3f5368 100%);
+		color: white;
+		border-radius: 1.35rem;
+		padding: 1.35rem 1.25rem 1.4rem;
+		box-shadow: var(--shadow-lg);
 	}
-	
-	.dashboard-main {
-		margin-left: 280px;
-		flex: 1;
-		padding: 2rem;
-	}
-	
-	.dashboard-header {
-		margin-bottom: 2rem;
-	}
-	
-	.dashboard-header h1 {
-		font-size: 2rem;
+
+	.live-label {
+		margin: 0 0 0.55rem;
+		font-size: 0.72rem;
 		font-weight: 800;
-		color: var(--color-navy-dark);
-		margin-bottom: 0.5rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-accent);
 	}
-	
-	.subtitle {
-		color: var(--color-text-secondary);
-		font-size: 1.125rem;
-		margin: 0;
+
+	.hero h2 {
+		margin: 0 0 0.4rem;
+		font-size: 1.45rem;
+		line-height: 1.2;
 	}
-	
-	/* Stats Grid */
-	.stats-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 1.5rem;
-		margin-bottom: 3rem;
+
+	.hero-meta {
+		margin: 0 0 1.1rem;
+		opacity: 0.85;
+		font-size: 0.92rem;
 	}
-	
-	.stat-card {
-		background: white;
-		padding: 1.5rem;
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-card);
+
+	.hero-actions {
 		display: flex;
-		align-items: center;
-		gap: 1rem;
-		transition: all 0.3s ease;
+		flex-wrap: wrap;
+		gap: 0.6rem;
 	}
-	
-	.stat-card:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--shadow-card-hover);
+
+	.hero-actions :global(.hero-outline) {
+		border-color: rgba(255, 255, 255, 0.45);
+		color: white;
+		background: transparent;
 	}
-	
+
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.7rem;
+		margin: 1rem 0;
+	}
+
+	.stat,
+	.panel,
+	.insight,
+	.course-card,
+	.pay-note {
+		background: var(--color-surface);
+		border-radius: 1.1rem;
+		box-shadow: var(--shadow-card);
+	}
+
+	.stat {
+		padding: 0.9rem 0.7rem;
+		text-align: center;
+	}
+
 	.stat-icon {
-		font-size: 2.5rem;
+		width: 32px;
+		height: 32px;
+		margin: 0 auto 0.4rem;
+		color: var(--color-accent);
 	}
-	
-	.stat-content h3 {
-		font-size: 2rem;
-		font-weight: 800;
+
+	.stat-icon svg {
+		width: 28px;
+		height: 28px;
+	}
+
+	.stat strong {
+		display: block;
+		font-size: 1.35rem;
 		color: var(--color-navy-dark);
-		margin: 0;
 	}
-	
-	.stat-content p {
+
+	.stat span {
 		color: var(--color-text-secondary);
-		margin: 0;
-		font-size: 0.875rem;
+		font-size: 0.75rem;
+		font-weight: 600;
 	}
-	
-	.section {
-		margin-bottom: 3rem;
-	}
-	
-	.section-header {
+
+	.insight {
+		padding: 1rem 1.1rem;
 		display: flex;
-		justify-content: space-between;
+		gap: 0.75rem;
 		align-items: center;
-		margin-bottom: 1.5rem;
+		justify-content: space-between;
+		background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface));
+		margin-bottom: 1.25rem;
 	}
-	
-	.section-header h2 {
-		font-size: 1.5rem;
-		font-weight: 700;
+
+	.insight strong {
+		display: block;
 		color: var(--color-navy-dark);
+		margin-bottom: 0.25rem;
+	}
+
+	.insight p {
 		margin: 0;
+		color: var(--color-text-secondary);
+		font-size: 0.9rem;
+		line-height: 1.45;
 	}
-	
-	.view-all {
-		color: var(--color-accent);
-		font-weight: 600;
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
-	
-	.view-all:hover {
-		color: var(--color-accent-dark);
-	}
-	
-	.courses-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-		gap: 2rem;
-	}
-	
-	.course-enrollment-card {
-		background: white;
-		border-radius: var(--radius-lg);
-		overflow: hidden;
-		box-shadow: var(--shadow-card);
-		display: flex;
-		flex-direction: column;
-	}
-	
-	.course-image {
-		width: 100%;
-		height: 160px;
-		object-fit: cover;
-	}
-	
-	.course-info {
-		padding: 1.5rem;
-		flex-grow: 1;
-		display: flex;
-		flex-direction: column;
-	}
-	
-	.course-info h3 {
-		font-size: 1.125rem;
-		font-weight: 700;
-		color: var(--color-navy-dark);
-		margin-bottom: 1rem;
-	}
-	
-	.progress-section {
-		margin-bottom: 1.5rem;
-	}
-	
-	.progress-header {
+
+	.section-head {
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: 0.5rem;
+		align-items: baseline;
+		margin-bottom: 0.85rem;
 	}
-	
-	.progress-label {
-		font-size: 0.875rem;
-		color: var(--color-text-secondary);
-		font-weight: 600;
+
+	.section-head h3 {
+		margin: 0;
+		color: var(--color-navy-dark);
+		font-size: 1.1rem;
 	}
-	
-	.progress-percent {
-		font-size: 0.875rem;
-		color: var(--color-accent);
+
+	.section-head a {
+		color: var(--color-navy-light);
 		font-weight: 700;
+		font-size: 0.88rem;
+		text-decoration: none;
 	}
-	
-	.progress-bar {
+
+	.course-row {
+		display: grid;
+		grid-template-columns: minmax(240px, 1fr);
+		gap: 0.85rem;
+		overflow-x: auto;
+		padding-bottom: 0.25rem;
+	}
+
+	.course-card {
+		display: block;
+		padding: 0.9rem;
+		text-decoration: none;
+		color: inherit;
+		min-width: 240px;
+	}
+
+	.course-card-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 0.75rem;
+		margin-bottom: 0.7rem;
+	}
+
+	.course-card img {
+		width: 72px;
+		height: 72px;
+		object-fit: cover;
+		border-radius: 1rem;
+	}
+
+	.course-card h4 {
+		margin: 0.45rem 0 0.25rem;
+		color: var(--color-navy-dark);
+		font-size: 1.02rem;
+	}
+
+	.course-card p {
+		margin: 0 0 0.7rem;
+		color: var(--color-text-secondary);
+		font-size: 0.82rem;
+	}
+
+	.bar {
 		height: 8px;
 		background: var(--color-bg-light);
-		border-radius: var(--radius-full);
+		border-radius: 99px;
 		overflow: hidden;
 	}
-	
-	.progress-fill {
+
+	.bar span {
+		display: block;
 		height: 100%;
 		background: var(--color-accent);
-		border-radius: var(--radius-full);
-		transition: width 0.3s ease;
+		border-radius: 99px;
+		min-width: 8px;
 	}
-    
-    .course-footer {
-        margin-top: auto;
-    }
 
-	.live-classes-list {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-	
-	.live-class-card {
-		background: white;
-		padding: 1.5rem;
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-card);
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-		position: relative;
-	}
-	
-	.live-class-info {
-		flex: 1;
-	}
-	
-	.live-class-info h3 {
-		font-size: 1.125rem;
-		font-weight: 700;
-		color: var(--color-navy-dark);
-		margin: 0.5rem 0;
-	}
-	
-	.live-class-meta {
-		display: flex;
-		gap: 1.5rem;
-		flex-wrap: wrap;
-		color: var(--color-text-secondary);
-		font-size: 0.875rem;
-	}
-	
-	.loading-container, .error-container, .empty-state {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		padding: 4rem;
-		background: white;
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-card);
+	.panel {
+		padding: 1.25rem;
 		text-align: center;
-		gap: 1rem;
 	}
 
-	.loader {
-		border: 4px solid var(--color-bg-light);
-		border-top: 4px solid var(--color-accent);
-		border-radius: 50%;
-		width: 40px;
-		height: 40px;
-		animation: spin 1s linear infinite;
+	.muted {
+		color: var(--color-text-secondary);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
 	}
 
-	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
+	.error {
+		color: var(--color-error);
 	}
 
-	@media (max-width: 1024px) {
-		.dashboard-main { margin-left: 0; }
+	.pay-note {
+		margin-top: 1.25rem;
+		padding: 1rem;
+	}
+
+	@media (min-width: 720px) {
+		.hero {
+			padding: 1.7rem 1.6rem;
+		}
+
+		.hero h2 {
+			font-size: 1.8rem;
+			max-width: 18ch;
+		}
+
+		.course-row {
+			grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		}
+
+		.insight {
+			padding: 1.15rem 1.3rem;
+		}
 	}
 </style>

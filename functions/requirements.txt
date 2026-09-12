@@ -1,7 +1,8 @@
-firebase-functions
-firebase-admin
-google-cloud-firestore
-google-cloud-storage
-pydantic
-pytest
-python-dotenv
+# ProSiya Cloud Functions dependencies
+firebase-functions>=0.4.0
+firebase-admin>=6.5.0
+google-cloud-firestore>=2.16.0
+google-cloud-storage>=2.16.0
+pydantic>=2.0
+pytest>=8.0
+python-dotenv>=1.0

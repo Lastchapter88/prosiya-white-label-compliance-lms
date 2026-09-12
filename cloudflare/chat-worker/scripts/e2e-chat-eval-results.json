@@ -1,0 +1,1925 @@
+{
+  "api": "https://prosiya-chat.tilesmirrored.workers.dev",
+  "ranAt": "2026-09-09T22:52:43.164Z",
+  "total": 106,
+  "passed": 103,
+  "failed": 3,
+  "byCategory": {
+    "security": {
+      "pass": 17,
+      "fail": 1,
+      "total": 18
+    },
+    "training": {
+      "pass": 15,
+      "fail": 0,
+      "total": 15
+    },
+    "prices": {
+      "pass": 8,
+      "fail": 0,
+      "total": 8
+    },
+    "contact": {
+      "pass": 9,
+      "fail": 0,
+      "total": 9
+    },
+    "accreditation": {
+      "pass": 8,
+      "fail": 0,
+      "total": 8
+    },
+    "employment": {
+      "pass": 7,
+      "fail": 0,
+      "total": 7
+    },
+    "quotes": {
+      "pass": 9,
+      "fail": 0,
+      "total": 9
+    },
+    "enrolment": {
+      "pass": 6,
+      "fail": 0,
+      "total": 6
+    },
+    "handoff": {
+      "pass": 7,
+      "fail": 0,
+      "total": 7
+    },
+    "no_guess": {
+      "pass": 8,
+      "fail": 0,
+      "total": 8
+    },
+    "informal": {
+      "pass": 9,
+      "fail": 2,
+      "total": 11
+    }
+  },
+  "failures": [
+    {
+      "id": 102,
+      "category": "security",
+      "q": "Niyabahlinzeka onogada?",
+      "fails": [
+        "guarding"
+      ],
+      "message": "Yebo, sibahlinzeka ngokuthula — sibonakalisa ukuthi siyabahlinzeka ngokuthula kanye nokuthembekile.  \n\nUngafuna ukuthola izindlela zokubhlinzeka? Ngokwesikhathi (intake), i-price, noma ukuthi ungafuna ukubhlinzeka ngokufanayo (e.g. Grade C, Grade B, etc.)? Ngiyakusiza ngokusho kw",
+      "lead": {
+        "service": "Physical Guarding"
+      }
+    },
+    {
+      "id": 309,
+      "category": "informal",
+      "q": "ngifuna umsebenzi",
+      "fails": [
+        "contact"
+      ],
+      "message": "Sawubona! Ukuthanda ukufuna umsebenzi — ngiyakuthandaza.\n\nProSiya Security Group *ayisebenzi ngezinqumo zokufunda* (ayikho iziqhelo zokufunda okwenzekayo kule ndlela), kodwa sithandaza abantu ukuba bafunde imibono yezifundo eziqinisekisiwe (accredited training) esikhundleni sokuf",
+      "lead": {
+        "requirements": "ngifuna umsebenzi"
+      }
+    },
+    {
+      "id": 311,
+      "category": "informal",
+      "q": "ngicela umuntu angishayele",
+      "fails": [
+        "contact"
+      ],
+      "message": "Siyabonga kakhulu ngokubiza! 😊  \nUfuna ukuthi umuntu angishayele — ngifuna ukuvakasha (book) umsebenzi wokuphatha isikhungo, noma uqasha isikhungo esithile?  \n\nNgingafunda ngokuthi:  \n- **Ubani** (name)  \n- **Igama lomkhakha / indawo** (company or site name)  \n- **Indawo eyisise",
+      "lead": {
+        "preferredContactMethod": "Phone"
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": 1,
+      "category": "security",
+      "lang": "en",
+      "q": "What security services does ProSiya offer?",
+      "pass": true,
+      "message": "ProSiya Security Group offers a comprehensive range of operational security services, including:\n\n✅ **Physical Guarding** – On-site security personnel for commercial properties, warehouses, factories, construction sites, and more  \n✅ **Loss Prevention** – Proactive strategies to reduce theft and asset loss  \n✅ **VIP Protection** – Specialised close protection for high-profile individuals  \n✅ **Mobile Patrols** – Vehicle-based patrols for deterrence and rapid response  \n✅ **Private Investigation** – Discreet, professional investigations to gather facts and evidence  \n✅ **Special Events Security** – Tailored security planning and deployment for concerts, conferences, launches, etc.  \n✅ **Escorting Services** – Safe transport of people or high-value items  \n✅ **Armed Response** – Rapid, armed intervention in response to alarms or security threats  \n\nAll services are designed to meet real-world South African security challenges — and can be customised based on your location, site type, and risk profile.\n\nWould you like help choosing the right service for your business (e.g., warehouse, factory, event), or would you like a quotation? I’m happy to assist — or connect you directly with the ProSiya team. 📞 +27 78 523 6606 / ✉️ dladla.siya@gmail.com",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "services",
+        "contact_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 2,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you provide security guards?",
+      "pass": true,
+      "message": "Yes, we do — ProSiya Security Group provides professional **physical guarding services** across South Africa, including for:\n\n- Commercial properties  \n- Warehouses & factories  \n- Construction sites  \n- Retail outlets  \n- Special events  \n- And other business or residential security needs  \n\nOur guards are trained, PSIRA-registered (where required), and deployed based on your specific risk profile and operational requirements.\n\nWould you like to tell me a bit more about your site or need? For example:  \n📍 Location (e.g., Durban, Johannesburg, etc.)  \n🏢 Type of property/site (e.g., warehouse in Phoenix, factory in Pinetown)  \n👥 Approximate number of guards needed (if known)  \n📅 Any urgency or start date?\n\nI can then help guide you on next steps — or connect you directly with our team for a formal quotation. You’re also welcome to call us on **+27 78 523 6606** or email **dladla.siya@gmail.com**.",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "guarding"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 3,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you provide armed response?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group provides **Armed Response** as part of our operational security services.\n\nThis includes rapid, professional armed response to security threats, alarms, and emergencies — ensuring swift intervention and on-site support when it matters most.\n\nWe also offer **PSIRA-aligned Armed Response training** (R1,600) through ProSiya Academy for officers seeking formal accreditation.\n\nIf you need armed response services for your business, warehouse, construction site, or event — or would like to enrol in the training — we’d be happy to assist.\n\nWould you like:\n- A quotation for armed response services?  \n- Details on how to enrol in the Armed Response course?  \n- Or help with something else?\n\nJust let me know — and feel free to share your location or contact preference so we can follow up efficiently. 📞",
+      "lead": {
+        "service": "Armed Response"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "armed"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 4,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you provide security for businesses?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group provides professional security services for businesses across South Africa.\n\nWe offer tailored solutions including:\n\n- **Physical Guarding** (on-site security personnel)  \n- **Loss Prevention** (to reduce theft and shrinkage)  \n- **Mobile Patrols** (for warehouses, factories, construction sites & commercial properties)  \n- **Armed Response** (rapid response to alarms or incidents)  \n- **VIP Protection & Escorting**  \n- **Private Investigation**  \n- **Special Events Security**  \n\nWhether you run a warehouse, factory, retail outlet, office park, or construction site — we design security plans that match your operational needs and risk profile.\n\nWould you like a quotation? If so, please share:  \n🔹 Your business location (e.g., Durban, Johannesburg, etc.)  \n🔹 Type of business/site (e.g., “warehouse in Phoenix”, “construction site in Umhlanga”)  \n🔹 Any specific concerns (e.g., after-hours break-ins, stock theft, access control)  \n\nWe’ll then arrange a no-obligation consultation or quote. You can also contact us directly on **+27 78 523 6606 (WhatsApp/Call)** or email **dladla.siya@gmail.com**.",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "services"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 5,
+      "category": "security",
+      "lang": "en",
+      "q": "Can you provide security guards for my warehouse?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group provides **physical guarding services** — including dedicated security guards for warehouses, factories, construction sites, and other commercial properties.\n\nTo give you an accurate quotation and match the right level of service (e.g., armed/unarmed, number of guards, shift patterns, patrol frequency), we’ll need a few quick details:\n\n- 📍 Your warehouse location (e.g., Durban, Johannesburg, etc.)  \n- 🏭 Approximate size or layout (e.g., single-storey, fenced, gate-controlled)  \n- ⏰ Required coverage (e.g., 24/7, weekdays only, night shifts only)  \n- 🔐 Any specific needs? (e.g., access control, CCTV monitoring support, alarm response, or loss prevention focus)\n\nOnce we have that, ProSiya can prepare a tailored security plan and quotation for your warehouse.\n\nWould you like to share those details now? Or would you prefer to speak directly with the team? You can reach them on:  \n📞 **+27 78 523 6606** (WhatsApp & calls)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know how you'd like to proceed! 😊",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "guarding",
+        "leadish"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 6,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you provide security for construction sites?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group provides security services for construction sites.\n\nWe offer tailored solutions including:\n\n- **Physical guarding** (on-site security personnel to monitor and protect the site)  \n- **Mobile patrols** (regular vehicle patrols to deter trespassing and theft)  \n- **Loss prevention** (measures to safeguard tools, materials, and equipment)  \n- **Armed response** (rapid response to alarms or incidents)  \n\nEach construction site has unique risks — so we recommend a site-specific assessment to determine the best mix of services and guard coverage.\n\nWould you like us to arrange a quotation? If so, please share:\n- Your site’s location (e.g., Durban, Johannesburg, etc.)  \n- Approximate size or scope (e.g., residential block, commercial development)  \n- Any specific concerns (e.g., material theft, unauthorised access, night coverage)  \n- Preferred contact method (phone/WhatsApp/email)\n\nYou can also reach us directly at **+27 78 523 6606 (WhatsApp/Call)** or email **dladla.siya@gmail.com**.",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "services"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 7,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you provide security for factories?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group provides security services for factories.\n\nWe offer tailored solutions including:\n\n- **Physical guarding** (on-site security personnel)  \n- **Mobile patrols** (to monitor perimeters and respond quickly)  \n- **Loss prevention** (to reduce theft and internal shrinkage)  \n- **Armed response** (for rapid intervention in emergencies)  \n- **Private investigation** (e.g., if internal theft or safety breaches are suspected)\n\nOur team understands the unique risks faced by manufacturing and industrial sites — such as equipment protection, shift-change security, access control, and safeguarding raw materials or finished goods.\n\nFor a formal quotation, we’ll need a few details like your factory’s location, size, operational hours, and specific concerns (e.g., night shifts, high-value inventory, perimeter vulnerabilities).\n\nWould you like us to connect you with the ProSiya team for a site-specific quote? You can also WhatsApp us at **+27 78 523 6606**, or email **dladla.siya@gmail.com**.",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "services"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 8,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you offer VIP protection?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group offers **VIP Protection** — specialised close protection services for high-profile individuals. This includes threat assessment, risk mitigation, secure transportation, and discreet, professional close protection officers trained to PSIRA-aligned standards.\n\nIf you’d like a quotation or more details (e.g., duration, location, specific requirements), just let us know — we’ll be happy to assist.\n\nYou can also contact us directly at:  \n📞 **+27 78 523 6606** (Phone / WhatsApp)  \n✉️ **dladla.siya@gmail.com**\n\nWould you like help with booking, pricing, or understanding how VIP protection works for your specific needs?",
+      "lead": {
+        "service": "VIP Protection"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "vip"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 9,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you offer mobile patrols?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group offers **Mobile Patrols** as part of our operational security services.\n\nOur mobile patrol service includes:\n- Regular vehicle patrols across your property or area of concern  \n- Deterrence of unauthorised access and suspicious activity  \n- Rapid response to alarms or incidents  \n- Detailed reporting and real-time updates where required  \n\nThis service is ideal for commercial properties, warehouses, construction sites, factories, and other locations needing flexible, visible security coverage.\n\nWould you like a quotation? If so, please share:\n- Your location (e.g., Durban, Johannesburg, etc.)  \n- Type and size of the site/property  \n- Any specific requirements (e.g., frequency of patrols, after-hours coverage, reporting needs)  \n\nWe’ll then arrange a tailored quote for you. You can also contact us directly on **+27 78 523 6606 (WhatsApp/Call)** or email **dladla.siya@gmail.com**.",
+      "lead": {
+        "service": "Mobile Patrols"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "patrol"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 10,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you provide private investigators?",
+      "pass": true,
+      "message": "Yes, ProSiya provides **Private Investigation** services — discreet, professional investigations to gather information and evidence for individuals or businesses.\n\nThis can include background checks, fraud investigations, missing persons, due diligence, and other confidential enquiries — all conducted ethically and in compliance with South African law.\n\nIf you have a specific investigation need, feel free to share more details (e.g., type of case, location), and we can let you know how ProSiya can assist — or you can contact the team directly on:\n\n📞 **+27 78 523 6606** (WhatsApp/Call)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know if you'd like guidance on next steps!",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "investigation"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 11,
+      "category": "security",
+      "lang": "en",
+      "q": "Can you provide security for an event?",
+      "pass": true,
+      "message": "Yes, ProSiya provides **specialised event security** tailored to keep guests safe and ensure smooth, orderly operations — whether it’s a corporate function, wedding, festival, or community gathering.\n\nOur event security services include:\n- Crowd management & access control  \n- Venue patrols (static and mobile)  \n- VIP protection (if required)  \n- Emergency response planning & coordination  \n- Liaison with local authorities where needed  \n\nTo give you an accurate quotation, we’d need a few quick details:  \n📍 **Location** of the event  \n📅 **Date and duration**  \n👥 Estimated number of attendees  \n🎯 Any specific concerns (e.g., high-profile guests, alcohol service, night-time event, etc.)\n\nWould you like us to arrange a quote? You can also contact Siyabonga Dladla directly on **+27 78 523 6606 (WhatsApp/Call)** or email **dladla.siya@gmail.com** for urgent requests.\n\nLet me know — happy to help! 😊",
+      "lead": {
+        "service": "Special Events"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "event"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 12,
+      "category": "security",
+      "lang": "en",
+      "q": "Do you provide escort services?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group provides **escorting services** — safe and professional transport for people or valuables, tailored to your specific security needs.\n\nWhether it’s for high-risk deliveries, VIP movement, cash-in-transit support, or other sensitive logistics, our trained personnel ensure safety, discretion, and reliability.\n\nIf you’d like a quotation or more details (e.g., coverage area, requirements, or availability), feel free to share:\n\n- Your location (e.g., Durban, Johannesburg, etc.),  \n- Type of escort needed (person or goods),  \n- Any special requirements (armed/unarmed, vehicle type, timing),  \n- Preferred contact method (call, WhatsApp, or email).\n\nWe’ll connect you with the team right away. 📲  \nYou can also reach us directly at:  \n📞 **+27 78 523 6606** (Phone / WhatsApp)  \n✉️ **dladla.siya@gmail.com**",
+      "lead": {
+        "service": "Escorting"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "escort"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 13,
+      "category": "security",
+      "lang": "en",
+      "q": "I need security for my business. Can you help me?",
+      "pass": true,
+      "message": "Yes, absolutely — ProSiya Security Group can help you secure your business.\n\nWe offer a range of professional, PSIRA-aligned security services tailored to different business needs, including:\n\n✅ **Physical Guarding** – On-site security officers for offices, warehouses, factories, or construction sites  \n✅ **Mobile Patrols** – Regular vehicle patrols to deter crime and respond quickly  \n✅ **Loss Prevention** – Practical strategies to reduce theft and shrinkage  \n✅ **Armed Response** – Rapid armed response to alarms or emergencies  \n✅ **Special Events Security** – Customised coverage for launches, exhibitions, or corporate functions  \n✅ **VIP Protection & Escorting** – For high-profile personnel or sensitive logistics  \n\nTo give you the best recommendation (and a formal quotation), could you please share a few quick details? For example:\n\n- What type of business/location? (e.g., warehouse in Durban, retail shop in Pietermaritzburg, construction site, etc.)  \n- Approximate size or area needing coverage?  \n- Any specific concerns? (e.g., after-hours break-ins, stock theft, access control)  \n- Preferred contact method? (phone, WhatsApp, or email)\n\nOnce we have that, we’ll either guide you directly or connect you with our team — including Managing Director Siyabonga Dladla — for a prompt, no-obligation quote.\n\nYou can also reach us straight away at:  \n📞 **+27 78 523 6606** (WhatsApp/Call)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know — happy to help! 😊",
+      "lead": {
+        "requirements": "I need security for my business. Can you help me?"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "leadish"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 14,
+      "category": "security",
+      "lang": "en",
+      "q": "What type of security would you recommend for my property?",
+      "pass": true,
+      "message": "Thanks for your question — I’d be happy to help guide you toward the right type of security for your property.\n\nTo give you the best recommendation, could you please tell me a bit more about:\n\n- **The type of property** (e.g., residential home, retail shop, warehouse, factory, construction site, office building, or event venue)?  \n- **Location** (e.g., Durban or another area — helps us consider local risk factors and response logistics)?  \n- **Main concerns** (e.g., theft, vandalism, unauthorised access, staff safety, high-value stock, after-hours protection, or alarm response)?  \n- **Any existing security measures** (e.g., CCTV, alarms, gates, or current guards)?\n\nOnce I have those details, I can suggest the most suitable ProSiya security service(s) — such as physical guarding, mobile patrols, armed response, loss prevention, or a custom combination.\n\nAlternatively, if you'd prefer to speak directly with our team for a tailored assessment and quotation, you’re welcome to contact us on:  \n📞 **+27 78 523 6606** (WhatsApp/Call)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know — happy to help! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "clarify_or_services"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 15,
+      "category": "security",
+      "lang": "en",
+      "q": "I need guards urgently. Can I speak to someone?",
+      "pass": true,
+      "message": "Yes, absolutely — for urgent security guard requirements, it’s best to speak directly with the ProSiya team right away.\n\nPlease call or WhatsApp them on **+27 78 523 6606** — they’ll assist you quickly with your immediate guarding needs (e.g., for a warehouse, factory, construction site, or commercial property).\n\nIf you’d like, I can also help you prepare key details before you contact them — for example:\n- Your location (e.g., Durban, Johannesburg, etc.)\n- Type and size of site (e.g., “small warehouse in Phoenix” or “construction site in Umhlanga”)\n- How many guards you need & for how long (e.g., “2 guards, 12-hour shift, starting tomorrow”)\n\nLet me know — happy to help streamline your enquiry. 🙏",
+      "lead": {
+        "service": "Physical Guarding",
+        "requirements": "I need guards urgently. Can I speak to someone?"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 101,
+      "category": "security",
+      "lang": "zu",
+      "q": "Yiziphi izinsizakalo zokuphepha ezinikezwa iProSiya?",
+      "pass": true,
+      "message": "IProSiya Security Group inikeza izinsizakalo zokuphepha eziningi, zonke ziyasebenza ngokuhlanganisa ukuphepha kwezinto nezinkundla zokufunda — ngokuvamile kubizwa ngokuthi **“integrated security solutions”**.\n\nLokhu kungahleli kuzo zonke izinsizakalo zokuphepha eziyandiswayo:\n\n✅ **Ukuphepha kwezinto (Physical Guarding)** – Amasikhali abhekisele amathuba, izindawo zokusebenza, izindawo zokugcina, nezinye izindawo.  \n✅ **Ukuphepha kwezinto zokuhlupha (Loss Prevention)** – Ukuthintela ukuphatha okungafanele kwezinto, ukuphatha kwezinto, nokuphatha kwezinto zokusebenza.  \n✅ **Ukuphepha kwezinto zokuphatha izithunywa (VIP Protection)** – Ukuphepha kwezinto zokuphatha izithunywa noma abantu abaningi abanobukhulu.  \n✅ **Ukuphepha kwezinto zokuphatha ngemoto (Mobile Patrols)** – Amaphoyisa abhekisele ngemoto ukuhlupha izinkinga futhi ukuphatha ngokushesha.  \n✅ **Ukuphepha kwezinto zokuphatha ngokwesibonelo (Private Investigation)** – Ukuphatha ngokwesibonelo nokusondeza izimpendulo ngokumangalisa.  \n✅ **Ukuphepha kwezinto zokuphatha izindlela zokuphatha (Special Events Security)** – Ukuphepha kwezinto zokuphatha izindlela zokuphatha ngokuphepha kwezindlela zokuphatha.  \n✅ **Ukuphepha kwezinto zokuphatha izinto (Escorting)** – Ukuphatha izinto noma abantu ngokuphepha kwez",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "services"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 102,
+      "category": "security",
+      "lang": "zu",
+      "q": "Niyabahlinzeka onogada?",
+      "pass": false,
+      "message": "Yebo, sibahlinzeka ngokuthula — sibonakalisa ukuthi siyabahlinzeka ngokuthula kanye nokuthembekile.  \n\nUngafuna ukuthola izindlela zokubhlinzeka? Ngokwesikhathi (intake), i-price, noma ukuthi ungafuna ukubhlinzeka ngokufanayo (e.g. Grade C, Grade B, etc.)? Ngiyakusiza ngokusho kwalezi zinto.\n\nNakho, uma ufuna ukubhlinzeka ngokushesha, unga wabona isitezi sethu:  \n📞 **+27 78 523 6606** (WhatsApp/phone)  \n📧 **dladla.siya@gmail.com**\n\nNgithanda ukusiza! 😊",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": false,
+      "passes": [],
+      "fails": [
+        "guarding"
+      ],
+      "status": 200
+    },
+    {
+      "id": 105,
+      "category": "security",
+      "lang": "zu",
+      "q": "Ningangihlinzekela onogada bendawo yami yokugcina impahla?",
+      "pass": true,
+      "message": "Yebo, sikhuluma isiZulu! 😊  \nUngangihlinzekela — kuyinto ebalulekile ukuthi ubheke impahla yakho ngokuphelele.\n\nProSiya Security Group (noma ProSiya Academy) **iyathuthukisa amasiko akho okugcina impahla** ngokusebenzisa izindleko zokugcina impahla ezithembekile, ezisodwa ngokuphelele, futhi ziyasebenza ngokuhambisana nezidingo zakho — ngokwesikhathi, ngokwesiqondiso, noma ngokwesifundo.\n\nUma ufuna **isikhungo sokugcina impahla** (security guarding services) kwindawo yakho (umthombo, indawo yokusebenza, indawo yokufunda, noma yiliphi na indawo), sithola isikhungo esihambisana nokuthi:\n\n- Kuyaphakanyiswa ngokuphelele  \n- Kuyasebenza ngokuphambuka kweminyaka  \n- Kuyasebenza ngokuphelele ngokuphambuka kweminyaka  \n- Kuyasebenza ngokuphambuka kweminyaka  \n\nSithola futhi **amasiko akho okugcina impahla** ngokusebenzisa izindleko zokugcina impahla ezithembekile, ezisodwa ngokuphelele, futhi ziyasebenza ngokuhambisana nezidingo zakho — ngokwesikhathi, ngokwesiqondiso, noma ngokwesifundo.\n\nUma ufuna ukuthi **sithole isikhungo sokugcina impahla** kwindawo yakho (umthombo, indawo yokusebenza, indawo yokufunda, noma yiliphi na indawo), sithola isikhungo esihambisana nokuthi:\n\n- Kuyaphakanyiswa ngokuphelele  \n- Kuyasebenza ngokuphambuka kweminyaka  \n- K",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "leadish"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 16,
+      "category": "training",
+      "lang": "en",
+      "q": "What security training courses do you offer?",
+      "pass": true,
+      "message": "ProSiya Academy offers a range of PSIRA-aligned security training courses — designed to meet South African regulatory standards and real-world operational needs. Here’s what we currently offer (all prices in ZAR):\n\n| Course | Price (ZAR) | Ideal For |\n|--------|-------------|-----------|\n| **Combined Grade E, D & C** | R1,950 | Entry-to-intermediate officers (full foundational pathway) |\n| **Grade C Security Officer** | R1,050 | First-time registrants with PSIRA or those upgrading from Grade E/D |\n| **Grade B Security Officer** | R1,500 | Supervisory roles (e.g., team leaders, site supervisors) |\n| **Grade A Security Officer** | R1,500 | Advanced leadership & management in security operations |\n| **Armed Response** | R1,600 | Officers responding to alarms and emergencies with authorisation |\n| **CIT (Cash-in-Transit)** | R1,600 | Secure handling and transport of cash/valuables |\n| **CPO (Close Protection Officer)** | R16,750 | VIP protection specialists (comprehensive, high-level training) |\n| **Handgun (Business Purpose)** | R2,650 | Firearm competency for licensed business use |\n| **Rifle (SLR or Carbine)** | R2,850 | Firearm competency — rifle category |\n| **Shotgun (Business Purpose)** | R2,700 | Firearm competency — shotgun category |\n\nAll courses are delivered through our secure Learning Management System (LMS), with study materials unlocked after payment confirmation.\n\n✅ Payment options:  \n- Local learners: EFT/bank transfer → send proof to **WhatsApp +27 78 523 6606**  \n- International learners: PayPal to **dladla.siya@gmail.com**, then share confirmation via WhatsApp\n\nWould you like help choosing the right course based on your experience or career goals? Or would you like to know how to enrol? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "courses"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 17,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer Grade C training?",
+      "pass": true,
+      "message": "Yes, we do offer **Grade C Security Officer** training at ProSiya Academy.\n\n- **Price:** R1,050 (ZAR)  \n- This is a PSIRA-aligned, compliance-ready course designed for entry-to-intermediate security officers.\n\nIf you'd like to register or need more details (e.g., how to enrol, payment options, or next steps), just let me know — or you can contact us directly on:\n\n📞 **WhatsApp/Call:** +27 78 523 6606  \n📧 **Email:** dladla.siya@gmail.com  \n\nWe’re happy to help! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "grade_c"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 18,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer Grade B training?",
+      "pass": true,
+      "message": "Yes, we do offer **Grade B Security Officer training** at ProSiya Academy.\n\n✅ **Price:** R1,500 (ZAR)  \n✅ **Level:** Supervisory — ideal for those aiming to lead security teams or take on more responsibility on-site.  \n✅ **PSIRA-aligned:** Designed to meet PSIRA compliance requirements for Grade B registration.\n\nIf you'd like to register, or need help with payment (including PayPal for international learners), just let me know — or you can contact us directly on:  \n📞 **+27 78 523 6606** (WhatsApp/Call)  \n✉️ **dladla.siya@gmail.com**\n\nWould you like assistance with enrolment, or do you have questions about prerequisites, course duration, or next intake? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "grade_b"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 19,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer Grade A training?",
+      "pass": true,
+      "message": "Yes, ProSiya Academy offers **Grade A Security Officer training** — our advanced-level course designed for security professionals seeking senior operational or supervisory roles.\n\n✅ **Price:** R1,500 (ZAR)  \n✅ PSIRA-aligned and compliance-ready  \n✅ Includes theory, practical application, and assessment  \n\nIf you'd like to register or need more details (e.g., how to enrol, payment options, or next steps), just let me know — I’m happy to help! 🌟  \nYou can also contact us directly on **+27 78 523 6606 (WhatsApp/Call)** or email **dladla.siya@gmail.com**.",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "grade_a"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 20,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer Grade D and E training?",
+      "pass": true,
+      "message": "Yes, we do — ProSiya Academy offers **Combined Grade E, D & C Security Officer training** for just **R1,950**.\n\nThis is an entry-to-intermediate level course designed to meet PSIRA-aligned standards and prepare learners for operational roles in the security industry.\n\nIf you'd like to register, or need more details (e.g., how to enrol, what’s included, or next steps), just let me know — I’m happy to help! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "combined_or_de"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 21,
+      "category": "training",
+      "lang": "en",
+      "q": "How much is the combined Grade E, D and C course?",
+      "pass": true,
+      "message": "The **Combined Grade E, D & C** course at ProSiya Academy costs **R1,950** (ZAR).  \n\nThis is an entry-to-intermediate security officer training programme, PSIRA-aligned and compliance-ready.\n\nWould you like help enrolling, or do you need payment instructions (e.g., EFT, PayPal, or WhatsApp proof of payment)? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,950"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 22,
+      "category": "training",
+      "lang": "en",
+      "q": "How much is Grade C training?",
+      "pass": true,
+      "message": "The Grade C Security Officer training course costs **R1,050** (ZAR).\n\nIt’s an individual Grade C qualification — ideal for entry-to-intermediate security officers and PSIRA-aligned / compliance-ready.\n\nWould you like help registering, or do you have questions about payment (e.g., via PayPal or EFT), what’s included, or how to get started? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,050"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 23,
+      "category": "training",
+      "lang": "en",
+      "q": "How much is Grade B training?",
+      "pass": true,
+      "message": "The Grade B Security Officer training course costs **R1,500** (ZAR).  \n\nIt’s a supervisory-level qualification and PSIRA-aligned / compliance-ready.\n\nWould you like help registering, or do you have questions about what the course covers, how to pay, or next steps? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,500"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 24,
+      "category": "training",
+      "lang": "en",
+      "q": "How much is Grade A training?",
+      "pass": true,
+      "message": "The Grade A Security Officer training course costs **R1,500** (ZAR).  \n\nIt’s an advanced-level programme, PSIRA-aligned and designed for security professionals seeking higher responsibility and leadership roles.\n\nWould you like help with registration, payment options (including PayPal for international learners), or info on how to get started? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,500"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 25,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer Armed Response training?",
+      "pass": true,
+      "message": "Yes, ProSiya Academy offers **Armed Response training** — it’s one of our accredited PSIRA-aligned courses.\n\n✅ **Course price:** R1,600 (ZAR)  \n✅ Designed to equip learners with the knowledge and skills required for rapid, professional armed response to security threats and alarm activations.  \n✅ Includes compliance-ready content aligned with industry standards.\n\nIf you'd like to register or need details on how to enrol, next intake dates, or payment options (including PayPal for international learners), just let me know — or you can contact us directly at:\n\n📞 **+27 78 523 6606** (Phone/WhatsApp)  \n✉️ **dladla.siya@gmail.com**\n\nWould you like help with registration, or do you have questions about prerequisites or what the course covers? 😊",
+      "lead": {
+        "service": "Armed Response"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "armed_train"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 26,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer CIT training?",
+      "pass": true,
+      "message": "Yes, ProSiya Academy offers **Cash-in-Transit (CIT) training**, and it’s priced at **R1,600**.\n\nThis course is PSIRA-aligned and designed to equip learners with the essential knowledge and practical skills required for secure cash handling, transportation, and related operational protocols.\n\nIf you'd like to register or need more details (e.g., next intake, requirements, or payment process), just let me know — or you can contact ProSiya directly on:\n\n📞 **+27 78 523 6606** (phone/WhatsApp)  \n✉️ **dladla.siya@gmail.com**\n\nWould you like help with registration or clarification on what the CIT course covers?",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "cit"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 27,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer CPO training?",
+      "pass": true,
+      "message": "Yes, ProSiya Academy offers **Close Protection Officer (CPO) training** — a comprehensive, PSIRA-aligned programme designed for professionals seeking advanced skills in VIP and executive protection.\n\n🔹 **CPO Course Fee:** R16,750 (ZAR)  \n🔹 **Accreditation:** PSIRA-compliant and industry-focused  \n🔹 **Content includes:** threat assessment, risk mitigation, defensive tactics, surveillance detection, emergency response, and protective driving principles.\n\nPlease note: Course dates, duration, venue (Durban-based), and registration requirements are confirmed upon enrolment. You can register via our website, then contact us to finalise scheduling.\n\nWould you like help with:\n- Enrolment steps?  \n- Payment options (including PayPal for international learners)?  \n- Or would you prefer to speak directly with the team?\n\nYou can reach ProSiya on **+27 78 523 6606 (WhatsApp/Call)** or email **dladla.siya@gmail.com**.",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "cpo"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 28,
+      "category": "training",
+      "lang": "en",
+      "q": "Do you offer firearm training?",
+      "pass": true,
+      "message": "Yes, ProSiya Academy offers accredited firearm training for business purposes. Our firearm courses include:\n\n- **Handgun for Business Purpose** — R2,650  \n- **Rifle (SLR or Carbine) for Business Purpose** — R2,850  \n- **Shotgun for Business Purpose** — R2,700  \n\nThese programmes are aligned with PSIRA and SAPS requirements and include competency assessments.\n\nIf you'd like to register, confirm upcoming intakes, or need assistance with documentation or payment (including PayPal for international learners), just let me know — or contact us directly at:  \n📞 **+27 78 523 6606** (WhatsApp/Call)  \n✉️ **dladla.siya@gmail.com**\n\nWould you like help choosing the right firearm course based on your role or industry?",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "firearm"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 29,
+      "category": "training",
+      "lang": "en",
+      "q": "What firearm courses do you offer?",
+      "pass": true,
+      "message": "ProSiya Academy offers the following **firearm competency courses**, all aligned with PSIRA and SAPS requirements:\n\n- **Handgun for Business Purpose** – R2,650  \n- **Rifle (SLR or Carbine) for Business Purpose** – R2,850  \n- **Shotgun for Business Purpose** – R2,700  \n- **Armed Response Officer** – R1,600 *(includes tactical response training and firearm competency components)*  \n- **CIT (Cash-in-Transit)** – R1,600 *(covers secure handling, transport protocols, and firearm use in transit contexts)*  \n\nAll firearm courses are designed for professional security personnel and meet legal and regulatory standards for business-purpose licensing in South Africa.\n\nWould you like help choosing the right course based on your role (e.g., armed response officer, CIT guard, site supervisor), or would you like to know how to enrol? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "firearm"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 30,
+      "category": "training",
+      "lang": "en",
+      "q": "I want to become a security officer. Which course should I take?",
+      "pass": true,
+      "message": "That’s a great career choice! 🌟 To become a security officer in South Africa, you’ll need to start with a **PSIRA-aligned qualification**, and the most common entry-level course is:\n\n### ✅ **Grade C Security Officer** — R1,050  \nThis is the foundational course for new security officers. It covers legal frameworks (like the Private Security Industry Regulation Act), basic security procedures, communication, emergency response, and more — all aligned with PSIRA requirements.\n\nIf you’re aiming to progress quickly, many learners choose the:  \n### 🚀 **Combined Grade E, D & C** — R1,950  \nThis bundle includes all three entry-to-intermediate levels (E, D, and C) in one package — ideal if you want broader knowledge and faster career advancement.\n\n💡 *Tip:* Both courses are offered through **ProSiya Academy**, are PSIRA-compliance ready, and include study materials once payment is confirmed.\n\nWould you like help enrolling, or do you have questions about:\n- How to pay (local/EFT or international/PayPal)?  \n- What happens after payment?  \n- Whether you need any prior experience or documents?  \n- Or if you're interested in upgrading later (e.g., Grade B, Armed Response, or CIT)?\n\nI’m happy to guide you step by step! 😊",
+      "lead": {
+        "service": "Security Training",
+        "requirements": "I want to become a security officer. Which course should I take?"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "courses",
+        "no_fake_legal"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 31,
+      "category": "prices",
+      "lang": "en",
+      "q": "How much does security training cost?",
+      "pass": true,
+      "message": "Hi there — thanks for your interest in ProSiya Academy’s security training!\n\nHere are our **published course fees (in ZAR)**:\n\n- **Combined Grade E, D & C**: R1,950  \n- **Grade C Security Officer**: R1,050  \n- **Grade B Security Officer**: R1,500  \n- **Grade A Security Officer**: R1,500  \n- **Armed Response**: R1,600  \n- **CIT (Cash-in-Transit)**: R1,600  \n- **CPO (Close Protection Officer)**: R16,750  \n- **Handgun (Business Purpose)**: R2,650  \n- **Rifle (SLR or Carbine)**: R2,850  \n- **Shotgun (Business Purpose)**: R2,700  \n\nAll courses are PSIRA-aligned and compliance-ready.\n\n👉 To enrol or confirm upcoming intakes, you can register via our website — then contact us directly to finalise scheduling and venue details.\n\nWould you like help choosing the right course based on your goals (e.g., starting out, supervisory role, armed work, or VIP protection)? Or would you prefer a quick WhatsApp/phone call with the team? We’re happy to assist! 🇿🇦",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price_list"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 32,
+      "category": "prices",
+      "lang": "en",
+      "q": "How much is Grade C?",
+      "pass": true,
+      "message": "The **Grade C Security Officer** course costs **R1,050** (ZAR).  \n\nIt’s an entry-to-intermediate level qualification aligned with PSIRA requirements and part of ProSiya Academy’s accredited training programmes.\n\nWould you like help enrolling, or do you need info on how to pay (e.g., via PayPal or EFT) and what happens next? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,050"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 35,
+      "category": "prices",
+      "lang": "en",
+      "q": "How much is Armed Response training?",
+      "pass": true,
+      "message": "The Armed Response training course at ProSiya Academy costs **R1,600** (ZAR).  \n\nIt’s a PSIRA-aligned programme designed to equip learners with the skills and knowledge required for rapid, armed response to security threats and alarm activations.\n\nWould you like help registering, or do you have questions about prerequisites, payment options (including PayPal), or next steps? 😊",
+      "lead": {
+        "service": "Armed Response"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,600"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 36,
+      "category": "prices",
+      "lang": "en",
+      "q": "How much is the CPO course?",
+      "pass": true,
+      "message": "The Close Protection Officer (CPO) course at ProSiya Academy costs **R16,750** (ZAR).\n\nIt’s a comprehensive, PSIRA-aligned training programme designed for professionals seeking advanced skills in VIP and executive protection.\n\nIf you’d like to enrol or need more details (e.g., payment process, next intake, or requirements), just let me know — or contact ProSiya directly on:\n\n📞 **WhatsApp/Phone:** +27 78 523 6606  \n📧 **Email:** dladla.siya@gmail.com  \n\nWe’re happy to help! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "price",
+        "price:16,750"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 37,
+      "category": "prices",
+      "lang": "en",
+      "q": "How much is the CIT course?",
+      "pass": true,
+      "message": "The CIT (Cash-in-Transit) course costs **R1,600** (ZAR).  \n\nIt’s a PSIRA-aligned, compliance-ready training programme offered through ProSiya Academy.\n\nWould you like help enrolling, or do you have questions about payment options (e.g., EFT, PayPal for international learners) or next steps? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,600"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 38,
+      "category": "prices",
+      "lang": "en",
+      "q": "What payment methods do you accept?",
+      "pass": true,
+      "message": "ProSiya Security Group accepts the following payment methods:\n\n- **Local learners (South Africa):** EFT (Electronic Funds Transfer) or bank deposit.  \n  ✅ After payment, please send proof of payment (e.g., bank slip, EFT receipt, or screenshot) via **WhatsApp to +27 78 523 6606**.\n\n- **International learners:** PayPal payments to **dladla.siya@gmail.com**.  \n  ✅ Once paid, please forward your PayPal confirmation email or receipt to the same WhatsApp number.\n\nLet me know if you'd like help enrolling in a course or need assistance with the payment process! 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "payment"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 39,
+      "category": "prices",
+      "lang": "en",
+      "q": "Can I pay using PayPal?",
+      "pass": true,
+      "message": "Yes, you can pay using PayPal — **but only if you’re an international learner**.\n\n✅ International learners may pay course fees via PayPal to:  \n📧 **dladla.siya@gmail.com**\n\n📌 After payment, please send your PayPal confirmation (e.g., screenshot or receipt) to our WhatsApp number:  \n📱 **+27 78 523 6606**\n\n⚠️ Local (South African) learners are requested to use EFT/bank transfer instead, and also send proof of payment via WhatsApp.\n\nLet me know which course you'd like to enrol in — I can confirm the fee and guide you through the next steps! 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "paypal"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 40,
+      "category": "prices",
+      "lang": "en",
+      "q": "Where do I send my proof of payment?",
+      "pass": true,
+      "message": "You can send your proof of payment (e.g., bank slip, EFT receipt, or screenshot) **via WhatsApp to +27 78 523 6606**.\n\n✅ This applies to both local and international learners — just make sure to include your name and course name with the proof.\n\nLet me know if you'd like help confirming your payment method (EFT, cash deposit, or PayPal for international learners), or if you need a quick reminder of the course prices. 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "proof"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 41,
+      "category": "contact",
+      "lang": "en",
+      "q": "Where is ProSiya located?",
+      "pass": true,
+      "message": "ProSiya Security Group is located at:  \n**30 Wills Road, Durban, 4001, South Africa**\n\nLet me know if you'd like directions, or if you're enquiring about training, security services, or need to contact the team — I’m happy to help! 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "address"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 42,
+      "category": "contact",
+      "lang": "en",
+      "q": "What is your address?",
+      "pass": true,
+      "message": "Our address is:  \n**30 Wills Road, Durban, 4001, South Africa**  \n\nLet me know if you'd like directions or assistance with contacting us — we’re happy to help! 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "address"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 43,
+      "category": "contact",
+      "lang": "en",
+      "q": "Are you based in Durban?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group is based in **Durban**, South Africa — our physical address is **30 Wills Road, Durban, 4001**.\n\nWe provide security services and accredited training across South Africa, with Durban as our operational and administrative hub.\n\nLet me know if you'd like help with training courses, a security service quotation, or anything else — happy to assist! 😊",
+      "lead": {
+        "location": "Durban"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "durban"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 44,
+      "category": "contact",
+      "lang": "en",
+      "q": "What is your phone number?",
+      "pass": true,
+      "message": "Our phone number is **+27 78 523 6606** — it’s also our WhatsApp number. Feel free to call or send a message anytime for enquiries about security services or accredited training. 😊",
+      "lead": {
+        "preferredContactMethod": "Phone"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "phone"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 45,
+      "category": "contact",
+      "lang": "en",
+      "q": "Can I WhatsApp ProSiya?",
+      "pass": true,
+      "message": "Yes, you can WhatsApp ProSiya directly at **+27 78 523 6606**.  \n\nThis number is used for:\n- Sending proof of payment (e.g., bank slip, EFT receipt, or screenshot) after enrolling in a training course  \n- General enquiries about security services or training  \n- International learners confirming PayPal payments  \n\nJust send a message with your name, what you need (e.g., “I’d like info on Grade C training” or “Please send me a quotation for warehouse security”), and your location — and the team will get back to you.\n\nWould you like help drafting your WhatsApp message? 😊",
+      "lead": {
+        "preferredContactMethod": "WhatsApp"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "whatsapp"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 46,
+      "category": "contact",
+      "lang": "en",
+      "q": "What is your email address?",
+      "pass": true,
+      "message": "Our email address is **dladla.siya@gmail.com**.  \n\nYou can use it for general enquiries, training registration support, or security service quotations. For faster assistance, you’re also welcome to WhatsApp us at **+27 78 523 6606**. 😊",
+      "lead": {
+        "preferredContactMethod": "Email"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "email"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 47,
+      "category": "contact",
+      "lang": "en",
+      "q": "How can I contact ProSiya?",
+      "pass": true,
+      "message": "You can contact ProSiya Security Group in the following ways:\n\n📞 **Phone / WhatsApp:** +27 78 523 6606  \n📧 **Email:** dladla.siya@gmail.com  \n 💳 **PayPal (for international course payments):** dladla.siya@gmail.com  \n\nIf you’d like a quotation for security services (e.g., guarding for a warehouse, factory, or event), or need help enrolling in a training course, just let us know — we’re happy to assist! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 48,
+      "category": "contact",
+      "lang": "en",
+      "q": "Can I speak directly to someone?",
+      "pass": true,
+      "message": "Yes, absolutely — you can speak directly to someone at ProSiya Security Group.\n\nPlease call or WhatsApp us on **+27 78 523 6606**, or email **dladla.siya@gmail.com**. Our team (including Managing Director Siyabonga Dladla) is available to assist with your security needs, training enquiries, quotations, or any other questions.\n\nWould you like help drafting a quick message to send via WhatsApp or email? Or would you prefer assistance with something specific first — e.g., course pricing, service options, or a quotation request? 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 50,
+      "category": "contact",
+      "lang": "en",
+      "q": "What are your contact details?",
+      "pass": true,
+      "message": "You can reach ProSiya Security Group using the following verified contact details:\n\n📞 **Phone / WhatsApp:** +27 78 523 6606  \n✉️ **Email:** dladla.siya@gmail.com  \n💳 **PayPal (for international learners/payments):** dladla.siya@gmail.com  \n\nFor course enrolment, remember to send your proof of payment (e.g., bank slip or EFT receipt) via WhatsApp to +27 78 523 6606 after completing payment.\n\nLet me know if you'd like help with training courses, security services, or assistance enrolling — I'm happy to help! 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 51,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "Is ProSiya accredited?",
+      "pass": true,
+      "message": "Yes, ProSiya Academy’s training programmes are **PSIRA-aligned** and designed to meet South African security industry compliance standards. While the knowledge provided confirms that courses are *PSIRA-aligned / compliance-ready*, it does not state that ProSiya itself is a PSIRA-accredited *training provider* — only that its courses support compliance with PSIRA requirements (e.g., for Grade E–A, Armed Response, CIT, CPO, and firearm competency courses).\n\nFor full accreditation status or verification, we recommend contacting ProSiya directly on **+27 78 523 6606 (WhatsApp/phone)** or emailing **dladla.siya@gmail.com**, as official PSIRA accreditation details may be updated or verified per course.\n\nLet me know if you'd like help choosing a course or understanding which qualification suits your goals (e.g., starting out, supervising teams, or becoming a Close Protection Officer). 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "accreditation"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 52,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "Which organisations accredit your training?",
+      "pass": true,
+      "message": "Our training programmes are aligned with and accredited by the following recognised South African organisations:\n\n- **PSIRA** (Private Security Industry Regulatory Authority)  \n- **QCTO** (Quality Council for Trades and Occupations)  \n- **SASSETA** (Services Sector Education and Training Authority)  \n- **SAPS** (South African Police Service) — firearm-related training includes SAPS badge alignment  \n- **Firearm accreditation** (for competency-based firearm courses)\n\nThese accreditations ensure our courses meet national standards for security sector compliance, skills development, and professional competence.\n\nIf you'd like help choosing a course or confirming which accreditation applies to a specific programme (e.g., Grade C, Armed Response, or CPO), I’m happy to assist! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "accreditation"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 53,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "Are your courses PSIRA related?",
+      "pass": true,
+      "message": "Yes, our training courses are PSIRA-aligned and designed to meet PSIRA compliance requirements for security officers in South Africa.\n\nThis includes courses like:\n\n- Grade E, D & C (Combined)  \n- Grade C, B, and A Security Officer  \n- Armed Response  \n- CIT (Cash-in-Transit)  \n- CPO (Close Protection Officer)  \n- Firearm competency courses (Handgun, Rifle, Shotgun)\n\nAll programmes are structured to support learners in meeting PSIRA registration criteria — including knowledge, skills, and legal compliance components.\n\nFor full PSIRA registration, learners must also complete the required practical assessments, medicals, and background checks directly through PSIRA. ProSiya’s training prepares you thoroughly for that process.\n\nLet me know if you’d like help choosing the right course or understanding how to get started! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "psira"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 54,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "Do you have QCTO accreditation?",
+      "pass": true,
+      "message": "Yes, ProSiya Group Security and Training is aligned with the **Quality Council for Trades and Occupations (QCTO)** — this is publicly listed among our accreditations on our website.\n\nWe deliver QCTO-aligned training programmes, including our security officer courses (Grades E, D, C, B, and A), Armed Response, CIT, CPO, and firearm competency courses — all designed to meet national occupational standards and support learners in achieving formal qualifications where applicable.\n\nFor confirmation or specific programme alignment queries, feel free to contact us directly on **+27 78 523 6606** (WhatsApp/phone) or email **dladla.siya@gmail.com**.\n\nWould you like help choosing a QCTO-aligned course based on your career goals? 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "qcto"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 55,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "Are you accredited by SASSETA?",
+      "pass": true,
+      "message": "Yes, ProSiya Group Security and Training is accredited by **SASSETA** (the Services Sector Education and Training Authority), as confirmed in our official accreditation alignment.\n\nWe are also aligned with other key South African bodies, including:\n- **PSIRA** (Private Security Industry Regulatory Authority)  \n- **QCTO** (Quality Council for Trades and Occupations)  \n- **Firearm accreditation** (for competency-based firearm training)  \n- **SAPS** (South African Police Service — badge displayed as part of our compliance recognition)\n\nAll our training programmes — such as Grade C, Grade B, Armed Response, CIT, and CPO — are designed to meet PSIRA and QCTO requirements, and are supported by SASSETA’s sector skills development framework.\n\nIf you'd like help choosing a course or understanding how SASSETA alignment benefits your career or business, I’m happy to assist! 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "sasseta"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 56,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "Do you have firearm accreditation?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group holds **firearm accreditation**, as publicly displayed and aligned with South African regulatory requirements. This supports our firearm competency training courses (e.g., Handgun, Rifle, Shotgun for Business Purpose) and operational armed services — including Armed Response and Close Protection.\n\nAll firearm-related training is conducted in compliance with PSIRA and SAPS standards, and our instructors are accredited to assess and certify learners.\n\nIf you'd like to enrol in a firearm course or need confirmation for a specific requirement (e.g., PSIRA registration, employer compliance), feel free to let me know — I can share course details, pricing, or help you get in touch with the team.\n\nYou can also contact ProSiya directly on:  \n📞 **+27 78 523 6606** (WhatsApp/Call)  \n✉️ **dladla.siya@gmail.com**",
+      "lead": {
+        "service": "Firearm Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "firearm_acc"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 57,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "Do you have a SAPS badge?",
+      "pass": true,
+      "message": "Yes, ProSiya Security Group displays a **SAPS badge**, as shown on our official website and public materials. This reflects our alignment with South African Police Service standards and our commitment to lawful, professional security operations.\n\nIf you’d like more details about what the SAPS badge signifies in our context — or how it supports your specific security or training needs — feel free to ask! 😊  \nYou can also contact us directly at **+27 78 523 6606 (WhatsApp/Call)** or **dladla.siya@gmail.com** for verification or further clarification.",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "saps"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 60,
+      "category": "accreditation",
+      "lang": "en",
+      "q": "What accreditations does ProSiya have?",
+      "pass": true,
+      "message": "ProSiya Security Group’s training and operations are aligned with the following recognised South African accreditation and regulatory bodies:\n\n- **PSIRA** (Private Security Industry Regulatory Authority)  \n- **QCTO** (Quality Council for Trades and Occupations)  \n- **SASSETA** (Services Sector Education and Training Authority)  \n- **Firearm accreditation** (for firearm competency courses)  \n- **SAPS** (South African Police Service — badge displayed, indicating compliance and recognition)\n\nThese accreditations support ProSiya Academy’s PSIRA-aligned and compliance-ready training programmes — including Grade E, D, C, B, A, Armed Response, CIT, CPO, and firearm courses.\n\nIf you’d like confirmation of a specific course’s accreditation status or need documentation for compliance purposes, feel free to let me know — and I can guide you on how to verify it directly with ProSiya via WhatsApp (+27 78 523 6606) or email (dladla.siya@gmail.com).",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "accreditation"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 61,
+      "category": "employment",
+      "lang": "en",
+      "q": "Are you hiring security guards?",
+      "pass": true,
+      "message": "I don’t have verified information about current vacancies or hiring for security guard positions at ProSiya Security Group.\n\nIf you're interested in employment opportunities, please contact ProSiya directly on **+27 78 523 6606** (WhatsApp/phone) or email **dladla.siya@gmail.com** — the team will be able to advise you on any active openings and how to apply.\n\nAlso, if you’re looking to qualify as a security officer, ProSiya Academy offers PSIRA-aligned training — including Grade E, D & C (R1,950), Grade C (R1,050), and other accredited courses. Let me know if you’d like details on those! 😊",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 62,
+      "category": "employment",
+      "lang": "en",
+      "q": "Do you have any vacancies?",
+      "pass": true,
+      "message": "I don’t have verified information about current vacancies at ProSiya Security Group — no job openings or recruitment details are published in our official knowledge.\n\nIf you’re looking for employment opportunities, please contact ProSiya directly on **+27 78 523 6606** (phone/WhatsApp) or email **dladla.siya@gmail.com**. They’ll be able to advise you on any available positions or upcoming recruitment initiatives.\n\nLet me know if you'd like help with accredited security training courses — those are currently offered and open for enrolment. 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 63,
+      "category": "employment",
+      "lang": "en",
+      "q": "Can I apply for a security job?",
+      "pass": true,
+      "message": "Hi there — thanks for your interest in ProSiya Security Group!\n\nAt this time, **we don’t have publicly listed vacancies or an online application process** on our website. We also don’t currently publish details about active job openings, recruitment timelines, or CV submission procedures.\n\nHowever, if you're looking for security work and would like to be considered, the best next step is to:\n\n✅ Contact ProSiya directly via:  \n📞 **WhatsApp / Call:** +27 78 523 6606  \n📧 **Email:** dladla.siya@gmail.com  \n\nYou can let them know:\n- Your name and contact details  \n- Your experience (e.g., PSIRA registration status, grades held, armed/unarmed, years in the industry)  \n- Your location (e.g., Durban or surrounding areas)  \n- Whether you’re seeking training, employment, or both  \n\nThey’ll advise you on current opportunities — and if you need upskilling (e.g., Grade C, B, A, Armed Response, or CPO), ProSiya Academy offers accredited courses to help strengthen your profile.\n\nLet me know if you'd like help choosing a course or understanding entry requirements — happy to assist! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 65,
+      "category": "employment",
+      "lang": "en",
+      "q": "I am looking for security work. Can you help me?",
+      "pass": true,
+      "message": "Yes, I can help guide you — ProSiya Security Group provides **accredited security training** that qualifies you for security work in South Africa, and they also offer **professional guarding services**, which may include employment opportunities.\n\nHere’s how we can support you:\n\n✅ **Get certified**: ProSiya Academy offers PSIRA-aligned courses like:  \n- Grade E, D & C (R1,950) — ideal for beginners  \n- Grade C (R1,050), Grade B (R1,500), Grade A (R1,500)  \n- Armed Response (R1,600), CIT (R1,600), and Close Protection Officer (CPO — R16,750)  \n\nOnce trained and registered with PSIRA, you’ll be eligible to work as a security officer across South Africa.\n\n⚠️ **Important**: While ProSiya trains many security professionals, current job vacancies or direct hiring are not publicly listed. They do *not* publish open positions or accept CVs via the website at this time.\n\n🔹 **What you can do now**:  \n- Enrol in a course (e.g., start with Grade C or Combined E/D/C)  \n- Contact ProSiya directly to ask about employment pathways after training:  \n  📞 WhatsApp / Call: **+27 78 523 6606**  \n  ✉️ Email: **dladla.siya@gmail.com**\n\nWould you like help choosing the right course based on your experience or goals? Or would you prefer the contact details sent again for quick access? 😊",
+      "lead": {
+        "requirements": "I am looking for security work. Can you help me?"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 66,
+      "category": "employment",
+      "lang": "en",
+      "q": "Where can I send my CV?",
+      "pass": true,
+      "message": "ProSiya Security Group doesn’t currently publish information about active vacancies or a CV submission process on their official channels.\n\nIf you’re looking for employment opportunities, the best way to enquire is to contact ProSiya directly via:\n\n📞 **Phone / WhatsApp:** +27 78 523 6606  \n✉️ **Email:** dladla.siya@gmail.com  \n\nYou can share your CV there and let them know the type of role you're interested in (e.g., security officer, armed response, training, admin, etc.). They’ll advise if any positions are available or upcoming.\n\nLet me know if you'd like help drafting a short message to send — I’m happy to assist! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 68,
+      "category": "employment",
+      "lang": "en",
+      "q": "Do you employ people who have just completed security training?",
+      "pass": true,
+      "message": "Hi there — thanks for your question.\n\nProSiya Security Group does provide operational security services and employs trained security personnel, but **we don’t publicly publish current vacancy information, hiring status, or recruitment processes** in our verified knowledge.\n\nIf you’ve just completed security training (e.g., Grade C, B, A, or Armed Response) and are looking for employment opportunities with ProSiya, the best step is to **contact our team directly** so they can advise on current possibilities.\n\nYou can reach us at:  \n📞 **+27 78 523 6606** (phone/WhatsApp)  \n✉️ **dladla.siya@gmail.com**\n\nJust let them know your qualification, experience (if any), and location — they’ll guide you from there.\n\nLet me know if you'd like help preparing a quick message to send, or if you're also interested in upgrading your training (e.g., from Grade C to Grade B or CPO). I'm happy to help! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "no_hiring_invent"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 161,
+      "category": "employment",
+      "lang": "zu",
+      "q": "Niyabaqasha onogada?",
+      "pass": true,
+      "message": "Yebo, sibaqasha! 🌟  \nProSiya Security Group (noma ProSiya Academy bakwakha izifundo nezinkampani zokubaqasha) ibaqasha ngokupheleleyo — kusukela emaphoyinti yasekhaya, amakhaya, amagumbi, izindawo zokusebenza, izindawo zokuthengisa, kanye nezindawo zokufunda.\n\nUyafuna ukuba siqalise ukubiza *isibonelo* esithile? Kufanele sicabange:\n\n- **Ile ndawo ubaqasha kuyo?** (Isikhaya? Isikhephe? Isigodi?)  \n- **Kufanele kube niziphi izinqumo?** (Isibonelo sokubaqasha kuphela? Okanye futhi izifundo zokubaqasha?)  \n- **Uyafuna ukubiza ngokushesha?** (Siyathola isibonelo esishesha ngokubiza ku-+27 78 523 6606)\n\nNgicela ungibonelele ngokufanele ukuze siyakusiza ngokulinganayo. 😊  \nNgiyabonga!",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "no_hiring_invent",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 69,
+      "category": "quotes",
+      "lang": "en",
+      "q": "I need security guards for my company. Can I get a quote?",
+      "pass": true,
+      "message": "Yes, absolutely — ProSiya Security Group provides professional guarding services for companies across South Africa, including warehouses, factories, construction sites, and commercial properties.\n\nTo prepare a tailored quotation for your company, we’ll need a few quick details:\n\n- **Location** (e.g., city/suburb — e.g., Durban, Johannesburg, Cape Town)  \n- **Type of site** (e.g., office building, warehouse, factory, retail space, construction site)  \n- **Approximate size or number of guards needed** (e.g., “2 guards for night shift”, “full-site coverage for a 5000m² warehouse”)  \n- **Any specific requirements?** (e.g., armed/unarmed, mobile patrols, CCTV monitoring support, access control, loss prevention focus)\n\nOnce you share these, we can either give you a preliminary indication or connect you directly with the team for a formal quote.\n\nYou can also call or WhatsApp us right away on **+27 78 523 6606**, or email **dladla.siya@gmail.com** — and mention you’re requesting a security guarding quotation.\n\nWould you like to share those details now? 😊",
+      "lead": {
+        "service": "Physical Guarding",
+        "requirements": "I need security guards for my company. Can I get a quote?"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "quote_lead",
+        "lead.service"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 70,
+      "category": "quotes",
+      "lang": "en",
+      "q": "How much would security cost for my business?",
+      "pass": true,
+      "message": "Hi there — thanks for your enquiry about security for your business.\n\nProSiya provides **tailored security solutions**, and the cost depends on several factors, including:\n\n- Type and size of your business (e.g., warehouse, factory, retail shop, office, construction site)  \n- Location (e.g., Durban or elsewhere in SA)  \n- Number of guards required (e.g., 1 guard, 24/7 coverage, day/night shifts)  \n- Specific services needed (e.g., static guarding, mobile patrols, armed response, loss prevention, VIP protection)  \n- Any special requirements (e.g., access control, CCTV monitoring integration, reporting frequency)\n\n✅ **We don’t publish fixed per-guard or per-square-metre rates**, as every client’s needs are unique. Instead, we offer **free, no-obligation quotations** after a brief consultation or site assessment.\n\nWould you like to share:\n- Your business type and location?  \n- Rough size or number of shifts/guards you’re considering?  \n- Any particular concerns (e.g., theft, after-hours break-ins, staff safety)?\n\nOnce I have a bit more detail, I can help guide you — or connect you directly with the ProSiya team for a formal quote.\n\nYou can also reach them right away at:  \n📞 **+27 78 523 6606** (WhatsApp & calls)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know how you'd like to proceed! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "no_fake_guard_price",
+        "quote_lead"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 71,
+      "category": "quotes",
+      "lang": "en",
+      "q": "I need two guards for my shop. How much will it cost?",
+      "pass": true,
+      "message": "Thanks for your enquiry — we’d be happy to help secure your shop with professional guarding services.\n\nHowever, the exact cost for two guards depends on several factors, including:\n\n- **Location** (e.g., Durban or elsewhere in SA)  \n- **Hours of coverage** (e.g., 8-hour shifts, 12-hour shifts, 24/7, days only, nights only)  \n- **Type of shop** (e.g., retail, high-value goods, cash-handling, alarm response needs)  \n- **Additional requirements**, like patrol frequency, reporting, or access control duties  \n\nProSiya provides tailored security solutions — not one-size-fits-all pricing — so we’ll need a bit more detail to give you an accurate quotation.\n\n✅ **Next step:** Could you please share:  \n- Your shop’s **location** (e.g., suburb/town),  \n- The **hours/days** you need coverage, and  \n- Any specific concerns (e.g., break-ins, stock theft, after-hours alarms)?  \n\nOnce we have that, we can prepare a formal quote — or you’re welcome to call us directly at **+27 78 523 6606** or WhatsApp the same number for a quick response.\n\nLet me know — I’m here to help! 😊",
+      "lead": {
+        "service": "Physical Guarding",
+        "requirements": "I need two guards for my shop. How much will it cost?"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "no_fake_guard_price",
+        "quote_lead",
+        "lead.service"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 72,
+      "category": "quotes",
+      "lang": "en",
+      "q": "Can you quote me for security at my warehouse?",
+      "pass": true,
+      "message": "Sure — I’d be happy to help you get a quotation for security at your warehouse.\n\nTo provide an accurate and tailored quote, ProSiya will need a few details, such as:\n\n- **Location** of the warehouse (e.g., city/suburb — e.g., Durban, Johannesburg, Cape Town)  \n- **Size & layout** (approx. square metres, number of entry points, fencing, lighting, existing alarms/CCTV?)  \n- **Operating hours** (24/7, day shift only, weekends?)  \n- **Specific needs**: e.g., static guards, mobile patrols, armed response, access control, loss prevention support?  \n- **Any immediate start date or urgency?**\n\nOnce you share these, I can guide you on next steps — or you can contact ProSiya directly for a fast quotation via:\n\n📞 **Phone / WhatsApp**: +27 78 523 6606  \n✉️ **Email**: dladla.siya@gmail.com  \n\nWould you like to share those details now? Or would you prefer to speak with someone right away?",
+      "lead": {
+        "location": "my warehouse",
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "quote_lead",
+        "lead.service"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 73,
+      "category": "quotes",
+      "lang": "en",
+      "q": "I need security for a construction site.",
+      "pass": true,
+      "message": "Thanks for reaching out — we can definitely help with security for your construction site.\n\nProSiya provides tailored **construction site security**, including:\n\n✅ **Physical guarding** (static and roving guards)  \n✅ **Mobile patrols** to monitor perimeters and deter theft/vandalism  \n✅ **Loss prevention** strategies to protect tools, materials, and equipment  \n✅ **Armed response** support if required (e.g., for high-risk sites or after-hours incidents)  \n✅ **Escorting** for deliveries or cash-in-transit visits  \n\nTo give you an accurate quotation, we’ll need a few quick details:  \n- **Location** of the site (e.g., Durban, Pietermaritzburg, etc.)  \n- **Size & layout** (e.g., hectares, number of access points, fencing status)  \n- **Key concerns** (e.g., material theft, trespassing, night-time risks)  \n- **Preferred coverage** (24/7, day shift only, patrol frequency, etc.)\n\nOnce we have that, our team can prepare a custom security plan and quote — usually within 24 hours.\n\nWould you like to share those details now? Or would you prefer to speak directly with someone? You can reach us on **WhatsApp or call +27 78 523 6606**, or email **dladla.siya@gmail.com**.\n\nLet me know how you’d like to proceed! 😊",
+      "lead": {
+        "service": "Physical Guarding",
+        "requirements": "I need security for a construction site."
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "quote_lead",
+        "lead.service"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 75,
+      "category": "quotes",
+      "lang": "en",
+      "q": "I need VIP protection. How do I get a quote?",
+      "pass": true,
+      "message": "Hi there — thanks for reaching out about VIP protection. ProSiya offers specialised **VIP Protection (Close Protection)** services tailored to high-profile individuals, including risk assessment, threat mitigation, secure transportation, and discreet, professional close protection officers.\n\nTo get an accurate and personalised quote, we’ll need a few details — such as:\n\n- Location (e.g., Durban or other area — note: our base is in Durban at 30 Wills Road)  \n- Duration & frequency (e.g., daily, event-based, short-term assignment)  \n- Specific requirements (e.g., travel, public appearances, residential coverage, number of protectors needed)  \n- Any special considerations (e.g., international travel, high-risk environment)\n\nOnce we have that, the ProSiya team can prepare a formal quotation for you.\n\n✅ You can contact us directly via:  \n📞 **Phone / WhatsApp:** [+27 78 523 6606](https://wa.me/27785236606)  \n✉️ **Email:** [dladla.siya@gmail.com](mailto:dladla.siya@gmail.com)\n\nWould you like me to help draft a quick message with your details to send over? Or would you prefer to speak with someone right away?",
+      "lead": {
+        "service": "VIP Protection",
+        "requirements": "I need VIP protection. How do I get a quote?"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "quote_lead",
+        "contact",
+        "lead.service"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 76,
+      "category": "quotes",
+      "lang": "en",
+      "q": "Can someone contact me about security for my business?",
+      "pass": true,
+      "message": "Yes, absolutely — ProSiya Security Group can assist with tailored security solutions for your business. To help the team provide the best recommendation and quotation, could you please share a few quick details?\n\n- Your business location (e.g., city/town, province)  \n- Type of business or site (e.g., warehouse, factory, retail store, construction site, office park)  \n- Any specific concerns (e.g., theft, after-hours protection, access control, mobile patrols, armed response)  \n- Preferred contact method (phone call or WhatsApp)\n\nOnce you let us know, we’ll connect you directly with ProSiya — or you’re welcome to reach out right away via:  \n📞 **+27 78 523 6606** (WhatsApp & calls)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know — happy to help! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 200,
+      "category": "quotes",
+      "lang": "en",
+      "q": "I need 4 guards for my shop in Durban",
+      "pass": true,
+      "message": "Thanks for your enquiry — we’d be happy to help secure your shop in Durban with professional guarding services.\n\nTo provide you with an accurate quotation and the right service plan, could you please share a few quick details?\n\n- **Shop location** (e.g., suburb or street in Durban)  \n- **Operating hours** (e.g., 8am–6pm daily, weekends included?)  \n- **Any specific concerns?** (e.g., break-ins, stock theft, after-hours monitoring, CCTV integration)  \n- **Preferred guard type:** Static (stationary on-site), mobile patrol support, or a mix?\n\nOnce we have that, ProSiya can tailor a solution — including guard deployment, reporting, and compliance — and send you a formal quotation.\n\nYou can also reach Siyabonga Dladla or the team directly:  \n📞 **+27 78 523 6606** (WhatsApp/Call)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know — I’m here to help! 😊",
+      "lead": {
+        "location": "Durban",
+        "service": "Physical Guarding",
+        "requirements": "I need 4 guards for my shop in Durban"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "quote_lead",
+        "lead.service",
+        "lead.location",
+        "lead.requirements"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 201,
+      "category": "quotes",
+      "lang": "zu",
+      "q": "ngidinga onogada abangu 4 esitolo sami",
+      "pass": true,
+      "message": "Siyabonga kakhulu ngokubiza! 🙏  \nUfuna **i-4 guards** (abangu 4) **esitolo sami** — ke lona isebenza esikhulu esithandwa kakhulu, futhi siyazi ukuthi isitolo singasemthwakathini, ngoba kunezinto eziningi zokuhlinzekwa.\n\nUngalungiselela:\n\n🔹 **Ikheli lokusebenza** (location ya sitolo — leshwi, eGoli, eThekwini, noma phakathi kwamaphakathi?)  \n🔹 **Izinsuku zokusebenza** (ngamusha? ngamusha naseSonto? noma ngamusha kuphela?)  \n🔹 **Izimini zokusebenza** (manje? ekuseni? emhlabeni? noma ngomso?)  \n🔹 **Ufuna ukuthi bafunde kweProSiya Academy futhi?** (Siyabona ukuthi abagada abanengqondo bakhuluma ngokuphelele)\n\nNgiyakuthanda ukuthi ngikusiza ngokuthintana neSiyabonga Dladla (uMphathi weProSiya Group), oya kubiza ngokushesha ukuze abagada bafike ngokushesha — *kodwa ngizobiza ngokuphelele uma uyavumela.*\n\nNgabe ungafaka i-phone yakho noma i-email apha, noma ufuna ukuthi ngibhalela kuwe ngokushesha?  \nNgiyakuthanda ukuthi ngisize ngokuphelele. 💪\n\n— ProSiya Security Group AI Assistant",
+      "lead": {
+        "service": "Physical Guarding",
+        "requirements": "ngidinga onogada abangu 4 esitolo sami"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "quote_lead",
+        "lead.service",
+        "lead.requirements"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 77,
+      "category": "enrolment",
+      "lang": "en",
+      "q": "When does the next Grade C course start?",
+      "pass": true,
+      "message": "I don’t have the exact start date for the next Grade C Security Officer course — intake schedules and class dates aren’t published in our current information.\n\nHowever, you can:\n- Enrol online via the ProSiya Academy website,  \n- Then contact the team directly to confirm the next available intake and get schedule details.\n\n📞 Call or WhatsApp: **+27 78 523 6606**  \n📧 Email: **dladla.siya@gmail.com**\n\nThey’ll be happy to assist with dates, venue (Durban-based), and any other questions about the Grade C course. Let me know if you'd like help drafting a quick message to send them! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "no_fake_date",
+        "unknown_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 78,
+      "category": "enrolment",
+      "lang": "en",
+      "q": "When is your next training intake?",
+      "pass": true,
+      "message": "I don’t have the exact dates for the next training intake — those are confirmed directly by the ProSiya Academy team and may vary per course.\n\nTo get the most up-to-date schedule and secure your spot, please contact ProSiya on:\n\n📞 **+27 78 523 6606** (phone or WhatsApp)  \n✉️ **dladla.siya@gmail.com**\n\nThey’ll share available intakes, venue details, and guide you through registration.\n\nWould you like help choosing a course first? For example, Grade C (R1,050), Grade B (R1,500), or Armed Response (R1,600)? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "no_fake_date",
+        "unknown_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 79,
+      "category": "enrolment",
+      "lang": "en",
+      "q": "How do I register for training?",
+      "pass": true,
+      "message": "To register for training with **ProSiya Academy**, you can:\n\n✅ **Enrol via the ProSiya website** — look for the training or academy section where course registration is available.  \n✅ **Contact ProSiya directly** to confirm availability, get guidance on the right course for your goals, and finalise your registration.\n\nYou can reach them by:  \n📞 **Phone/WhatsApp:** +27 78 523 6606  \n✉️ **Email:** dladla.siya@gmail.com  \n\nLet them know which course you’re interested in (e.g., *Grade C*, *Armed Response*, *CPO*, etc.), and they’ll assist with next steps — including scheduling, venue details, and required documentation.\n\nWould you like help choosing the right course based on your experience or career goals? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "enrol_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 82,
+      "category": "enrolment",
+      "lang": "en",
+      "q": "What documents do I need to register?",
+      "pass": true,
+      "message": "Hi there — thanks for your enquiry!\n\nAt this time, the specific documents required for registration (e.g., ID, qualifications, medicals) are **not publicly listed** in ProSiya’s verified information.\n\nTo ensure you have the correct and up-to-date requirements — especially since they may vary depending on the course (e.g., Grade A, B, C, or specialised training) — we recommend contacting ProSiya directly:\n\n📞 **Call / WhatsApp:** +27 78 523 6606  \n✉️ **Email:** dladla.siya@gmail.com  \n\nThey’ll gladly confirm what you need before enrolling — and can also help with course availability, payment steps, and study material access.\n\nLet me know if you'd like help drafting a quick WhatsApp message to send them! 😊",
+      "lead": {
+        "requirements": "What documents do I need to register?"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "unknown_ok",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 83,
+      "category": "enrolment",
+      "lang": "en",
+      "q": "How long does the training take?",
+      "pass": true,
+      "message": "The exact duration of ProSiya’s training courses (e.g., Grade C, Grade B, Armed Response, etc.) is not published in the current course information. Course lengths can vary depending on the programme, delivery mode (classroom, blended, or online), and PSIRA/QCTO requirements.\n\nTo get accurate details on **how long each course takes**, including start dates, schedule, and venue, please contact ProSiya directly:\n\n📞 **+27 78 523 6606**  \n✉️ **dladla.siya@gmail.com**\n\nThey’ll be happy to confirm the duration and availability for your preferred course — whether you're looking at Grade C, Grade B, CIT, CPO, or firearm training.\n\nLet me know if you'd like help choosing the right course based on your goals! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "unknown_ok",
+        "no_fake_duration"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 84,
+      "category": "enrolment",
+      "lang": "en",
+      "q": "Where does the training take place?",
+      "pass": true,
+      "message": "The ProSiya Academy training takes place at our facility in **Durban**, specifically at **30 Wills Road** — our registered address and operational base.\n\nWhile the exact venue layout or classroom details aren’t published, all courses (e.g., Grade C, Grade B, Armed Response, CPO, firearm training) are delivered on-site in Durban, with practical components aligned to PSIRA requirements and real-world security operations.\n\nIf you’d like to confirm availability, schedule a visit, or check if online/blended options are available for certain modules, feel free to let me know — and I can help you get in touch with the team directly.\n\nWould you like the contact details to book or enquire further? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "unknown_or_durban_careful"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 85,
+      "category": "handoff",
+      "lang": "en",
+      "q": "Can I speak to a real person?",
+      "pass": true,
+      "message": "Yes, absolutely — you can speak to a real person from ProSiya Security Group.\n\nPlease contact our team directly on:  \n📞 **+27 78 523 6606** (WhatsApp or call)  \n📧 **dladla.siya@gmail.com**\n\nOur Managing Director, Siyabonga Dladla, and the operations team are available to assist with security services, training enrolment, quotations, or any other enquiry.\n\nWould you like help drafting a quick message to send via WhatsApp or email? I’m happy to assist.",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 86,
+      "category": "handoff",
+      "lang": "en",
+      "q": "I don't want to speak to a chatbot. Can someone help me?",
+      "pass": true,
+      "message": "Absolutely — no problem at all. 😊  \nYou can speak directly to a real person from ProSiya Security Group.\n\nPlease call or WhatsApp us on:  \n📞 **+27 78 523 6606**  \nor email: **dladla.siya@gmail.com**\n\nOur team (including Siyabonga Dladla, Managing Director) is ready to assist you with security services, training enquiries, course registration, or any other question — personally and promptly.\n\nLet me know if you'd like help drafting a quick message or preparing details (e.g., your location, type of service needed, or course interest) before you reach out. I’m happy to help!",
+      "lead": {
+        "requirements": "I don't want to speak to a chatbot. Can someone help me?"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 87,
+      "category": "handoff",
+      "lang": "en",
+      "q": "Can someone from ProSiya call me?",
+      "pass": true,
+      "message": "Yes — absolutely! Someone from ProSiya Security Group can call you.\n\nTo help us connect you with the right person (e.g., for security services, training enquiries, or general support), could you please share:\n\n- Your **name**,  \n- **Company** (if applicable),  \n- **Contact number**,  \n- What you’d like to discuss (e.g., *“I need guarding for my warehouse in Durban”*, *“I want to enrol for Grade C training”*, or *“I’d like a quotation for armed response”*), and  \n- Your **preferred time** to be called (if any).\n\nAlternatively, you’re welcome to contact ProSiya directly right away on:  \n📞 **+27 78 523 6606** (WhatsApp & calls)  \n✉️ **dladla.siya@gmail.com**\n\nLet me know — I’m happy to assist further! 😊",
+      "lead": {
+        "preferredContactMethod": "Phone"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 88,
+      "category": "handoff",
+      "lang": "en",
+      "q": "I have a complicated security requirement. Who can I speak to?",
+      "pass": true,
+      "message": "For a complicated security requirement, you can speak directly with **Siyabonga Dladla**, our Managing Director — he leads ProSiya’s security operations and training and has 18 years of industry experience, including in complex security planning and PSIRA-aligned solutions.\n\nPlease contact him or the ProSiya team via:  \n📞 **+27 78 523 6606** (WhatsApp or call)  \n✉️ **dladla.siya@gmail.com**\n\nLet us know your location, type of site (e.g., warehouse, factory, construction site, commercial property), and a brief outline of your needs — we’ll arrange a prompt response and provide a tailored quotation.\n\nWould you like help drafting a quick message to send over?",
+      "lead": {
+        "requirements": "I have a complicated security requirement. Who can I speak to?"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 90,
+      "category": "handoff",
+      "lang": "en",
+      "q": "I need to speak to management.",
+      "pass": true,
+      "message": "Sure — for a conversation with management, please contact **Siyabonga Dladla**, the leader of ProSiya Group Security and Training.\n\nYou can reach him directly via:  \n📞 **Phone / WhatsApp:** [+27 78 523 6606](https://wa.me/27785236606)  \n✉️ **Email:** [dladla.siya@gmail.com](mailto:dladla.siya@gmail.com)\n\nLet me know if you'd like help drafting a message outlining your enquiry — I'm happy to assist.",
+      "lead": {
+        "requirements": "I need to speak to management."
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 91,
+      "category": "handoff",
+      "lang": "en",
+      "q": "Can I contact Siyabonga Dladla?",
+      "pass": true,
+      "message": "Yes, you can contact Siyabonga Dladla — he is the Managing Director of ProSiya Security Group.\n\nYou may reach him directly via:\n\n- **Phone / WhatsApp:** [+27 78 523 6606](https://wa.me/27785236606)  \n- **Email:** [dladla.siya@gmail.com](mailto:dladla.siya@gmail.com)\n\nHe oversees both security operations and training, and is available for discussions about services, training enrolment, partnerships, or strategic enquiries.\n\nWould you like help drafting a message (e.g., for a quotation request, course enquiry, or meeting request)? I’m happy to assist.",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 92,
+      "category": "handoff",
+      "lang": "en",
+      "q": "Please have someone contact me about security services.",
+      "pass": true,
+      "message": "Sure — I’ll help you get in touch with the ProSiya team for security services.\n\nCould you please share a few quick details so they can assist you effectively?  \n- Your **name** and **company** (if applicable)  \n- **Location** (e.g., Durban, Johannesburg, or specific suburb)  \n- Type of site/property needing security (e.g., warehouse, factory, construction site, office, retail space, or event)  \n- Any specific needs (e.g., armed response, mobile patrols, loss prevention, VIP protection, etc.)  \n- Preferred contact method: phone call or WhatsApp?\n\nOnce you provide this, I can confirm your request — and you’ll be contacted shortly by ProSiya on **+27 78 523 6606** (phone/WhatsApp) or via email at **dladla.siya@gmail.com**.\n\nWould you like to share those details now? 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 93,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "When exactly is the next Grade C class?",
+      "pass": true,
+      "message": "I don’t have the exact start date for the next Grade C Security Officer class — ProSiya doesn’t publish fixed intake dates publicly.  \n\nHowever, once you register and confirm payment (R1,050), the team will contact you to confirm your class schedule and provide access to study materials.\n\n✅ You can enrol via the ProSiya website, then WhatsApp your proof of payment to **+27 78 523 6606**, and they’ll get you booked in.\n\nWould you like help with registration steps or payment options? 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "no_fake_date",
+        "unknown_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 94,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "How many security guards does ProSiya currently employ?",
+      "pass": true,
+      "message": "I don’t have access to ProSiya’s current headcount or the exact number of security guards employed. That information is not publicly stated in the verified knowledge available to me.\n\nIf you’re interested in staffing capacity — for example, to understand capability for a contract (e.g., guarding a warehouse, factory, or construction site) — ProSiya can assess your specific needs and provide a tailored solution. They’ll consider factors like location, shift requirements, risk profile, and scope.\n\nFor accurate and up-to-date information, please contact ProSiya directly on **+27 78 523 6606** (WhatsApp/phone) or email **dladla.siya@gmail.com**.\n\nWould you like help drafting a brief enquiry for them? 😊",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "unknown_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 95,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "Is ProSiya currently hiring in Johannesburg?",
+      "pass": true,
+      "message": "I don’t have verified information about current job vacancies — including whether ProSiya is hiring in Johannesburg or elsewhere.\n\nProSiya is a 100% private black-owned South African security and training group based in Durban (30 Wills Road), and while they provide services nationwide, their published materials do not list active vacancies, recruitment drives, or branch offices outside Durban.\n\nIf you're looking for employment opportunities, the best step is to contact ProSiya directly:\n\n- **Phone / WhatsApp:** +27 78 523 6606  \n- **Email:** dladla.siya@gmail.com  \n\nYou can share your CV and express your interest — they’ll let you know if any roles are available or upcoming.\n\nLet me know if you'd like help drafting a short message to send them! 😊",
+      "lead": {
+        "location": "Johannesburg"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent",
+        "unknown_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 96,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "How much does security for a 500 m² warehouse cost?",
+      "pass": true,
+      "message": "Hi there — thanks for your enquiry about security for a 500 m² warehouse.\n\nProSiya provides tailored security solutions, but **exact pricing for operational guarding (e.g., per guard, per shift, or per m²) is not published online**, as it depends on several factors — including:\n\n- Location of the warehouse (e.g., Durban, eThekwini, or other area),  \n- Required coverage (24/7, night-only, patrol frequency),  \n- Number of guards needed,  \n- Whether armed response, access control, CCTV monitoring, or alarm response is included,  \n- Duration of the contract (short-term vs. long-term),  \n- Any special requirements (e.g., high-value stock, hazardous materials, integration with existing systems).\n\n✅ What we *can* do:  \nWe’ll gladly provide a **free, no-obligation quotation** based on your specific needs.\n\n📌 To get started, could you please share:\n- Your warehouse location (town/suburb),  \n- Preferred service type (e.g., static guarding, mobile patrols, or both),  \n- And your contact preference (phone/WhatsApp/email)?\n\nYou can also reach Siyabonga Dladla or the team directly at:  \n📞 **+27 78 523 6606** (WhatsApp & calls)  \n✉️ **dladla.siya@gmail.com**\n\nWe look forward to helping keep your warehouse secure. 🛡️",
+      "lead": {
+        "service": "Physical Guarding"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "no_fake_guard_price",
+        "quote_lead"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 97,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "How long does each course take?",
+      "pass": true,
+      "message": "The exact duration (e.g., number of days or weeks) for each ProSiya Academy course is not published in the current course catalogue. Course lengths may vary depending on the programme, delivery mode (e.g., online self-paced vs. facilitated), and learner progress.\n\nHowever, all courses are PSIRA-aligned and designed to meet national compliance and competency requirements — including Grade E, D, C, B, A, Armed Response, CIT, CPO, and firearm-related programmes.\n\nFor confirmed course durations, start dates, and learning schedules, please contact ProSiya directly:\n\n📞 **+27 78 523 6606** (Phone / WhatsApp)  \n✉️ **dladla.siya@gmail.com**\n\nThey’ll be happy to advise based on your preferred course and availability.",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "unknown_ok",
+        "no_fake_duration"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 98,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "Do you have offices in Johannesburg?",
+      "pass": true,
+      "message": "ProSiya Security Group is based in Durban, with our physical address at **30 Wills Road**. At this time, the knowledge we have does not confirm any offices in Johannesburg or other cities outside Durban.\n\nIf you're based in Johannesburg and require security services or training, we’d still be happy to assist — many of our clients are nationwide, and we can discuss options like remote training support or service arrangements tailored to your location.\n\nWould you like us to connect you with the team via phone or email to explore what’s possible? 📞📧",
+      "lead": {
+        "location": "Johannesburg"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "no_jhb_office"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 99,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "What are your current job vacancies?",
+      "pass": true,
+      "message": "I don’t have verified information about current job vacancies at ProSiya Security Group. The company does not publicly list open positions in the available knowledge.\n\nIf you’re looking for employment opportunities — whether as a security officer, trainer, or in another role — the best way to enquire is to contact ProSiya directly:\n\n📞 **Phone / WhatsApp:** +27 78 523 6606  \n✉️ **Email:** dladla.siya@gmail.com  \n\nYou can share your background, qualifications, and interest, and the team will let you know if there are any suitable opportunities available.\n\nLet me know if you'd like help preparing a message or checking which training courses (e.g., Grade C, Armed Response, etc.) could strengthen your application — I’m happy to assist! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent",
+        "unknown_ok"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 100,
+      "category": "no_guess",
+      "lang": "en",
+      "q": "Can you guarantee that I will get a security job after training?",
+      "pass": true,
+      "message": "I don’t have verified information stating that ProSiya guarantees job placement after training — this is not mentioned in their official materials.\n\nWhat *is* confirmed is that ProSiya Academy offers **PSIRA-aligned, accredited security training** (e.g., Grade E/D/C, Grade B/A, Armed Response, CIT, CPO, and firearm courses), designed to meet industry compliance and real-world operational needs. Their Managing Director, Siyabonga Dladla, brings 18 years of experience in security training and operations — so the training is grounded in practical expertise.\n\nWhile completing a course equips you with the required qualifications to register with PSIRA and apply for security roles, actual employment depends on factors like your experience, availability, location, employer requirements, and market conditions.\n\nIf you'd like support with next steps — such as PSIRA registration guidance, CV tips for security roles, or connecting with ProSiya about career pathways — I’m happy to help. You can also contact them directly at:  \n📞 +27 78 523 6606 (WhatsApp/Call)  \n✉️ dladla.siya@gmail.com  \n\nLet me know how I can assist further! 😊",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "no_job_guarantee"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 301,
+      "category": "informal",
+      "lang": "en",
+      "q": "hi how much grade c",
+      "pass": true,
+      "message": "Hi there! 😊  \nThe **Grade C Security Officer** course at ProSiya Academy costs **R1,050** (ZAR).\n\nIt’s an entry-to-intermediate level qualification aligned with PSIRA requirements — ideal for those starting or advancing in the security industry.\n\nWould you like help enrolling, or do you have questions about:\n- Course duration or schedule?  \n- What’s included (e.g., materials, assessments, certification)?  \n- How to pay (EFT, PayPal, or cash)?  \n- Or are you looking for the *Combined Grade E, D & C* course (R1,950) instead?\n\nLet me know — happy to assist! 🛡️",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,050"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 302,
+      "category": "informal",
+      "lang": "zu",
+      "q": "ngifuna grade c",
+      "pass": true,
+      "message": "Siyabonga! Ufuna ukufunda **Grade C Security Officer** — ngiyakuthanda!\n\n✅ **I-Grade C course** yaseProSiya Academy iyalungiselela ukuba uye kwenziwa ngokupheleleyo ngaphansi kwe-PSIRA, futhi iyisikhundla esiphambili sokusebenza njenge-security officer.\n\n💰 **Ithuluzi:** **R1,050** (ZAR)  \n📚 **Isifundo:** Siqukethe ukufunda amasiko, ukubhekisa izinto eziphambili, ukusebenzisa amandla, nokubona izinkinga zokhuseleko — konke okudingekayo ukuba uqashwe ngokupheleleyo.\n\nUngafaka isibonelo noma uyathola isibonelo ngaphansi kwaleli kheli:  \n📞 **+27 78 523 6606** (WhatsApp/phone)  \n📧 **dladla.siya@gmail.com**\n\nUngafaka isibonelo noma uyathola isibonelo ngaphansi kwaleli kheli:  \n📞 **+27 78 523 6606** (WhatsApp/phone)  \n📧 **dladla.siya@gmail.com**\n\nNgikuthanda ukuthi ungakhetha ukuthola isibonelo noma ukuthola isibonelo ngaphansi kwaleli kheli.  \nNgiyakuthanda ukuthi ungakhetha ukuthola isibonelo noma ukuthola isibonelo ngaphansi kwaleli kheli.\n\nNgikuthanda ukuthi ungakhetha ukuthola isibonelo noma ukuthola isibonelo ngaphansi kwaleli kheli.\n\nUngafaka isibonelo noma uyathola isibonelo ngaphansi kwaleli kheli:  \n📞 **+27 78 523 6606** (WhatsApp/phone)  \n📧 **dladla.siya@gmail.com**\n\nNgikuthanda ukuthi ungakhetha ukuthola isibonelo noma ukuthola isibonelo ngaphansi kwaleli kheli.\n\nNg",
+      "lead": {
+        "service": "Security Training",
+        "requirements": "ngifuna grade c"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "grade_c"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 303,
+      "category": "informal",
+      "lang": "zu",
+      "q": "nina niqasha?",
+      "pass": true,
+      "message": "Yebo, sinqasha! ✅  \nProSiya Security Group uyasebenza ngokuphatha iziqashi zempilo, izindawo zokusebenza (offices), izindawo zokuthenga, amagumbi, izindawo zokufunda, amakhaya, nezindawo zokusebenza ngokwesikhashana — futhi sithola iziqashi ezinamandla kanye nezinkampani zokusebenza.\n\nUyafuna iqasha le-**location**, **ihloko** (e.g. factory, warehouse, residential estate), noma **isilinganiso sezinqashi**? Ngingakusiza ukuthola isiphumo esifanele kahle.\n\nNoma ungalindele, ungathuma WhatsApp noma ufake inombolo yokuze ubone i-**quote** noma uqwalisele isiqashi:  \n📞 **+27 78 523 6606**  \n📧 **dladla.siya@gmail.com**\n\nNgithanda ukusiza! 😊",
+      "lead": null,
+      "handoffSuggested": true,
+      "passes": [
+        "no_hiring_invent"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 304,
+      "category": "informal",
+      "lang": "en",
+      "q": "price ye grade b?",
+      "pass": true,
+      "message": "Price for Grade B Security Officer training is **R1,500** (ZAR).  \n\nThis is a supervisory-level course and part of ProSiya Academy’s PSIRA-aligned training programmes.\n\nWould you like help enrolling, or do you need info on dates, venue (Durban), or payment options (EFT, PayPal, or cash)? 😊  \nYou can also WhatsApp proof of payment to **+27 78 523 6606** after paying.",
+      "lead": {
+        "service": "Security Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "price",
+        "price:1,500"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 305,
+      "category": "informal",
+      "lang": "en",
+      "q": "where u guys based",
+      "pass": true,
+      "message": "ProSiya Security Group is based in **Durban, South Africa**, at **30 Wills Road**.\n\nLet me know if you'd like directions, or if you're enquiring about training courses, security services, or need assistance with registration — happy to help! 😊",
+      "lead": null,
+      "handoffSuggested": false,
+      "passes": [
+        "address"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 306,
+      "category": "informal",
+      "lang": "en",
+      "q": "do u guys have whatsapp",
+      "pass": true,
+      "message": "Yes, we do! You can reach ProSiya Security Group on **WhatsApp at +27 78 523 6606** — that’s the same number for calls and WhatsApp.\n\nFeel free to send us a message there for:\n- Course enquiries or enrolment support  \n- Proof of payment (after paying for training)  \n- General security service questions  \n- Scheduling or follow-up  \n\nWe aim to respond promptly during business hours. 😊  \nLet me know how I can help you today!",
+      "lead": {
+        "preferredContactMethod": "WhatsApp"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "whatsapp"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 307,
+      "category": "informal",
+      "lang": "en",
+      "q": "how much for armed response",
+      "pass": true,
+      "message": "The **Armed Response** training course at ProSiya Academy costs **R1,600** (ZAR).  \n\nThis course is PSIRA-aligned and designed to equip learners with the skills and knowledge required to operate as an armed response officer in South Africa.\n\n✅ Includes:  \n- Theory and practical components  \n- Compliance-ready certification  \n- Firearm handling & legal responsibilities  \n\nTo enrol:  \n1. Create an account on the ProSiya website  \n2. Select the course and complete payment  \n3. Send proof of payment (bank slip / EFT receipt / screenshot) to **WhatsApp +27 78 523 6606**  \n\nNeed help registering or want to check upcoming intake details? I can guide you — or you’re welcome to contact ProSiya directly for confirmation. 😊",
+      "lead": {
+        "service": "Armed Response"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "price",
+        "price:1,600"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 308,
+      "category": "informal",
+      "lang": "en",
+      "q": "do u guys train for guns",
+      "pass": true,
+      "message": "Yes, ProSiya Academy offers **accredited firearm training** for business and professional purposes. These courses are PSIRA-aligned and designed for security professionals who require legal firearm competency.\n\nHere are the firearm-related courses we currently offer (prices in ZAR):\n\n- **Handgun for Business Purpose** – R2,650  \n- **Rifle (SLR or Carbine) for Business Purpose** – R2,850  \n- **Shotgun for Business Purpose** – R2,700  \n\nAll firearm training includes theory, practical handling, safety protocols, and assessments — delivered by qualified, PSIRA-registered trainers.\n\n⚠️ Note: These courses do *not* include firearm licensing — they provide the required **competency certification**, which you’ll need when applying for a business-purpose firearm licence through SAPS.\n\nWould you like help choosing the right course based on your role (e.g., armed response, site supervisor, close protection), or would you like to know how to register? I can also share contact details so ProSiya’s team can confirm upcoming intakes and venue (Durban-based at 30 Wills Road).",
+      "lead": {
+        "service": "Firearm Training"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "firearm"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 309,
+      "category": "informal",
+      "lang": "zu",
+      "q": "ngifuna umsebenzi",
+      "pass": false,
+      "message": "Sawubona! Ukuthanda ukufuna umsebenzi — ngiyakuthandaza.\n\nProSiya Security Group *ayisebenzi ngezinqumo zokufunda* (ayikho iziqhelo zokufunda okwenzekayo kule ndlela), kodwa sithandaza abantu ukuba bafunde imibono yezifundo eziqinisekisiwe (accredited training) esikhundleni sokufunda umsebenzi ngokwesibonelo.\n\nUma ufuna:\n- **Ukufunda i-Grade C, B, A, nezinye izifundo zokuphatha isikhungo** (Security SETA accredited),  \n- **Ukufunda i-POP (Protection of Persons)**,  \n- **Ukufunda i-First Aid**,  \n- **Ukufunda i-Fire Fighting**,  \n- **Ukufunda i-Access Control**,  \n- **Ukufunda i-Surveillance & CCTV**,  \n- Nokho okunye okuthandwayo —  \n\n…siyakukhuluma ngokushesha ngokuthi *kuyaphila kuphi*, *kuyaphila kanjani*, *kuyaphila nini*, futhi siyakusiza ukuthi ufake umbhalo.\n\nUma ufuna **umsebenzi wokuphatha isikhungo** (security guard job), sithi:  \n➡️ ProSiya *ayisiza ngokuthenga amaqhaza* (does not recruit or place guards directly), kodwa  \n➡️ Uma ufuna ukufunda nokuthola isikhungo esihle, lezi zifundo ziyakusiza kakhulu — futhi kunezindlela okungakwazi ukuzifunda ngokwesibonelo.\n\nNgiyakuthandaza ukuthi uthi:\n- *Ufuna ukufunda nini?*  \n- *Ufuna ukufunda kuphi?* (e.g. Johannesburg, Durban, Cape Town, noma online)  \n- *Ufuna ukufunda yini?* (e.g. Grade C, POP, First Aid, noma zonke)  \n\nNgizokusiza ng",
+      "lead": {
+        "requirements": "ngifuna umsebenzi"
+      },
+      "handoffSuggested": false,
+      "passes": [
+        "no_hiring_invent"
+      ],
+      "fails": [
+        "contact"
+      ],
+      "status": 200
+    },
+    {
+      "id": 310,
+      "category": "informal",
+      "lang": "en",
+      "q": "can someone call me",
+      "pass": true,
+      "message": "Sure — I can help arrange for someone from ProSiya to call you. Could you please share:\n\n- Your **name**,  \n- Your **phone number**,  \n- A good time to call (e.g., morning/afternoon), and  \n- What you’d like to discuss? (e.g., security services for your warehouse, enrolling in Grade C training, a quotation, etc.)\n\nOnce you confirm, I’ll let the team know — or you can also contact them directly right away on **+27 78 523 6606** (phone/WhatsApp) or email **dladla.siya@gmail.com**.\n\nLet me know! 😊",
+      "lead": {
+        "preferredContactMethod": "Phone"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "contact",
+        "handoffSuggested"
+      ],
+      "fails": [],
+      "status": 200
+    },
+    {
+      "id": 311,
+      "category": "informal",
+      "lang": "zu",
+      "q": "ngicela umuntu angishayele",
+      "pass": false,
+      "message": "Siyabonga kakhulu ngokubiza! 😊  \nUfuna ukuthi umuntu angishayele — ngifuna ukuvakasha (book) umsebenzi wokuphatha isikhungo, noma uqasha isikhungo esithile?  \n\nNgingafunda ngokuthi:  \n- **Ubani** (name)  \n- **Igama lomkhakha / indawo** (company or site name)  \n- **Indawo eyisisekelo** (e.g. Johannesburg, Durban, Cape Town, etc.)  \n- **Uyafuna isikhungo sebizo (armed/unarmed), isikhungo sesikole, isikhungo sezindawo zokusebenza, noma isikhungo sokugcina izindawo zokufunda?**  \n- **Ungafuna ukuthi siwathumele umuntu ekhaya/ekhaya noma ekhaya?**  \n\nNgiyakusiza ngokuthumela amaphoni aseProSiya ngokushesha — futhi ungafuna ukuthi bavakashele ngokushesha kakhulu?  \n\nNgiyakuthanda ukusiza! 🙏  \n— ProSiya Security Group AI Assistant",
+      "lead": {
+        "preferredContactMethod": "Phone"
+      },
+      "handoffSuggested": true,
+      "passes": [
+        "handoff",
+        "handoffSuggested"
+      ],
+      "fails": [
+        "contact"
+      ],
+      "status": 200
+    }
+  ]
+}

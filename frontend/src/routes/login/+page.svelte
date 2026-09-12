@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components';
 	import { onMount } from 'svelte';
+	import { friendlyAuthError } from '$lib/utils/authErrors';
 
 	let email = '';
 	let password = '';
@@ -15,9 +16,7 @@
 	onMount(async () => {
 		const result = await authService.handleGoogleRedirect();
 		if (result.error) {
-			error = result.error.includes('invalid') || result.error.includes('INVALID')
-				? 'Google sign-in could not be completed. Use email/password or try again in a new tab.'
-				: result.error;
+			error = friendlyAuthError({ message: result.error });
 			return;
 		}
 		if (result.user) {
@@ -36,7 +35,7 @@
 			await goto(redirect);
 		} catch (err: any) {
 			console.error('Login error:', err);
-			error = err.message || 'Invalid email or password';
+			error = friendlyAuthError(err);
 		} finally {
 			isLoading = false;
 		}
@@ -48,7 +47,7 @@
 		const redirect = $page.url.searchParams.get('redirect') || '/student/dashboard';
 		authService.loginWithGoogle(redirect).catch((err: any) => {
 			console.error('Google sign-in error:', err);
-			error = err?.message || 'Google sign-in failed. Please try again.';
+			error = friendlyAuthError(err);
 			googleLoading = false;
 		});
 	}

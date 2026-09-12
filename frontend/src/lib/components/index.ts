@@ -7,3 +7,6 @@ export { default as Button } from './Button.svelte';
 export { default as Badge } from './Badge.svelte';
 export { default as Modal } from './Modal.svelte';
 export { default as PaymentInstructions } from './PaymentInstructions.svelte';
+export { default as ChatWidget } from './ChatWidget.svelte';
+export { default as StudentPortalShell } from './StudentPortalShell.svelte';
+export { default as ProgressRing } from './ProgressRing.svelte';

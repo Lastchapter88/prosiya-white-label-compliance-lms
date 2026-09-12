@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Header, Button, Badge } from '$lib/components';
+	import { Button, Badge } from '$lib/components';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { courseService } from '$lib/services/courses';
@@ -64,7 +64,6 @@
 </svelte:head>
 
 <div class="player-layout">
-	<Header />
 	
 	<main class="player-container">
 		{#if isLoading}
@@ -179,7 +178,7 @@
 	.player-layout {
 		display: flex;
 		flex-direction: column;
-		height: 100vh;
+		min-height: 70vh;
 		background: var(--color-bg);
 	}
 

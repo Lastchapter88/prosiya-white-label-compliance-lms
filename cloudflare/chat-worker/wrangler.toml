@@ -1,0 +1,15 @@
+name = "prosiya-chat"
+main = "src/index.ts"
+compatibility_date = "2025-03-01"
+workers_dev = true
+
+[vars]
+QWEN_MODEL = "qwen-plus"
+QWEN_API_BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+
+# QWEN_API_KEY is set via: wrangler secret put QWEN_API_KEY
+
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
