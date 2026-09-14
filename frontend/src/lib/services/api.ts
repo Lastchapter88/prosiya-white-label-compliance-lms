@@ -1,4 +1,3 @@
-import { browser } from '$app/environment';
 import { auth } from '$lib/stores/auth';
 import { get } from 'svelte/store';
 
@@ -10,7 +9,7 @@ class ApiClient {
         const headers = new Headers(options.headers);
         
         // Add auth token if available
-        const token = get(auth).token;
+        const token = (get(auth) as { token?: string }).token;
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
         }
@@ -25,10 +24,7 @@ class ApiClient {
         try {
             const response = await fetch(url, config);
             
-            // Handle 401 Unauthorized (Token expired)
             if (response.status === 401) {
-                auth.logout();
-                if (browser) window.location.href = '/login';
                 throw new Error('Session expired');
             }
             

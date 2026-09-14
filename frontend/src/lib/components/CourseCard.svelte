@@ -2,11 +2,19 @@
 	// Course card component matching mockup design
 	export let title: string;
 	export let image: string;
+	export let category: string = '';
+	export let description: string = '';
 	export let features: string[] = [];
 	export let href: string = '#';
 	export let price: number | null = null;
 	export let currency: string = 'ZAR';
 
+	$: kicker = category || features[0] || 'Professional training';
+	$: summary =
+		description ||
+		(category ? '' : features[1]) ||
+		'Practical, career-focused learning for the security industry.';
+	$: supporting = category || description ? features : features.slice(2);
 	$: priceLabel =
 		price == null
 			? null
@@ -21,21 +29,25 @@
 	</div>
 	
 	<div class="course-content">
+		<div class="course-kicker">{kicker}</div>
 		<h3 class="course-title">{title}</h3>
+		{#if summary}
+			<p class="course-description">{summary}</p>
+		{/if}
 
 		{#if priceLabel}
 			<p class="course-price">{priceLabel}</p>
 		{/if}
 		
-		{#if features.length > 0}
+		{#if supporting.length > 0}
 			<ul class="feature-list">
-				{#each features as feature}
+				{#each supporting as feature}
 					<li>{feature}</li>
 				{/each}
 			</ul>
 		{/if}
 		
-		<a href={href} class="btn btn-accent">View Course</a>
+		<a href={href} class="btn btn-accent">View Programme <span aria-hidden="true">→</span></a>
 	</div>
 </div>
 
@@ -81,6 +93,8 @@
 		gap: 1rem;
 		flex: 1;
 	}
+
+	.course-kicker { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-dark, var(--color-navy-dark)); }
 	
 	.course-title {
 		font-size: 1.5rem;
@@ -95,6 +109,8 @@
 		font-weight: 700;
 		color: var(--color-accent-dark, var(--color-navy-dark));
 	}
+
+	.course-description { margin: -0.35rem 0 0; color: var(--color-text-secondary); line-height: 1.55; }
 	
 	.feature-list {
 		list-style: none;
@@ -143,6 +159,9 @@
 		transform: translateY(-2px);
 		box-shadow: var(--shadow-md);
 	}
+
+	.btn-accent span { margin-left: 0.35rem; transition: transform 0.2s ease; display: inline-block; }
+	.btn-accent:hover span { transform: translateX(3px); }
 	
 	/* Responsive */
 	@media (max-width: 640px) {

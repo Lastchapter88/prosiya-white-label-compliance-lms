@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { authService } from '$lib/services/auth';
+	import { auth } from '$lib/stores/auth';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components';
 	import { onMount } from 'svelte';
 	import { friendlyAuthError } from '$lib/utils/authErrors';
+	import { defaultPostAuthPath, waitForAuthUser } from '$lib/utils/authRedirect';
 
 	let formData = {
 		first_name: '',
@@ -18,20 +20,35 @@
 	
 	let isLoading = false;
 	let googleLoading = false;
+	let leaving = false;
 	let errors: Record<string, string> = {};
 	let globalError = '';
 
-	onMount(async () => {
-		const result = await authService.handleGoogleRedirect();
-		if (result.error) {
-			globalError = friendlyAuthError({ message: result.error });
-			return;
+	$: checkingSession = $auth.loading || leaving;
+
+	async function finishSignIn(preferred?: string | null) {
+		if (leaving) return;
+		leaving = true;
+		try {
+			const user = await waitForAuthUser();
+			await goto(defaultPostAuthPath(user, preferred || $page.url.searchParams.get('redirect')));
+		} catch (err) {
+			leaving = false;
+			throw err;
 		}
-		if (result.user) {
-			const redirect = result.redirectUrl || $page.url.searchParams.get('redirect') || '/student/dashboard';
-			await goto(redirect);
+	}
+
+	onMount(async () => {
+		const storedError = sessionStorage.getItem('prosiya_auth_error');
+		if (storedError) {
+			sessionStorage.removeItem('prosiya_auth_error');
+			globalError = friendlyAuthError({ message: storedError });
 		}
 	});
+
+	$: if (!checkingSession && !leaving && !$auth.loading && $auth.isAuthenticated) {
+		finishSignIn($page.url.searchParams.get('redirect'));
+	}
 	
 	function validateForm() {
 		errors = {};
@@ -59,11 +76,11 @@
 		
 		try {
 			await authService.register(formData);
-			const redirect = $page.url.searchParams.get('redirect') || '/student/dashboard';
-			await goto(redirect);
+			await finishSignIn($page.url.searchParams.get('redirect'));
 		} catch (err: any) {
 			console.error('Registration error:', err);
 			globalError = friendlyAuthError(err);
+			leaving = false;
 		} finally {
 			isLoading = false;
 		}
@@ -74,10 +91,14 @@
 		googleLoading = true;
 		try {
 			const redirect = $page.url.searchParams.get('redirect') || '/student/dashboard';
-			await authService.loginWithGoogle(redirect);
+			const user = await authService.loginWithGoogle(redirect);
+			if (user) {
+				await finishSignIn(redirect);
+			}
 		} catch (err: any) {
 			console.error('Google sign-up error:', err);
 			globalError = friendlyAuthError(err);
+			leaving = false;
 			googleLoading = false;
 		}
 	}
@@ -127,6 +148,10 @@
 					<h2>Create Account</h2>
 					<p>Fill in your details to get started</p>
 				</div>
+
+				{#if checkingSession}
+					<div class="error-box info-box">Finishing sign-in…</div>
+				{/if}
                 
                 {#if globalError}
                     <div class="error-box">
@@ -226,8 +251,8 @@
 						{/if}
 					</div>
 					
-					<Button type="submit" variant="accent" size="lg" className="w-full" disabled={isLoading}>
-						{isLoading ? 'Creating Account...' : 'Create Account'}
+					<Button type="submit" variant="accent" size="lg" className="w-full" disabled={isLoading || googleLoading || checkingSession}>
+						{isLoading || leaving ? 'Creating Account...' : 'Create Account'}
 					</Button>
 				</form>
 				
@@ -240,7 +265,7 @@
 						type="button"
 						class="btn-social"
 						on:click={handleGoogleSignUp}
-						disabled={googleLoading || isLoading}
+						disabled={googleLoading || isLoading || checkingSession}
 					>
 						<span class="social-icon">G</span>
 						{googleLoading ? 'Signing up...' : 'Sign up with Google'}
@@ -365,6 +390,12 @@
 		margin-bottom: 1.5rem;
 		border-left: 4px solid var(--color-error);
     }
+
+	.info-box {
+		background: rgba(253, 185, 19, 0.12);
+		color: var(--color-navy-dark);
+		border-left: 4px solid var(--color-accent);
+	}
 
 	.form-header h2 {
 		font-size: 2rem;

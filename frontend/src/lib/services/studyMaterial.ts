@@ -70,9 +70,14 @@ export const studyMaterialService = {
 
 	async getAccess(userId: string, courseSlug: string): Promise<MaterialAccess | null> {
 		const docRef = doc(db, 'material_access', accessDocId(userId, courseSlug));
-		const snap = await getDoc(docRef);
-		if (!snap.exists()) return null;
-		return { id: snap.id, ...snap.data() } as MaterialAccess;
+		try {
+			const snap = await getDoc(docRef);
+			if (!snap.exists()) return null;
+			return { id: snap.id, ...snap.data() } as MaterialAccess;
+		} catch (error: any) {
+			if (error?.code === 'permission-denied') return null;
+			throw error;
+		}
 	},
 
 	async getMyAccessRequests(userId: string): Promise<MaterialAccess[]> {
@@ -90,7 +95,9 @@ export const studyMaterialService = {
 	}): Promise<MaterialAccess> {
 		const id = accessDocId(params.userId, params.courseSlug);
 		const existing = await this.getAccess(params.userId, params.courseSlug);
-		if (existing) return existing;
+		if (existing?.status === 'approved' || existing?.status === 'pending') {
+			return existing;
+		}
 
 		const record: Omit<MaterialAccess, 'id'> = {
 			userId: params.userId,
@@ -102,8 +109,19 @@ export const studyMaterialService = {
 			requestedAt: new Date().toISOString()
 		};
 
-		await setDoc(doc(db, 'material_access', id), record);
+		await setDoc(doc(db, 'material_access', id), record, { merge: true });
 		return { id, ...record };
+	},
+
+	async listAccessForUser(userId: string): Promise<MaterialAccess[]> {
+		return this.getMyAccessRequests(userId);
+	},
+
+	async approveAllPendingForUser(userId: string, adminUid: string) {
+		const records = await this.getMyAccessRequests(userId);
+		const pending = records.filter((record) => record.status === 'pending');
+		await Promise.all(pending.map((record) => this.approveAccess(record.id, adminUid)));
+		return pending.length;
 	},
 
 	async listPendingAccess(): Promise<MaterialAccess[]> {

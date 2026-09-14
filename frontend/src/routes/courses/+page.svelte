@@ -10,8 +10,8 @@
 </script>
 
 <svelte:head>
-	<title>Courses - ProSiya LMS</title>
-	<meta name="description" content="Security Grades A–E and Armed Response training. Combined Grade E, D & C from R1,950. Accredited programmes by ProSiya." />
+	<title>Programmes — ProSiya Group</title>
+	<meta name="description" content="Explore ProSiya’s professional security and firearm programmes, from Grades E, D and C through armed response, CIT, CPO and firearm competency." />
 </svelte:head>
 
 <div class="page">
@@ -20,9 +20,10 @@
 	<main class="main">
 		<section class="courses-hero">
 			<div class="container">
-				<h1 class="page-title">Our Courses</h1>
+				<p class="eyebrow">Professional security & firearm training</p>
+				<h1 class="page-title">Our programmes</h1>
 				<p class="page-subtitle">
-					Professional security training programmes with clear pricing. Tap a course to view details — you’ll need to log in to see full content and enroll.
+					Choose a professional starting point, review the programme details, and follow the path into your next stage of training with ProSiya Group.
 				</p>
 			</div>
 		</section>
@@ -34,6 +35,8 @@
 						<CourseCard
 							title={course.title}
 							image={course.image}
+							category={course.category}
+							description={course.short_description}
 							features={course.features}
 							href={course.href}
 							price={course.price}
@@ -75,6 +78,7 @@
 		margin: 0 auto;
 		line-height: 1.6;
 	}
+	.eyebrow { margin: 0 0 .6rem; color: var(--color-accent-dark, var(--color-navy-dark)); font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-align: center; text-transform: uppercase; }
 	.courses-section {
 		padding: 2rem 0 4rem;
 	}

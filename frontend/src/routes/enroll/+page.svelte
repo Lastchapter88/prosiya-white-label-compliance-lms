@@ -15,12 +15,13 @@
 			<div class="container">
 				<h1 class="page-title">Get Started</h1>
 				<p class="page-subtitle">
-					Create an account to enroll in security grades, firearm competency, armed response, CIT and CPO programmes.
+					Create an account, apply for a programme, then send proof of payment. An admin must
+					authorise each course before you can open lessons.
 				</p>
 				<div class="actions">
-					<a href="/register" class="btn btn-accent">Create Account</a>
+					<a href="/courses" class="btn btn-accent">Browse programmes</a>
+					<a href="/register" class="btn btn-outline">Create Account</a>
 					<a href="/login" class="btn btn-outline">Sign In</a>
-					<a href="/courses" class="btn btn-outline">Browse Courses</a>
 				</div>
 
 				<div class="payment-box">

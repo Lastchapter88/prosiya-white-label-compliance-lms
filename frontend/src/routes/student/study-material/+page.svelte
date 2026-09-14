@@ -1,21 +1,25 @@
 <script lang="ts">
 	import { Badge, Button, PaymentInstructions } from '$lib/components';
 	import { onMount } from 'svelte';
-	import { auth, hasPaidAccess } from '$lib/stores/auth';
+	import { auth } from '$lib/stores/auth';
 	import { enrollmentService, type LearnerCourse } from '$lib/services/enrollments';
 	import { materialSubtitle, studyMaterialService, type StudyMaterial } from '$lib/services/studyMaterial';
+	import { hasCourseAccess } from '$lib/utils/courseAccess';
 
 	let courses: LearnerCourse[] = [];
 	let isLoading = true;
 	let error: string | null = null;
 	let downloadingId: string | null = null;
 
-	$: paid = hasPaidAccess($auth.user);
+	$: unlockedCourses = courses.filter((course) => hasCourseAccess($auth.user, course.accessStatus));
 
 	onMount(async () => {
 		try {
 			if ($auth.user?.id) {
-				courses = await enrollmentService.getMyCourses($auth.user.id);
+				courses = await enrollmentService.getMyCourses(
+					$auth.user.id,
+					$auth.user.paymentStatus === 'paid'
+				);
 			}
 		} catch (e: any) {
 			error = e.message || 'Failed to load study materials';
@@ -25,7 +29,8 @@
 	});
 
 	async function downloadMaterial(material: StudyMaterial) {
-		if (!paid) return;
+		const course = courses.find((item) => item.courseSlug === material.courseSlug);
+		if (!hasCourseAccess($auth.user, course?.accessStatus)) return;
 		downloadingId = material.id;
 		try {
 			const url = await studyMaterialService.getDownloadUrl(material.storagePath);
@@ -45,37 +50,34 @@
 <div class="page-head">
 	<p class="kicker">Study packs</p>
 	<h1>Your materials</h1>
-	<p>Official PDFs grouped by the courses you enrolled in.</p>
+	<p>Official PDFs only appear for courses an admin has authorised.</p>
 </div>
 
 {#if isLoading}
 	<div class="panel muted">Loading study packs…</div>
 {:else if error}
 	<div class="panel error">{error}</div>
-{:else if !paid}
+{:else if unlockedCourses.length === 0}
 	<div class="panel payment">
 		<div class="lock" aria-hidden="true">🔒</div>
-		<h2>Payment unlocks these files</h2>
+		<h2>No authorised study packs yet</h2>
 		<p>
-			You can see which packs belong to your courses. Downloads open after ProSiya confirms payment.
+			Signing in does not open PDFs. Apply for a course, pay, and wait for an admin to authorise that programme.
 		</p>
 		<div class="pay-box">
 			<PaymentInstructions />
 		</div>
 		<div class="actions">
-			<Button href="/courses" variant="navy">Course fees</Button>
-			<Button href="/student/courses" variant="outline">My courses</Button>
+			<Button href="/courses" variant="navy">Apply for a course</Button>
+			<Button href="/student/courses" variant="outline">My applications</Button>
 		</div>
 	</div>
-{:else if courses.length === 0}
-	<div class="panel muted">
-		<p>Enrol in a course to receive its study pack here.</p>
-		<Button href="/courses" variant="accent">Browse courses</Button>
-	</div>
 {:else}
-	<Badge variant="success">Payment confirmed — packs unlocked</Badge>
+	<Badge variant="success">
+		{unlockedCourses.length} authorised pack{unlockedCourses.length === 1 ? '' : 's'}
+	</Badge>
 	<div class="packs">
-		{#each courses as course}
+		{#each unlockedCourses as course}
 			<section class="panel pack">
 				<div class="pack-head">
 					<img src={course.image} alt="" />

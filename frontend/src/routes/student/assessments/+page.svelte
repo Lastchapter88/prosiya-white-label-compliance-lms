@@ -3,14 +3,19 @@
 	import { onMount } from 'svelte';
 	import { auth } from '$lib/stores/auth';
 	import { enrollmentService, type LearnerCourse } from '$lib/services/enrollments';
+	import { hasCourseAccess } from '$lib/utils/courseAccess';
 
 	let courses: LearnerCourse[] = [];
 	let isLoading = true;
+	$: unlocked = courses.filter((course) => hasCourseAccess($auth.user, course.accessStatus));
 
 	onMount(async () => {
 		try {
 			if ($auth.user?.id) {
-				courses = await enrollmentService.getMyCourses($auth.user.id);
+				courses = await enrollmentService.getMyCourses(
+					$auth.user.id,
+					$auth.user.paymentStatus === 'paid'
+				);
 			}
 		} finally {
 			isLoading = false;
@@ -25,19 +30,23 @@
 <div class="page-head">
 	<p class="kicker">Assessments</p>
 	<h1>Tests and legal knowledge</h1>
-	<p>Use the study pack first. Practical and legal tests are completed with ProSiya Academy.</p>
+	<p>Tests open only for courses an admin has authorised.</p>
 </div>
 
 {#if isLoading}
 	<div class="panel muted">Loading assessments…</div>
-{:else if courses.length === 0}
+{:else if unlocked.length === 0}
 	<div class="panel empty">
-		<p>Enrol in a course to see the tests that belong to it.</p>
+		<p>
+			{courses.length
+				? 'Your applications are pending. Assessments stay locked until an admin authorises the course.'
+				: 'Apply for a course first. Tests appear after ProSiya authorises access.'}
+		</p>
 		<Button href="/courses" variant="accent">Browse courses</Button>
 	</div>
 {:else}
 	<div class="list">
-		{#each courses as course}
+		{#each unlocked as course}
 			<section class="hero">
 				<p class="label">Study then test</p>
 				<h2>{course.courseTitle}</h2>

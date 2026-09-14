@@ -511,13 +511,15 @@
 	@media (max-width: 480px) {
 		.chat-root {
 			right: 0.75rem;
-			bottom: 0.75rem;
+			bottom: 0.9rem;
 		}
 
 		.chat-panel {
 			width: calc(100vw - 1.5rem);
 			height: min(70vh, calc(100vh - 5.5rem));
 		}
+
+		.chat-fab { width: 3rem; height: 3rem; }
 	}
 
 	@media (max-width: 959px) {

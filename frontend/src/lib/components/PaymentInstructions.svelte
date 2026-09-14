@@ -19,7 +19,7 @@
 			<a href={paymentDetails.whatsAppProofUrl} target="_blank" rel="noopener noreferrer">
 				{paymentDetails.proofOfPaymentPhone} on WhatsApp
 			</a>.
-			Once verified, ProSiya Academy will unlock your study materials.
+			Once verified, an admin will authorise the specific course you applied for. Signing in does not unlock lessons.
 		</p>
 	</div>
 
@@ -32,7 +32,7 @@
 			<a href={paymentDetails.whatsAppProofUrl} target="_blank" rel="noopener noreferrer">
 				{paymentDetails.proofOfPaymentPhone} on WhatsApp
 			</a>
-			so we can verify your payment and activate your account.
+			so we can verify your payment and authorise that course.
 		</p>
 	</div>
 

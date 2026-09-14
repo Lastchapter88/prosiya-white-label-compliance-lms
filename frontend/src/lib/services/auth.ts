@@ -5,6 +5,7 @@ import {
 	signOut,
 	updateProfile,
 	GoogleAuthProvider,
+	signInWithPopup,
 	signInWithRedirect,
 	getRedirectResult
 } from 'firebase/auth';
@@ -13,7 +14,19 @@ import { isAdminEmail, normalizeEmail } from '$lib/config/admins';
 
 const GOOGLE_REDIRECT_KEY = 'prosiya_google_redirect';
 
-async function ensureFirestoreUser(user: any) {
+function googleProvider() {
+	const provider = new GoogleAuthProvider();
+	provider.setCustomParameters({ prompt: 'select_account' });
+	provider.addScope('email');
+	provider.addScope('profile');
+	return provider;
+}
+
+export async function ensureFirestoreUser(user: {
+	uid: string;
+	email?: string | null;
+	displayName?: string | null;
+}) {
 	const userRef = doc(db, 'users', user.uid);
 	const userSnap = await getDoc(userRef);
 	const email = normalizeEmail(user.email || '');
@@ -34,7 +47,10 @@ async function ensureFirestoreUser(user: any) {
 			isActive: true,
 			updatedAt: new Date().toISOString()
 		});
-	} else if (isAdminEmail(email) && userSnap.data().role !== 'admin') {
+		return;
+	}
+
+	if (isAdminEmail(email) && userSnap.data().role !== 'admin') {
 		await updateDoc(userRef, {
 			role: 'admin',
 			updatedAt: new Date().toISOString()
@@ -43,7 +59,7 @@ async function ensureFirestoreUser(user: any) {
 }
 
 export const authService = {
-	async login(credentials: any) {
+	async login(credentials: { email: string; password: string }) {
 		const { email, password } = credentials;
 		const result = await signInWithEmailAndPassword(firebaseAuth, email, password);
 		try {
@@ -54,16 +70,39 @@ export const authService = {
 		return result.user;
 	},
 
-	loginWithGoogle(redirectUrl?: string) {
+	async loginWithGoogle(redirectUrl?: string) {
 		if (typeof window !== 'undefined' && redirectUrl) {
 			sessionStorage.setItem(GOOGLE_REDIRECT_KEY, redirectUrl);
 		}
-		const provider = new GoogleAuthProvider();
-		return signInWithRedirect(firebaseAuth, provider);
+
+		const provider = googleProvider();
+		try {
+			const result = await signInWithPopup(firebaseAuth, provider);
+			try {
+				await ensureFirestoreUser(result.user);
+			} catch (profileErr) {
+				console.error('Profile sync after Google sign-in failed:', profileErr);
+			}
+			if (typeof window !== 'undefined') {
+				sessionStorage.removeItem(GOOGLE_REDIRECT_KEY);
+			}
+			return result.user;
+		} catch (err: any) {
+			const code = String(err?.code || '');
+			const useRedirect =
+				code === 'auth/popup-blocked' ||
+				code === 'auth/operation-not-supported-in-this-environment';
+			if (useRedirect) {
+				await signInWithRedirect(firebaseAuth, provider);
+				return undefined;
+			}
+			throw err;
+		}
 	},
 
 	async handleGoogleRedirect(): Promise<{ user?: any; redirectUrl?: string; error?: string }> {
-		const storedRedirect = typeof window !== 'undefined' ? sessionStorage.getItem(GOOGLE_REDIRECT_KEY) : null;
+		const storedRedirect =
+			typeof window !== 'undefined' ? sessionStorage.getItem(GOOGLE_REDIRECT_KEY) : null;
 		try {
 			const result = await getRedirectResult(firebaseAuth);
 			if (result?.user) {
@@ -72,20 +111,23 @@ export const authService = {
 				} catch (profileErr) {
 					console.error('Profile sync after Google sign-in failed:', profileErr);
 				}
+				if (typeof window !== 'undefined') {
+					sessionStorage.removeItem(GOOGLE_REDIRECT_KEY);
+				}
 				return { user: result.user, redirectUrl: storedRedirect || undefined };
 			}
-			return {};
+			return { redirectUrl: storedRedirect || undefined };
 		} catch (err: any) {
-			const msg = err?.message || 'Google sign-in failed';
-			return { error: msg };
-		} finally {
-			if (typeof window !== 'undefined') {
-				sessionStorage.removeItem(GOOGLE_REDIRECT_KEY);
-			}
+			return { error: err?.message || 'Google sign-in failed' };
 		}
 	},
 
-	async register(userData: any) {
+	async register(userData: {
+		email: string;
+		password: string;
+		first_name?: string;
+		last_name?: string;
+	}) {
 		const { email, password, first_name, last_name } = userData;
 		const normalizedEmail = normalizeEmail(email);
 
@@ -113,11 +155,11 @@ export const authService = {
 				updatedAt: new Date().toISOString()
 			});
 		} catch (profileErr) {
-			// Auth account already exists — do not fail registration for profile write issues.
 			console.error('Profile create after register failed:', profileErr);
 			try {
 				await ensureFirestoreUser({
-					...result.user,
+					uid: result.user.uid,
+					email: result.user.email,
 					displayName: `${first_name || ''} ${last_name || ''}`.trim()
 				});
 			} catch (retryErr) {

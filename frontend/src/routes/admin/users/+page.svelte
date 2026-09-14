@@ -95,7 +95,8 @@
 			<div>
 				<h1>Registered Users</h1>
 				<p class="subtitle">
-					View everyone who has signed up and control study material access with payment status.
+					View everyone who has signed up. Payment status is a record only — course access is
+					approved per programme under Course applications.
 				</p>
 			</div>
 			<button class="refresh-btn" type="button" on:click={loadUsers} disabled={loading}>
@@ -109,11 +110,11 @@
 				<strong class="stat-value">{users.length}</strong>
 			</div>
 			<div class="stat-card paid">
-				<span class="stat-label">Paid (material access)</span>
+				<span class="stat-label">Marked paid</span>
 				<strong class="stat-value">{paidCount}</strong>
 			</div>
 			<div class="stat-card unpaid">
-				<span class="stat-label">Awaiting payment</span>
+				<span class="stat-label">Unpaid / awaiting proof</span>
 				<strong class="stat-value">{unpaidCount}</strong>
 			</div>
 		</div>
@@ -145,7 +146,7 @@
 							<th>Registered</th>
 							<th>Role</th>
 							<th>Payment</th>
-							<th class="text-right">Material access</th>
+							<th class="text-right">Payment record</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -199,8 +200,9 @@
 		</div>
 
 		<p class="help-text">
-			Toggle <strong>Paid</strong> after confirming course payment. Paid learners can download study
-			materials immediately; unpaid learners will see instructions to complete payment first.
+			Marking a learner as paid does <strong>not</strong> open their courses. Approve each course on
+			the <a href="/admin/study-material">Course applications</a> page after you confirm payment.
+			Unpaid learners can enrol and submit an application only.
 		</p>
 	</main>
 </div>
@@ -456,6 +458,11 @@
 		margin-top: 1rem;
 		color: var(--color-text-secondary);
 		font-size: 0.9rem;
+	}
+
+	.help-text a {
+		color: var(--color-navy);
+		font-weight: 700;
 	}
 
 	@media (max-width: 1024px) {

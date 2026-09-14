@@ -6,6 +6,7 @@
 	import { courseCatalogue } from '$lib/data/courses';
 	import { auth } from '$lib/stores/auth';
 	import { enrollmentService } from '$lib/services/enrollments';
+	import { studyMaterialService, type MaterialAccessStatus } from '$lib/services/studyMaterial';
 	import { fade } from 'svelte/transition';
 	
 	let course: any = null;
@@ -13,6 +14,7 @@
 	let error: string | null = null;
 	let enrollLoading = false;
 	let showEnrollSuccess = false;
+	let accessStatus: MaterialAccessStatus | 'none' = 'none';
 
 	function catalogueCourse(slug: string) {
 		const match = courseCatalogue.find((item) => item.slug === slug);
@@ -25,7 +27,10 @@
 			short_description: match.short_description,
 			category: match.category,
 			level: match.level,
-			duration_hours: 40,
+			duration_hours: null,
+			theory_hours: null,
+			practical_hours: null,
+			min_age: null,
 			price: match.price,
 			currency: match.currency,
 			cover_image: match.image,
@@ -46,9 +51,21 @@
 		} finally {
 			isLoading = false;
 		}
+
+		if ($auth.user?.id && slug) {
+			const access = await studyMaterialService.getAccess($auth.user.id, slug);
+			accessStatus = access?.status || 'none';
+		}
 	});
 
+	$: if ($auth.user?.id && course?.slug) {
+		studyMaterialService.getAccess($auth.user.id, course.slug).then((access) => {
+			accessStatus = access?.status || 'none';
+		});
+	}
+
 	async function handleEnroll() {
+		if ($auth.loading) return;
 		if (!$auth.isAuthenticated) {
 			window.location.href = `/login?redirect=/courses/${($page.params as any).slug}`;
 			return;
@@ -74,6 +91,7 @@
 			}
 
 			showEnrollSuccess = true;
+			accessStatus = 'pending';
 		} catch (e: any) {
 			alert(e.message || 'Failed to enroll in course');
 		} finally {
@@ -81,15 +99,15 @@
 		}
 	}
 
-	const accreditations = [
-		{ name: 'PSIRA', logo: '/images/badges/psira.png' },
-		{ name: 'QCTO', logo: '/images/badges/qcto.png' },
-		{ name: 'SASSETA', logo: '/images/badges/sasseta.png' }
-	];
+	$: accreditations = [
+		{ name: 'PSIRA', code: course?.psira_code, logo: '/images/badges/psira.png' },
+		{ name: 'QCTO', code: course?.qcto_code, logo: '/images/badges/qcto.png' },
+		{ name: 'SASSETA', code: course?.sasseta_code, logo: '/images/badges/sasseta.png' }
+	].filter((item) => item.code);
 </script>
 
 <svelte:head>
-	<title>{course?.title || 'Course Details'} - ProSiya LMS</title>
+	<title>{course?.title || 'Programme Details'} - ProSiya Group</title>
 </svelte:head>
 
 <div class="page">
@@ -105,7 +123,7 @@
 			<div class="error-state">
 				<h2>Oops!</h2>
 				<p>{error}</p>
-				<Button href="/courses" variant="outline">Back to Courses</Button>
+				<Button href="/courses" variant="outline">Back to programmes</Button>
 			</div>
 		{:else if course}
 			<!-- Course Hero -->
@@ -118,10 +136,7 @@
 							<p class="course-subtitle">{course.short_description}</p>
 							
 							<div class="course-meta">
-								<div class="meta-item">
-									<span class="icon">📅</span>
-									<span>{course.duration_hours} Hours</span>
-								</div>
+								{#if course.duration_hours != null}<div class="meta-item"><span class="icon">📅</span><span>{course.duration_hours} Hours</span></div>{/if}
 								<div class="meta-item">
 									<span class="icon">📊</span>
 									<span>{course.level}</span>
@@ -150,31 +165,53 @@
 										<span class="price">{course.price}</span>
 									</div>
 									
-									<Button 
-                                        variant="accent" 
-                                        size="lg" 
-                                        className="w-full mb-3"
-                                        on:click={handleEnroll}
-                                        disabled={enrollLoading}
-                                    >
-                                        {enrollLoading ? 'Enrolling...' : 'Enroll Now'}
-                                    </Button>
+									{#if accessStatus === 'approved'}
+										<Button
+											variant="accent"
+											size="lg"
+											className="w-full mb-3"
+											href="/student/courses/{course.slug}"
+										>
+											Open authorised course
+										</Button>
+									{:else}
+										<Button
+											variant="accent"
+											size="lg"
+											className="w-full mb-3"
+											on:click={handleEnroll}
+											disabled={enrollLoading || accessStatus === 'pending'}
+										>
+											{enrollLoading
+												? 'Submitting…'
+												: accessStatus === 'pending'
+													? 'Application submitted'
+													: accessStatus === 'denied'
+														? 'Apply again'
+														: 'Apply to enrol'}
+										</Button>
+									{/if}
 
 									<div class="payment-note">
-										<p class="payment-note-title">After enrolling</p>
-										<PaymentInstructions variant="compact" showHeading={false} />
+										<p class="payment-note-title">
+											{accessStatus === 'approved'
+												? 'This course is unlocked'
+												: 'Applying does not unlock the course'}
+										</p>
+										{#if accessStatus !== 'approved'}
+											<PaymentInstructions variant="compact" showHeading={false} />
+										{/if}
 									</div>
 									
 									<div class="includes">
-										<h4>This course includes:</h4>
+									<h4>Programme information</h4>
 										<ul>
-											<li>✓ {course.duration_hours} Hours of content</li>
-                                            {#if course.practical_hours > 0}
-											    <li>✓ {course.practical_hours} Hours practical training</li>
-                                            {/if}
-											<li>✓ Lifetime access</li>
-											<li>✓ Certificate of completion</li>
-											<li>✓ Regulatory compliance support</li>
+											{#if course.duration_hours != null}<li>✓ {course.duration_hours} total hours</li>{/if}
+                                            {#if course.theory_hours != null}<li>✓ {course.theory_hours} theory hours</li>{/if}
+                                            {#if course.practical_hours != null && course.practical_hours > 0}<li>✓ {course.practical_hours} practical hours</li>{/if}
+											{#if course.min_age != null}<li>✓ Minimum age: {course.min_age}</li>{/if}
+											{#if course.modules?.length}<li>✓ {course.modules.length} learning modules</li>{/if}
+											{#if !course.duration_hours && !course.min_age && !course.modules?.length}<li>Programme details available from ProSiya during enrolment.</li>{/if}
 										</ul>
 									</div>
 								</div>
@@ -191,14 +228,15 @@
 						<div class="main-content">
 							<!-- Course Description -->
 							<div class="content-section">
-								<h2>Course Overview</h2>
+								<h2>Programme overview</h2>
 								<p class="description">{course.description}</p>
 							</div>
 							
 							<!-- Course Curriculum -->
 							<div class="content-section">
-								<h2>Course Curriculum</h2>
+								<h2>What you will learn</h2>
 								<div class="modules-list">
+									{#if !course.modules?.length}<p class="empty-copy">Detailed modules will appear here when they are available for this programme. Contact ProSiya if you need help understanding the content before enrolling.</p>{/if}
 									{#each course.modules as module, index}
 										<div class="module-item">
 											<div class="module-header">
@@ -231,11 +269,11 @@
 							<div class="content-section">
 								<h2>Requirements</h2>
 								<ul class="requirements-list">
-									<li>Minimum Age: {course.min_age}</li>
-                                    {#if course.requires_id_verification}
-									    <li>Valid Identification Required</li>
-                                    {/if}
-                                    <li>English Proficiency</li>
+									{#if course.min_age != null}<li>Minimum age: {course.min_age}</li>{/if}
+					{#if course.requires_id_verification}
+					    <li>Valid identification required</li>
+					{/if}
+					{#if course.min_age == null && !course.requires_id_verification}<li>Requirements for this programme are available from ProSiya during enrolment.</li>{/if}
 								</ul>
 							</div>
 						</div>
@@ -249,21 +287,21 @@
 
     <Modal 
         show={showEnrollSuccess} 
-        title="Enrollment Successful!" 
+        title="Application submitted"
         on:close={() => window.location.href = '/student/dashboard'}
     >
         <div class="success-message">
-            <div class="success-icon">🎉</div>
-            <p>You have successfully enrolled in <strong>{course?.title}</strong>.</p>
+            <div class="success-icon">✅</div>
+            <p>Your application for <strong>{course?.title}</strong> has been sent.</p>
             <p>
-                To unlock study materials, complete your course payment and send proof of payment as
-                shown below. Your account will be activated once payment is verified.
+                Signing in does not unlock lessons. Pay, send proof of payment, and wait for an admin
+                to authorise this course.
             </p>
             <PaymentInstructions variant="compact" showHeading={false} />
         </div>
         <div slot="footer">
-            <Button on:click={() => window.location.href = '/student/courses'} variant="accent">Open study portal</Button>
-            <Button on:click={() => window.location.href = '/student/dashboard'} variant="outline">Dashboard</Button>
+            <Button on:click={() => window.location.href = '/student/dashboard'} variant="accent">View application status</Button>
+            <Button on:click={() => window.location.href = '/courses'} variant="outline">Browse programmes</Button>
         </div>
     </Modal>
 </div>
@@ -447,6 +485,8 @@
 		color: var(--color-text);
 		white-space: pre-line;
 	}
+
+	.empty-copy { color: var(--color-text-secondary); line-height: 1.7; }
 	
 	.modules-list {
 		display: flex;

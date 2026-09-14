@@ -3,6 +3,9 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { courseService } from '$lib/services/courses';
+	import { enrollmentService } from '$lib/services/enrollments';
+	import { auth } from '$lib/stores/auth';
+	import { hasCourseAccess } from '$lib/utils/courseAccess';
 	import { fade, slide } from 'svelte/transition';
 
 	let course: any = null;
@@ -21,9 +24,19 @@
 	async function loadData() {
 		isLoading = true;
 		try {
-			// Fetch course to get the index/sidebar
+			if ($auth.user?.id) {
+				const courses = await enrollmentService.getMyCourses(
+					$auth.user.id,
+					$auth.user.paymentStatus === 'paid'
+				);
+				const enrolled = courses.find((item) => item.courseSlug === slug);
+				if (!hasCourseAccess($auth.user, enrolled?.accessStatus)) {
+					error = 'This lesson is locked until an admin authorises the course.';
+					isLoading = false;
+					return;
+				}
+			}
 			course = await courseService.getCourse(slug);
-			// Fetch lesson details (video url, etc)
 			currentLesson = await courseService.getLesson(lessonId);
 		} catch (e: any) {
 			error = e.message || "Failed to load lesson";

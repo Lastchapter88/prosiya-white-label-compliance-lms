@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { auth, hasPaidAccess } from '$lib/stores/auth';
+	import { auth } from '$lib/stores/auth';
 	import { companyContact } from '$lib/data/companyProfile';
 
 	$: user = $auth.user;
-	$: paid = hasPaidAccess(user);
 	$: name = [user?.first_name, user?.last_name].filter(Boolean).join(' ') || 'Learner';
 
 	async function logout() {
@@ -25,7 +24,7 @@
 	<div>
 		<strong>{name}</strong>
 		<p>{user?.email || ''}</p>
-		<p class="status">{paid ? 'Study access unlocked' : 'Payment pending'}</p>
+		<p class="status">Course access is granted by an admin after your application and payment.</p>
 	</div>
 </section>
 

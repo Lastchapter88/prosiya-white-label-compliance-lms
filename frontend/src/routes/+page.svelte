@@ -4,421 +4,68 @@
 	import { api } from '$lib/services/api';
 	import { courseCatalogue } from '$lib/data/courses';
 
-	interface Course {
-		id: string;
-		title: string;
-		slug: string;
-		cover_image: string | null;
-		short_description: string;
-		category: string;
-		level: string;
-		price?: number | string;
-		currency?: string;
-	}
-
-	const catalogueFallback = courseCatalogue.map((course) => ({
-		title: course.title,
-		image: course.image,
-		features: [...course.features],
-		href: `/courses/${course.slug}`,
-		price: course.price,
-		currency: course.currency
-	}));
-
-	let courses: any[] = catalogueFallback;
-	let isLoading = true;
+	interface Course { title: string; slug: string; cover_image: string | null; short_description: string; category: string; level: string; price?: number | string; currency?: string; }
+	const fallback = courseCatalogue.map((course) => ({ title: course.title, image: course.image, features: [course.category, course.short_description, ...course.features.slice(1)], href: `/courses/${course.slug}`, price: course.price, currency: course.currency }));
+	let courses: any[] = fallback;
 
 	onMount(async () => {
 		try {
 			const response = await api.get('/courses/list/');
-			// Handle implementation specifics of pagination vs list
 			const results = response.results || response;
-
-			if (Array.isArray(results) && results.length > 0) {
-				courses = results.map((c: Course) => ({
-					title: c.title,
-					image: c.cover_image || '/images/courses/grade-c-security.jpg',
-					features: [
-						c.category,
-						`Level: ${c.level}`,
-						c.short_description
-					],
-					href: `/courses/${c.slug}`,
-					price: c.price != null ? Number(c.price) : null,
-					currency: c.currency || 'ZAR'
-				}));
-			}
-		} catch (error) {
-			console.error('Failed to load courses:', error);
-			courses = catalogueFallback;
-		} finally {
-			isLoading = false;
-		}
+			if (Array.isArray(results) && results.length) courses = results.map((course: Course) => ({ title: course.title, image: course.cover_image || '/images/courses/grade-c-security.jpg', features: [course.category, course.short_description, `Level: ${course.level}`], href: `/courses/${course.slug}`, price: course.price != null ? Number(course.price) : null, currency: course.currency || 'ZAR' }));
+		} catch { courses = fallback; }
 	});
+
+	const routes = [
+		{ number: '01', title: 'Security officer', copy: 'Start with the grades and programmes that build your foundation.', href: '#security-pathway' },
+		{ number: '02', title: 'Armed response', copy: 'Explore training for armed-response work in the security industry.', href: '/courses/armed-response' },
+		{ number: '03', title: 'Close protection', copy: 'Explore specialist protection training through the CPO programme.', href: '/courses/cpo' },
+		{ number: '04', title: 'Firearm competency', copy: 'Choose from the listed handgun, rifle or shotgun programmes.', href: '/courses/handgun-business-purpose' }
+	];
+
+	const learningModes = [
+		{ label: 'On campus', title: 'Train with people.', body: 'See the people, practical environments and instructor-led work behind ProSiya training.', image: '/images/courses/security-training.png' },
+		{ label: 'Online', title: 'Keep learning moving.', body: 'Use the ProSiya online learning portal for digital study where your programme supports it.', image: '/images/courses/grade-c-security.jpg' },
+		{ label: 'Hybrid', title: 'Connect both sides.', body: 'Combine digital learning with face-to-face practical training where available for the programme.', image: '/images/courses/security-training.png' }
+	];
 </script>
 
 <svelte:head>
-	<title>ProSiya LMS - Professional Security & Firearms Training</title>
-	<meta name="description" content="Compliance-grade training platform for security and firearms professionals. PSIRA, QCTO, and SASSETA accredited." />
+	<title>ProSiya Group — Professional Security & Firearm Training</title>
+	<meta name="description" content="Professional security and firearm training in South Africa, with real instructors, practical learning and an online learning portal." />
 </svelte:head>
 
 <div class="page">
 	<Header />
-	
-	<main class="main">
-		<!-- Hero Section -->
+	<main>
 		<section class="hero">
-			<div class="container">
-				<div class="hero-content">
-					<div class="hero-text">
-						<h1 class="hero-title">Professional Security & Firearm Training</h1>
-						<p class="hero-subtitle">Integrated security solutions and accredited training for South Africa</p>
-						
-						<!-- Accreditation Badges -->
-						<div class="accreditation-badges">
-							<img src="/images/badges/psira.png" alt="PSIRA Accredited" class="badge" />
-							<img src="/images/badges/qcto.png" alt="QCTO Certified" class="badge" />
-							<img src="/images/badges/sasseta.png" alt="SASSETA Accredited" class="badge" />
-						</div>
-						
-						<!-- Course Highlights -->
-						<ul class="highlights">
-							<li>Combined Grades E, D & C — R1,950</li>
-							<li>Armed Response & CIT — R1,600</li>
-							<li>CPO — R16,750</li>
-							<li>Firearm Competency — from R2,650</li>
-						</ul>
-						
-						<div class="hero-cta">
-							<a href="/enroll" class="btn btn-accent btn-lg">Get Started</a>
-							<a href="/courses" class="btn btn-outline btn-lg">View Courses</a>
-						</div>
-					</div>
-					
-					<div class="hero-image">
-						<img src="/images/instructors/instructor-1.png" alt="Professional Instructor" />
-					</div>
-				</div>
+			<div class="container hero-grid">
+				<div class="hero-copy"><p class="eyebrow">ProSiya Group · Security & Training</p><h1>A real place to train for the work ahead.</h1><p class="hero-lead">Professional security and firearm training with real instructors, practical learning environments and digital support for your programme.</p><div class="hero-actions"><a href="#career" class="btn btn-accent">Find your career direction <span>→</span></a><a href="/courses" class="btn btn-light">Explore programmes</a></div><div class="hero-facts"><div><strong>Real people</strong><span>Instructors & learners</span></div><div><strong>Practical focus</strong><span>Training for the industry</span></div><div><strong>Digital support</strong><span>Online learning portal</span></div></div></div>
+				<div class="hero-proof"><div class="main-photo"><img src="/images/courses/security-training.png" alt="ProSiya trainees in a practical training environment" /><span>Training that happens in the real world.</span></div><div class="support-photo"><img src="/images/instructors/instructor-1.png" alt="ProSiya professional instructor" /><span>People behind the profession.</span></div><div class="proof-card"><span class="proof-label">ProSiya Group</span><strong>Professional training, online & on campus.</strong><a href="/about">Learn about the institution →</a></div></div>
 			</div>
 		</section>
-		
-		<!-- Courses Section -->
-		<section class="courses-section">
-			<div class="container">
-				<div class="section-header">
-					<h2 class="section-title">Our Courses</h2>
-					<p class="section-subtitle">Professional training programs accredited by PSIRA, QCTO, and SASSETA</p>
-				</div>
-				
-				<div class="courses-grid">
-					{#each courses as course}
-						<CourseCard 
-							title={course.title}
-							image={course.image}
-							features={course.features}
-							href={course.href}
-							price={course.price}
-							currency={course.currency}
-						/>
-					{/each}
-				</div>
-			</div>
-		</section>
-		
-		<!-- Why Choose Us Section -->
-		<section class="why-section">
-			<div class="container">
-				<h2 class="section-title">Why Choose ProSiya?</h2>
-				
-				<div class="features-grid">
-					<div class="feature-card">
-						<div class="feature-icon">🎯</div>
-						<h3>Regulator-Ready</h3>
-						<p>Fully compliant with PSIRA, QCTO, and SASSETA requirements</p>
-					</div>
-					
-					<div class="feature-card">
-						<div class="feature-icon">🔒</div>
-						<h3>Audit-Defensible</h3>
-						<p>Court-grade evidence trails and compliance documentation</p>
-					</div>
-					
-					<div class="feature-card">
-						<div class="feature-icon">👨‍🏫</div>
-						<h3>Expert Instructors</h3>
-						<p>Certified professionals with years of industry experience</p>
-					</div>
-					
-					<div class="feature-card">
-						<div class="feature-icon">📱</div>
-						<h3>Flexible Learning</h3>
-						<p>Online theory combined with practical hands-on training</p>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-	
-	<Footer />
+
+		<section class="standards"><div class="container standards-inner"><div><p class="eyebrow">Professional standards</p><p>Training connected to South African security practice and compliance.</p></div><div class="badges"><img src="/images/badges/psira.png" alt="PSIRA" /><img src="/images/badges/qcto.png" alt="QCTO" /><img src="/images/badges/sasseta.png" alt="SASSETA" /></div><a href="/accreditation">View accreditation →</a></div></section>
+
+		<section class="career" id="career"><div class="container"><div class="section-heading"><div><p class="eyebrow">Choose your direction</p><h2>What are you preparing to become?</h2></div><p>Start with a goal, then explore the programmes that can support your next step.</p></div><div class="route-grid">{#each routes as route}<a class="route-card" href={route.href}><span class="route-number">{route.number}</span><h3>{route.title}</h3><p>{route.copy}</p><span class="route-link">Explore direction <span>→</span></span></a>{/each}</div></div></section>
+
+		<section class="pathway" id="security-pathway"><div class="container pathway-grid"><div class="pathway-copy"><p class="eyebrow">A clearer starting point</p><h2>Security officer pathway</h2><p>ProSiya’s catalogue includes multiple security-officer grades. Use this view to understand the available sequence of programmes before you choose where to begin.</p><div class="pathway-note">The stages below reflect listed ProSiya programmes. They are a discovery guide, not a claim that every stage is a prerequisite for the next.</div><a href="/courses" class="btn btn-dark">Compare all programmes <span>→</span></a></div><div class="pathway-steps"><div class="path-step"><span>01</span><div><strong>Combined Grade E, D & C</strong><small>Foundation security training · R1 950</small></div></div><div class="connector"></div><div class="path-step"><span>02</span><div><strong>Grade B Security Officer</strong><small>Supervisory-level training · R1 500</small></div></div><div class="connector"></div><div class="path-step"><span>03</span><div><strong>Grade A Security Officer</strong><small>Advanced security training · R1 500</small></div></div><div class="connector"></div><div class="path-step specialist"><span>04</span><div><strong>Specialist programmes</strong><small>Armed Response · CIT · CPO · Firearm competency</small></div></div><div class="pathway-end">Career direction starts with the right programme.</div></div></div></section>
+
+		<section class="programmes"><div class="container"><div class="section-heading"><div><p class="eyebrow">Professional programmes</p><h2>Training you can act on.</h2></div><a href="/courses" class="section-link">View all programmes →</a></div><div class="programme-grid">{#each courses.slice(0, 6) as course}<CourseCard {...course} />{/each}</div></div></section>
+
+		<section class="modes"><div class="container"><div class="section-heading"><div><p class="eyebrow">How learning happens</p><h2>Choose the learning environment that fits the programme.</h2></div><p>Availability depends on the programme. Review the details or contact ProSiya before enrolling if you need guidance.</p></div><div class="mode-grid">{#each learningModes as mode}<article class="mode-card"><img src={mode.image} alt={mode.title} /><div class="mode-body"><span class="mode-label">{mode.label}</span><h3>{mode.title}</h3><p>{mode.body}</p><a href="/contact">Ask about this option <span>→</span></a></div></article>{/each}</div></div></section>
+
+		<section class="people"><div class="container"><div class="section-heading"><div><p class="eyebrow">The people behind the training</p><h2>Meet the ProSiya instructors.</h2></div><p>Professional learning is personal. These real people are part of the team behind the ProSiya training experience.</p></div><div class="instructor-grid"><article class="instructor-card"><img src="/images/instructors/instructor-1.png" alt="ProSiya instructor" /><div><span class="mode-label">ProSiya instructor</span><h3>Experience that meets the learner.</h3><p>Training is grounded in the people who guide, support and prepare learners for professional responsibility.</p></div></article><article class="instructor-card"><img src="/images/instructors/1001096616.jpg" alt="ProSiya training team member" /><div><span class="mode-label">ProSiya training team</span><h3>People you can learn from.</h3><p>Get to know the real faces connected to the institution before you choose your programme.</p></div></article></div></div></section>
+
+		<section class="community"><div class="container"><div class="community-grid"><div class="community-copy"><p class="eyebrow">A place with purpose</p><h2>Training that leads to real moments.</h2><p>Graduation, recognition and professional presence are part of what ProSiya is about. The work matters because the people, families and communities around it matter.</p><div class="graduation-strip"><figure><img src="/images/graduation%20pictures/1001096599.jpg" alt="ProSiya graduates holding certificates" /><figcaption>Progress you can hold on to.</figcaption></figure><figure><img src="/images/graduation%20pictures/1001096601.jpg" alt="ProSiya graduation presentation" /><figcaption>Professional milestones.</figcaption></figure></div><a href="/about" class="btn btn-dark">About ProSiya Group <span>→</span></a></div><div class="entourage-feature"><img src="/images/entourage/presidential.jpg" alt="ProSiya Group in an important community setting" /><div class="entourage-overlay"><span class="mode-label">Institutional presence</span><h3>Professionalism carries weight.</h3><p>ProSiya’s work sits in a wider community of people, responsibility and trust.</p></div><img class="entourage-secondary" src="/images/entourage/1001096612.jpg" alt="ProSiya Group entourage" /></div></div></div></section>
+
+		<section class="final-cta"><div class="container"><div><p class="eyebrow">Your next step</p><h2>Take your training seriously.</h2><p>Explore the programmes, understand the requirements and start your enrolment when you’re ready.</p></div><div class="cta-actions"><a href="/enroll" class="btn btn-accent">Start enrolment <span>→</span></a><a href="/contact" class="btn btn-light">Talk to ProSiya</a></div></div></section>
+	</main><Footer />
 </div>
 
 <style>
-	.page {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		background: var(--color-bg-light);
-	}
-	
-	.main {
-		flex: 1;
-	}
-	
-	/* Hero Section */
-	.hero {
-		background: white;
-		padding: 4rem 0;
-	}
-	
-	.hero-content {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 4rem;
-		align-items: center;
-	}
-	
-	.hero-title {
-		font-size: 3rem;
-		font-weight: 800;
-		color: var(--color-navy-dark);
-		margin-bottom: 1rem;
-		line-height: 1.2;
-	}
-	
-	.hero-subtitle {
-		font-size: 1.25rem;
-		color: var(--color-text-secondary);
-		margin-bottom: 2rem;
-	}
-	
-	/* Accreditation Badges */
-	.accreditation-badges {
-		display: flex;
-		gap: 1.5rem;
-		margin-bottom: 2rem;
-		flex-wrap: wrap;
-	}
-	
-	.badge {
-		height: 60px;
-		width: auto;
-		object-fit: contain;
-	}
-	
-	/* Highlights List */
-	.highlights {
-		list-style: none;
-		padding: 0;
-		margin: 0 0 2rem 0;
-	}
-	
-	.highlights li {
-		padding-left: 1.75rem;
-		position: relative;
-		margin-bottom: 0.75rem;
-		color: var(--color-text);
-		font-size: 1.05rem;
-		font-weight: 500;
-	}
-	
-	.highlights li::before {
-		content: '✓';
-		position: absolute;
-		left: 0;
-		color: var(--color-accent);
-		font-weight: bold;
-		font-size: 1.25rem;
-	}
-	
-	/* Hero CTA */
-	.hero-cta {
-		display: flex;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-	
-	.btn {
-		padding: 0.875rem 2rem;
-		border-radius: var(--radius-md);
-		font-weight: 700;
-		text-decoration: none;
-		transition: all 0.3s ease;
-		display: inline-block;
-		text-align: center;
-	}
-	
-	.btn-lg {
-		padding: 1rem 2.5rem;
-		font-size: 1.1rem;
-	}
-	
-	.btn-accent {
-		background: var(--color-accent);
-		color: var(--color-navy-dark);
-		border: 2px solid var(--color-accent);
-	}
-	
-	.btn-accent:hover {
-		background: var(--color-accent-dark);
-		border-color: var(--color-accent-dark);
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-lg);
-	}
-	
-	.btn-outline {
-		background: transparent;
-		color: var(--color-navy-dark);
-		border: 2px solid var(--color-navy-dark);
-	}
-	
-	.btn-outline:hover {
-		background: var(--color-navy-dark);
-		color: white;
-		transform: translateY(-2px);
-	}
-	
-	/* Hero Image */
-	.hero-image {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.hero-image img {
-		width: 100%;
-		max-width: 400px;
-		height: auto;
-		border-radius: var(--radius-xl);
-		box-shadow: var(--shadow-xl);
-	}
-	
-	/* Courses Section */
-	.courses-section {
-		padding: 4rem 0;
-	}
-	
-	.section-header {
-		text-align: center;
-		margin-bottom: 3rem;
-	}
-	
-	.section-title {
-		font-size: 2.5rem;
-		font-weight: 800;
-		color: var(--color-navy-dark);
-		margin-bottom: 1rem;
-	}
-	
-	.section-subtitle {
-		font-size: 1.125rem;
-		color: var(--color-text-secondary);
-		max-width: 600px;
-		margin: 0 auto;
-	}
-	
-	.courses-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 2rem;
-	}
-	
-	/* Why Section */
-	.why-section {
-		padding: 4rem 0;
-		background: white;
-	}
-	
-	.features-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 2rem;
-		margin-top: 3rem;
-	}
-	
-	.feature-card {
-		text-align: center;
-		padding: 2rem;
-		background: var(--color-bg-light);
-		border-radius: var(--radius-lg);
-		transition: all 0.3s ease;
-	}
-	
-	.feature-card:hover {
-		transform: translateY(-5px);
-		box-shadow: var(--shadow-card-hover);
-	}
-	
-	.feature-icon {
-		font-size: 3rem;
-		margin-bottom: 1rem;
-	}
-	
-	.feature-card h3 {
-		font-size: 1.25rem;
-		font-weight: 700;
-		color: var(--color-navy-dark);
-		margin-bottom: 0.75rem;
-	}
-	
-	.feature-card p {
-		color: var(--color-text-secondary);
-		line-height: 1.6;
-		margin: 0;
-	}
-	
-	/* Responsive */
-	@media (max-width: 1024px) {
-		.hero-content {
-			grid-template-columns: 1fr;
-			gap: 3rem;
-		}
-		
-		.hero-image {
-			order: -1;
-		}
-		
-		.hero-title {
-			font-size: 2.5rem;
-		}
-	}
-	
-	@media (max-width: 640px) {
-		.hero {
-			padding: 2rem 0;
-		}
-		
-		.hero-title {
-			font-size: 2rem;
-		}
-		
-		.section-title {
-			font-size: 2rem;
-		}
-		
-		.accreditation-badges {
-			gap: 1rem;
-		}
-		
-		.badge {
-			height: 50px;
-		}
-		
-		.courses-grid {
-			grid-template-columns: 1fr;
-		}
-		
-		.btn-lg {
-			width: 100%;
-		}
-	}
+	.page { min-height: 100vh; background: var(--color-bg); }.hero { background: #111b2d; color: white; padding: 3.5rem 0 3.75rem; }.hero-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 4rem; align-items: center; }.eyebrow { margin: 0 0 .7rem; color: var(--color-accent); font-size: .72rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }.hero h1 { max-width: 590px; margin: 0 0 1.25rem; color: white; font-size: clamp(2.55rem, 4vw, 4.25rem); letter-spacing: -.045em; line-height: 1; }.hero-lead { max-width: 540px; margin-bottom: 1.75rem; color: #d6e0ec; font-size: 1.08rem; line-height: 1.65; }.hero-actions, .cta-actions { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }.btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; border-radius: var(--radius-md); padding: .85rem 1.25rem; font-weight: 800; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }.btn-accent { background: var(--color-accent); color: #111b2d; }.btn-light { border: 1px solid rgba(255,255,255,.44); color: white; }.btn-dark { background: #111b2d; color: white; }.hero-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; max-width: 570px; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.18); }.hero-facts div { display: flex; flex-direction: column; gap: .2rem; }.hero-facts strong { color: var(--color-accent); font-size: .82rem; }.hero-facts span { color: #aab9cb; font-size: .72rem; line-height: 1.3; }.hero-proof { position: relative; min-height: 470px; }.main-photo { position: absolute; inset: 0 5.5rem 3rem 0; overflow: hidden; border: 6px solid white; background: #263b52; }.main-photo img { width: 100%; height: 100%; object-fit: cover; }.main-photo span, .support-photo span { position: absolute; left: 0; bottom: 0; right: 0; padding: .7rem .9rem; background: linear-gradient(transparent, rgba(9,19,33,.92)); color: white; font-size: .8rem; font-weight: 700; }.support-photo { position: absolute; right: 0; bottom: 0; width: 42%; height: 48%; overflow: hidden; border: 5px solid #111b2d; box-shadow: -8px -8px 0 var(--color-accent); }.support-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }.proof-card { position: absolute; left: 1rem; bottom: .2rem; display: flex; flex-direction: column; gap: .25rem; max-width: 245px; padding: .9rem 1rem; background: var(--color-accent); color: #111b2d; }.proof-label { font-size: .66rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }.proof-card strong { font-size: 1rem; line-height: 1.2; }.proof-card a { margin-top: .3rem; color: #111b2d; font-size: .76rem; font-weight: 800; }.standards { border-bottom: 1px solid var(--color-border); background: var(--color-surface); }.standards-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 105px; }.standards .eyebrow { margin-bottom: .25rem; color: var(--color-accent-dark); }.standards p:not(.eyebrow) { margin: 0; color: var(--color-text-secondary); font-size: .9rem; }.badges { display: flex; align-items: center; gap: 1.25rem; }.badges img { height: 40px; width: auto; object-fit: contain; }.standards a, .section-link, .mode-body a { color: var(--color-navy-dark); font-size: .82rem; font-weight: 800; text-decoration: none; }.career, .programmes, .modes { padding: 5.5rem 0; }.career { background: var(--color-bg-light); }.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; }.section-heading h2, .pathway h2, .final-cta h2 { margin: 0; color: var(--color-navy-dark); font-size: clamp(2rem, 3.2vw, 3rem); letter-spacing: -.04em; line-height: 1.05; }.section-heading > p { max-width: 390px; margin: 0; color: var(--color-text-secondary); line-height: 1.6; }.route-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }.route-card { min-height: 230px; display: flex; flex-direction: column; padding: 1.35rem; border: 1px solid var(--color-border); background: var(--color-surface); text-decoration: none; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }.route-card:hover { border-color: var(--color-accent); transform: translateY(-4px); box-shadow: var(--shadow-lg); }.route-number { color: var(--color-accent-dark); font-size: .75rem; font-weight: 900; }.route-card h3 { margin: 1.5rem 0 .5rem; color: var(--color-navy-dark); font-size: 1.35rem; }.route-card p { margin: 0; color: var(--color-text-secondary); font-size: .9rem; line-height: 1.55; }.route-link { margin-top: auto; padding-top: 1.4rem; color: var(--color-navy-dark); font-size: .78rem; font-weight: 800; }.route-link span { color: var(--color-accent-dark); }.pathway { padding: 5.5rem 0; background: #f1eee6; }.pathway-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 5rem; align-items: start; }.pathway-copy > p:not(.eyebrow) { max-width: 500px; color: var(--color-text-secondary); line-height: 1.7; }.pathway-note { margin: 1.5rem 0 1.75rem; padding: .9rem 1rem; border-left: 3px solid var(--color-accent); background: rgba(255,255,255,.56); color: var(--color-text-secondary); font-size: .8rem; line-height: 1.5; }.pathway-steps { padding: 1.5rem; border: 1px solid #d8d2c6; background: rgba(255,255,255,.66); }.path-step { display: flex; align-items: center; gap: 1rem; }.path-step > span { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; flex: 0 0 2.25rem; border-radius: 50%; background: var(--color-navy-dark); color: white; font-size: .7rem; font-weight: 900; }.path-step strong { display: block; color: var(--color-navy-dark); }.path-step small { display: block; margin-top: .25rem; color: var(--color-text-secondary); font-size: .78rem; }.connector { width: 1px; height: 1.1rem; margin-left: 1.1rem; background: var(--color-accent-dark); }.path-step.specialist > span { background: var(--color-accent); color: #111b2d; }.pathway-end { margin: 1.5rem 0 0 3.25rem; padding-top: 1rem; border-top: 1px solid #d8d2c6; color: var(--color-navy-dark); font-weight: 800; font-size: .9rem; }.programme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }.modes { background: var(--color-surface); }.mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }.mode-card { overflow: hidden; border: 1px solid var(--color-border); background: var(--color-bg-light); }.mode-card > img { display: block; width: 100%; height: 180px; object-fit: cover; }.mode-body { padding: 1.25rem; }.mode-label { color: var(--color-accent-dark); font-size: .7rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }.mode-body h3 { margin: .55rem 0 .45rem; color: var(--color-navy-dark); font-size: 1.25rem; }.mode-body p { min-height: 70px; margin: 0 0 1.1rem; color: var(--color-text-secondary); font-size: .9rem; line-height: 1.55; }.final-cta { padding: 4rem 0; background: #111b2d; }.final-cta .container { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }.final-cta h2 { color: white; }.final-cta p:not(.eyebrow) { max-width: 600px; margin: .75rem 0 0; color: #becbd9; line-height: 1.55; }
+	.people, .community { padding: 5.5rem 0; }.people { background: var(--color-bg-light); }.instructor-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }.instructor-card { display: grid; grid-template-columns: 38% 1fr; min-height: 260px; border: 1px solid var(--color-border); background: var(--color-surface); }.instructor-card img { width: 100%; height: 100%; min-height: 260px; object-fit: cover; object-position: center top; }.instructor-card > div { padding: 1.5rem; align-self: end; }.instructor-card h3 { margin: .55rem 0 .55rem; color: var(--color-navy-dark); font-size: 1.35rem; }.instructor-card p { margin: 0; color: var(--color-text-secondary); font-size: .9rem; line-height: 1.55; }.community { background: #f1eee6; }.community-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 4rem; align-items: center; }.community-copy > p:not(.eyebrow) { max-width: 540px; color: var(--color-text-secondary); line-height: 1.7; }.graduation-strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin: 1.75rem 0; }.graduation-strip figure { margin: 0; }.graduation-strip img { width: 100%; height: 190px; object-fit: cover; object-position: center; }.graduation-strip figcaption { padding: .55rem .7rem; background: var(--color-surface); color: var(--color-text-secondary); font-size: .72rem; }.entourage-feature { position: relative; min-height: 560px; padding-right: 6rem; }.entourage-feature > img:first-child { width: 100%; height: 560px; object-fit: cover; object-position: center; }.entourage-overlay { position: absolute; left: 1rem; right: 5rem; bottom: 1.4rem; padding: 1rem 1.2rem; background: rgba(17,27,45,.94); color: white; }.entourage-overlay h3 { margin: .45rem 0 .35rem; color: white; font-size: 1.45rem; }.entourage-overlay p { margin: 0; color: #c9d3df; font-size: .86rem; line-height: 1.45; }.entourage-secondary { position: absolute; right: 0; top: 3rem; width: 42%; height: 220px; object-fit: cover; border: 5px solid #f1eee6; box-shadow: -7px 7px 0 var(--color-accent); }
+	@media (max-width: 950px) { .hero-grid, .pathway-grid, .community-grid { grid-template-columns: 1fr; gap: 3rem; }.hero-proof { max-width: 720px; }.route-grid { grid-template-columns: repeat(2, 1fr); }.programme-grid { grid-template-columns: repeat(2, 1fr); }.final-cta .container { align-items: flex-start; flex-direction: column; }.entourage-feature { max-width: 720px; } }
+	@media (max-width: 680px) { .hero { padding: 2.2rem 0 2.75rem; }.hero h1 { font-size: 2.55rem; }.hero-lead { font-size: 1rem; }.hero-facts { gap: .5rem; margin-top: 2rem; }.hero-facts strong { font-size: .72rem; }.hero-facts span { font-size: .65rem; }.hero-proof { min-height: 300px; }.main-photo { inset: 0 3.5rem 2.2rem 0; border-width: 4px; }.support-photo { width: 43%; height: 48%; border-width: 4px; box-shadow: -5px -5px 0 var(--color-accent); }.proof-card { left: .5rem; bottom: 0; max-width: 220px; padding: .7rem .8rem; }.standards-inner { align-items: flex-start; flex-direction: column; gap: .8rem; padding: 1.2rem 0; }.badges img { height: 30px; }.standards a { margin-bottom: .15rem; }.career, .programmes, .modes, .people, .community, .pathway { padding: 4rem 0; }.section-heading { align-items: flex-start; flex-direction: column; gap: .75rem; }.route-grid, .programme-grid, .mode-grid, .instructor-grid { grid-template-columns: 1fr; }.route-card { min-height: 180px; }.pathway-grid { gap: 2rem; }.pathway-steps { padding: 1rem; }.path-step small { font-size: .72rem; }.mode-card > img { height: 210px; }.mode-body p { min-height: auto; }.instructor-card { grid-template-columns: 42% 1fr; min-height: 220px; }.instructor-card img { min-height: 220px; }.instructor-card > div { padding: 1rem; }.instructor-card h3 { font-size: 1.1rem; }.community-grid { gap: 2rem; }.graduation-strip img { height: 150px; }.entourage-feature { min-height: 420px; padding-right: 3rem; }.entourage-feature > img:first-child { height: 420px; }.entourage-overlay { left: .6rem; right: 2.5rem; bottom: .7rem; padding: .8rem; }.entourage-overlay h3 { font-size: 1.2rem; }.entourage-secondary { top: 1.5rem; width: 43%; height: 145px; border-width: 3px; box-shadow: -4px 4px 0 var(--color-accent); }.final-cta .container { gap: 1.5rem; } }
 </style>

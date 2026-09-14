@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { auth, isAppAdmin } from '$lib/stores/auth';
 	import {
 		cycleThemePreference,
 		getStoredThemePreference,
@@ -9,6 +10,10 @@
 
 	let mobileMenuOpen = false;
 	let themePreference: ThemePreference = 'auto';
+
+	$: signedIn = $auth.isAuthenticated;
+	$: portalHref = isAppAdmin($auth.user) ? '/admin/dashboard' : '/student/dashboard';
+	$: portalLabel = isAppAdmin($auth.user) ? 'Admin' : 'My portal';
 
 	onMount(() => {
 		themePreference = getStoredThemePreference();
@@ -33,7 +38,7 @@
 			
 			<!-- Desktop Navigation -->
 			<nav class="nav-desktop">
-				<a href="/courses" class="nav-link">Courses</a>
+				<a href="/courses" class="nav-link">Programmes</a>
 				<a href="/services" class="nav-link">Services</a>
 				<a href="/accreditation" class="nav-link">Accreditation</a>
 				<a href="/about" class="nav-link">About</a>
@@ -51,7 +56,11 @@
 				>
 					{themePreference === 'night' ? '🌙' : themePreference === 'day' ? '☀️' : '🌓'}
 				</button>
-				<a href="/login" class="btn btn-outline">Login</a>
+				{#if signedIn}
+					<a href={portalHref} class="btn btn-outline">{portalLabel}</a>
+				{:else}
+					<a href="/login" class="btn btn-outline">Login</a>
+				{/if}
 				<a href="/enroll" class="btn btn-accent">Enroll Now</a>
 			</div>
 			
@@ -64,7 +73,7 @@
 		<!-- Mobile Navigation -->
 		{#if mobileMenuOpen}
 			<nav class="nav-mobile">
-				<a href="/courses" class="nav-link-mobile">Courses</a>
+				<a href="/courses" class="nav-link-mobile">Programmes</a>
 				<a href="/services" class="nav-link-mobile">Services</a>
 				<a href="/accreditation" class="nav-link-mobile">Accreditation</a>
 				<a href="/about" class="nav-link-mobile">About</a>
@@ -73,7 +82,11 @@
 					<button type="button" class="btn btn-outline theme-toggle-mobile" on:click={toggleTheme}>
 						{themePreferenceLabel(themePreference)}
 					</button>
-					<a href="/login" class="btn btn-outline">Login</a>
+					{#if signedIn}
+						<a href={portalHref} class="btn btn-outline">{portalLabel}</a>
+					{:else}
+						<a href="/login" class="btn btn-outline">Login</a>
+					{/if}
 					<a href="/enroll" class="btn btn-accent">Enroll Now</a>
 				</div>
 			</nav>
@@ -88,7 +101,7 @@
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		padding: 1rem 0;
+		padding: 0.65rem 0;
 	}
 	
 	.header-content {
@@ -104,7 +117,7 @@
 	}
 	
 	.logo {
-		height: 80px;
+		height: 62px;
 		width: auto;
 	}
 	
@@ -283,6 +296,8 @@
 	
 	/* Desktop Styles */
 	@media (min-width: 768px) {
+		.header { padding: 0.75rem 0; }
+		.logo { height: 68px; }
 		.nav-desktop {
 			display: flex;
 		}
@@ -298,5 +313,15 @@
 		.nav-mobile {
 			display: none;
 		}
+	}
+
+	@media (max-width: 767px) {
+		.header-content { gap: 0.75rem; }
+		.logo { height: 48px; }
+		.mobile-menu-toggle { width: 36px; height: 36px; }
+		.nav-mobile { gap: 0.35rem; padding: 0.85rem 0 0.25rem; margin-top: 0.65rem; }
+		.nav-link-mobile { padding: 0.45rem 0; }
+		.mobile-actions { gap: 0.5rem; margin-top: 0.65rem; }
+		.mobile-actions .btn { padding: 0.6rem 1rem; }
 	}
 </style>

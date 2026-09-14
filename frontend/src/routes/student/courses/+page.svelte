@@ -1,19 +1,21 @@
 <script lang="ts">
 	import { Badge, Button, ProgressRing } from '$lib/components';
 	import { onMount } from 'svelte';
-	import { auth, hasPaidAccess } from '$lib/stores/auth';
+	import { auth } from '$lib/stores/auth';
 	import { enrollmentService, type LearnerCourse } from '$lib/services/enrollments';
+	import { accessStatusLabel, hasCourseAccess } from '$lib/utils/courseAccess';
 
 	let courses: LearnerCourse[] = [];
 	let isLoading = true;
 	let error: string | null = null;
 
-	$: paid = hasPaidAccess($auth.user);
-
 	onMount(async () => {
 		try {
 			if ($auth.user?.id) {
-				courses = await enrollmentService.getMyCourses($auth.user.id);
+				courses = await enrollmentService.getMyCourses(
+					$auth.user.id,
+					$auth.user.paymentStatus === 'paid'
+				);
 			}
 		} catch (e: any) {
 			error = e.message || 'Could not load your courses';
@@ -30,7 +32,7 @@
 <div class="page-head">
 	<p class="kicker">Learner portal</p>
 	<h1>My courses</h1>
-	<p>Open a course to work through the study pack at your own pace.</p>
+	<p>Applications stay here. Course files open only after an admin authorises that programme.</p>
 </div>
 
 {#if isLoading}
@@ -39,25 +41,32 @@
 	<div class="panel error">{error}</div>
 {:else if courses.length === 0}
 	<div class="panel empty">
-		<h2>No enrolments yet</h2>
-		<p>Once you enrol, this becomes your study home for that course.</p>
+		<h2>No applications yet</h2>
+		<p>Apply for a programme. You will not get course access until ProSiya approves it.</p>
 		<Button href="/courses" variant="accent">Browse courses</Button>
 	</div>
 {:else}
 	<div class="list">
 		{#each courses as course}
-			<a class="course" href="/student/courses/{course.courseSlug}">
+			<a class="course" class:locked={!hasCourseAccess($auth.user, course.accessStatus)} href="/student/courses/{course.courseSlug}">
 				<img src={course.image} alt="" />
 				<div class="copy">
-					<Badge variant="accent" size="sm">{course.category}</Badge>
+					<Badge variant={hasCourseAccess($auth.user, course.accessStatus) ? 'success' : 'warning'} size="sm">
+						{hasCourseAccess($auth.user, course.accessStatus) ? 'Unlocked' : accessStatusLabel(course.accessStatus)}
+					</Badge>
 					<h2>{course.courseTitle}</h2>
 					<p>{course.shortDescription}</p>
 					<p class="meta">
-						{course.materials.length} study file{course.materials.length === 1 ? '' : 's'}
-						{#if !paid} · locked until payment{/if}
+						{#if hasCourseAccess($auth.user, course.accessStatus)}
+							{course.materials.length} study file{course.materials.length === 1 ? '' : 's'}
+						{:else}
+							Locked until an admin authorises this course.
+						{/if}
 					</p>
 				</div>
-				<ProgressRing value={course.progress} size={58} stroke={6} />
+				{#if hasCourseAccess($auth.user, course.accessStatus)}
+					<ProgressRing value={course.progress} size={58} stroke={6} />
+				{/if}
 			</a>
 		{/each}
 	</div>
@@ -109,6 +118,10 @@
 		padding: 0.9rem;
 		text-decoration: none;
 		color: inherit;
+	}
+
+	.course.locked {
+		opacity: 0.92;
 	}
 
 	.course img {

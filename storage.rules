@@ -15,8 +15,8 @@ service firebase.storage {
       return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    function isPaidUser() {
-      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.paymentStatus == 'paid';
+    function hasApprovedCourse(courseId) {
+      return firestore.get(/databases/(default)/documents/material_access/$(request.auth.uid)_$(courseId)).data.status == 'approved';
     }
 
     // User avatars
@@ -25,15 +25,15 @@ service firebase.storage {
       allow write: if isAuthenticated() && isOwner(userId);
     }
 
-    // Course study material PDFs — admin upload; paid learners may download
+    // Course study material PDFs — admin upload; only approved courses may download
     match /courses/{courseId}/study-material/{fileName} {
-      allow read: if isAuthenticated() && (isAdmin() || isPaidUser());
+      allow read: if isAuthenticated() && (isAdmin() || hasApprovedCourse(courseId));
       allow write: if isAuthenticated() && isAdmin();
     }
 
     // Other course content (videos, legacy uploads)
     match /courses/{courseId}/{fileName} {
-      allow read: if isAuthenticated();
+      allow read: if isAuthenticated() && (isAdmin() || hasApprovedCourse(courseId));
       allow write: if isAuthenticated() && isAdmin();
     }
 

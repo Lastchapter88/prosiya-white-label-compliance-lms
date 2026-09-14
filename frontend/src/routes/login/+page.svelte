@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { authService } from '$lib/services/auth';
+	import { auth } from '$lib/stores/auth';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components';
 	import { onMount } from 'svelte';
 	import { friendlyAuthError } from '$lib/utils/authErrors';
+	import { defaultPostAuthPath, waitForAuthUser } from '$lib/utils/authRedirect';
 
 	let email = '';
 	let password = '';
@@ -12,18 +14,33 @@
 	let isLoading = false;
 	let googleLoading = false;
 	let error = '';
+	let leaving = false;
+
+	$: checkingSession = $auth.loading || leaving;
+
+	async function finishSignIn(preferred?: string | null) {
+		if (leaving) return;
+		leaving = true;
+		try {
+			const user = await waitForAuthUser();
+			await goto(defaultPostAuthPath(user, preferred || $page.url.searchParams.get('redirect')));
+		} catch (err) {
+			leaving = false;
+			throw err;
+		}
+	}
 
 	onMount(async () => {
-		const result = await authService.handleGoogleRedirect();
-		if (result.error) {
-			error = friendlyAuthError({ message: result.error });
-			return;
-		}
-		if (result.user) {
-			const redirect = result.redirectUrl || $page.url.searchParams.get('redirect') || '/student/dashboard';
-			await goto(redirect);
+		const storedError = sessionStorage.getItem('prosiya_auth_error');
+		if (storedError) {
+			sessionStorage.removeItem('prosiya_auth_error');
+			error = friendlyAuthError({ message: storedError });
 		}
 	});
+
+	$: if (!checkingSession && !leaving && !$auth.loading && $auth.isAuthenticated) {
+		finishSignIn($page.url.searchParams.get('redirect'));
+	}
 
 	async function handleLogin(event: Event) {
 		event.preventDefault();
@@ -31,25 +48,31 @@
 		error = '';
 		try {
 			await authService.login({ email, password });
-			const redirect = $page.url.searchParams.get('redirect') || '/student/dashboard';
-			await goto(redirect);
+			await finishSignIn($page.url.searchParams.get('redirect'));
 		} catch (err: any) {
 			console.error('Login error:', err);
 			error = friendlyAuthError(err);
+			leaving = false;
 		} finally {
 			isLoading = false;
 		}
 	}
 
-	function handleGoogleSignIn() {
+	async function handleGoogleSignIn() {
 		error = '';
 		googleLoading = true;
-		const redirect = $page.url.searchParams.get('redirect') || '/student/dashboard';
-		authService.loginWithGoogle(redirect).catch((err: any) => {
+		try {
+			const redirect = $page.url.searchParams.get('redirect') || '/student/dashboard';
+			const user = await authService.loginWithGoogle(redirect);
+			if (user) {
+				await finishSignIn(redirect);
+			}
+		} catch (err: any) {
 			console.error('Google sign-in error:', err);
 			error = friendlyAuthError(err);
+			leaving = false;
 			googleLoading = false;
-		});
+		}
 	}
 </script>
 
@@ -80,6 +103,10 @@
 					<h2>Sign In</h2>
 					<p>Enter your credentials to access your account</p>
 				</div>
+
+				{#if checkingSession}
+					<div class="info-message">Finishing sign-in…</div>
+				{/if}
 				
 				{#if error}
 					<div class="error-message">
@@ -96,7 +123,7 @@
 							bind:value={email}
 							placeholder="your.email@example.com"
 							required
-							disabled={isLoading}
+							disabled={isLoading || googleLoading || checkingSession}
 						/>
 					</div>
 					
@@ -108,7 +135,7 @@
 							bind:value={password}
 							placeholder="Enter your password"
 							required
-							disabled={isLoading}
+							disabled={isLoading || googleLoading || checkingSession}
 						/>
 					</div>
 					
@@ -117,7 +144,7 @@
 							<input
 								type="checkbox"
 								bind:checked={rememberMe}
-								disabled={isLoading}
+								disabled={isLoading || googleLoading || checkingSession}
 							/>
 							<span>Remember me</span>
 						</label>
@@ -125,8 +152,8 @@
 						<a href="/forgot-password" class="forgot-link">Forgot password?</a>
 					</div>
 					
-					<Button type="submit" variant="accent" size="lg" className="w-full" disabled={isLoading}>
-						{isLoading ? 'Signing in...' : 'Sign In'}
+					<Button type="submit" variant="accent" size="lg" className="w-full" disabled={isLoading || googleLoading || checkingSession}>
+						{isLoading || leaving ? 'Signing in...' : 'Sign In'}
 					</Button>
 				</form>
 				
@@ -135,7 +162,7 @@
 				</div>
 				
 				<div class="social-login">
-					<button type="button" class="btn-social" on:click={handleGoogleSignIn} disabled={googleLoading || isLoading}>
+					<button type="button" class="btn-social" on:click={handleGoogleSignIn} disabled={googleLoading || isLoading || checkingSession}>
 						<span class="social-icon">G</span>
 						{googleLoading ? 'Signing in...' : 'Continue with Google'}
 					</button>
@@ -253,13 +280,23 @@
 		color: var(--color-text-secondary);
 	}
 	
-	.error-message {
-		background: rgba(239, 68, 68, 0.1);
-		color: var(--color-error);
+	.error-message,
+	.info-message {
 		padding: 1rem;
 		border-radius: var(--radius-md);
 		margin-bottom: 1.5rem;
+	}
+
+	.error-message {
+		background: rgba(239, 68, 68, 0.1);
+		color: var(--color-error);
 		border-left: 4px solid var(--color-error);
+	}
+
+	.info-message {
+		background: rgba(253, 185, 19, 0.12);
+		color: var(--color-navy-dark);
+		border-left: 4px solid var(--color-accent);
 	}
 	
 	.form-group {

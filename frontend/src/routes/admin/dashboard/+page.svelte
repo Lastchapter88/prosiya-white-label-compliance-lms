@@ -102,10 +102,11 @@
 				<div class="section">
 					<h2>User Management</h2>
 					<p class="section-desc">
-						View registered learners and toggle paid/unpaid status to control study material access.
+						Signing in does not unlock courses. Approve each learner application after payment is confirmed.
 					</p>
 					<div class="section-actions">
 						<Button href="/admin/users" variant="navy">Manage Registered Users</Button>
+						<Button href="/admin/study-material" variant="outline">Course applications</Button>
 					</div>
 				</div>
 

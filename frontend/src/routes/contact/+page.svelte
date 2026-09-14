@@ -48,7 +48,7 @@
 
 				<div class="contact-cta">
 					<a href="/register" class="btn btn-accent">Get Started</a>
-					<a href="/courses" class="btn btn-outline">View Courses</a>
+					<a href="/courses" class="btn btn-outline">View programmes</a>
 				</div>
 			</div>
 		</section>

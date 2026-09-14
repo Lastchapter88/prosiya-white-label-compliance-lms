@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Badge, Button, PaymentInstructions, ProgressRing } from '$lib/components';
 	import { page } from '$app/stores';
-	import { auth, hasPaidAccess } from '$lib/stores/auth';
+	import { auth } from '$lib/stores/auth';
 	import { enrollmentService, type LearnerCourse } from '$lib/services/enrollments';
 	import { materialSubtitle, studyMaterialService, type StudyMaterial } from '$lib/services/studyMaterial';
+	import { accessStatusLabel, hasCourseAccess } from '$lib/utils/courseAccess';
 
 	let course: LearnerCourse | null = null;
 	let tab: 'lessons' | 'about' = 'lessons';
@@ -12,8 +13,8 @@
 	let downloadingId: string | null = null;
 
 	$: slug = $page.params.slug;
-	$: paid = hasPaidAccess($auth.user);
-	$: nextMaterial = course?.materials[0] || null;
+	$: unlocked = hasCourseAccess($auth.user, course?.accessStatus);
+	$: nextMaterial = unlocked ? course?.materials[0] || null : null;
 
 	$: if (slug && $auth.user?.id) {
 		loadCourse();
@@ -24,7 +25,10 @@
 		isLoading = true;
 		error = null;
 		try {
-			const courses = await enrollmentService.getMyCourses($auth.user.id);
+			const courses = await enrollmentService.getMyCourses(
+				$auth.user.id,
+				$auth.user.paymentStatus === 'paid'
+			);
 			course = courses.find((item) => item.courseSlug === slug) || null;
 			if (!course) {
 				error = 'This course is not in your portal yet. Enrol first, then come back here to study.';
@@ -37,7 +41,7 @@
 	}
 
 	async function openMaterial(material: StudyMaterial) {
-		if (!paid) return;
+		if (!unlocked) return;
 		downloadingId = material.id;
 		try {
 			const url = await studyMaterialService.getDownloadUrl(material.storagePath);
@@ -73,7 +77,11 @@
 				<div>
 					<Badge variant="accent" size="sm">{course.category}</Badge>
 					<h1>{course.courseTitle}</h1>
-					<p>{course.materials.length} study file{course.materials.length === 1 ? '' : 's'} in this pack</p>
+					<p>
+						{unlocked
+							? `${course.materials.length} study file${course.materials.length === 1 ? '' : 's'} in this pack`
+							: accessStatusLabel(course.accessStatus)}
+					</p>
 				</div>
 				<ProgressRing value={course.progress} size={64} stroke={6} />
 			</div>
@@ -88,18 +96,25 @@
 	</div>
 
 	{#if tab === 'lessons'}
-		{#if course.materials.length === 0}
+		{#if !unlocked}
+			<div class="panel muted">
+				<p>
+					This course is locked. Signing in is not enough. After you pay and send proof, an admin
+					must authorise this programme before lessons open.
+				</p>
+			</div>
+		{:else if course.materials.length === 0}
 			<div class="panel muted">Study files for this course have not been published yet.</div>
 		{:else}
 			<ol class="lessons">
 				{#each course.materials as material, index}
-					<li class:locked={!paid}>
-						<div class="index" class:done={paid}>{paid ? '✓' : String(index + 1).padStart(2, '0')}</div>
+					<li class:locked={!unlocked}>
+						<div class="index" class:done={unlocked}>{unlocked ? '✓' : String(index + 1).padStart(2, '0')}</div>
 						<div class="lesson-copy">
 							<strong>{material.title}</strong>
 							<span>{materialSubtitle(material)}</span>
 						</div>
-						{#if paid}
+						{#if unlocked}
 							<Button
 								variant={index === 0 ? 'accent' : 'outline'}
 								size="sm"
@@ -124,16 +139,20 @@
 		</div>
 	{/if}
 
-	{#if !paid}
+	{#if !unlocked}
 		<div class="lock-note">
-			<p>Payment unlocks every file in this pack. Send proof of payment and we will open it for you.</p>
+			<p>
+				{course.accessStatus === 'denied'
+					? 'This application was declined. You can apply again from the course page after speaking with ProSiya.'
+					: 'Payment and admin approval unlock this pack. Send proof of payment and wait for authorisation.'}
+			</p>
 			<PaymentInstructions variant="compact" />
 		</div>
 	{/if}
 
 	{#if nextMaterial}
 		<div class="resume">
-			{#if paid}
+			{#if unlocked}
 				<Button
 					variant="accent"
 					className="resume-btn"

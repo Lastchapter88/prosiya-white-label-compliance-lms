@@ -28,7 +28,7 @@
 			{ icon: '📊', label: 'Dashboard', href: '/admin/dashboard' },
 			{ icon: '👥', label: 'Users', href: '/admin/users' },
 			{ icon: '📚', label: 'Courses', href: '/admin/courses' },
-			{ icon: '📄', label: 'Study Material', href: '/admin/study-material' },
+			{ icon: '📄', label: 'Applications', href: '/admin/study-material' },
 			{ icon: '🏢', label: 'Tenants', href: '/admin/tenants' },
 			{ icon: '🎓', label: 'Certificates', href: '/admin/certificates' },
 			{ icon: '📋', label: 'Audit Logs', href: '/admin/audit' },

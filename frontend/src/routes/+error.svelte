@@ -16,7 +16,7 @@
 				</p>
 				<div class="actions">
 					<a href="/" class="btn btn-accent">Home</a>
-					<a href="/courses" class="btn btn-outline">Courses</a>
+					<a href="/courses" class="btn btn-outline">Programmes</a>
 					<a href="/contact" class="btn btn-outline">Contact</a>
 				</div>
 			</div>

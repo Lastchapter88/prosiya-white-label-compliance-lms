@@ -26,7 +26,7 @@
 			<div class="footer-section">
 				<h4>Quick Links</h4>
 				<ul>
-					<li><a href="/courses">Courses</a></li>
+					<li><a href="/courses">Programmes</a></li>
 					<li><a href="/services">Security Services</a></li>
 					<li><a href="/accreditation">Accreditation</a></li>
 					<li><a href="/about">About Us</a></li>

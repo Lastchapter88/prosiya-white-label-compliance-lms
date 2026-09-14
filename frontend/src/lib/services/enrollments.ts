@@ -10,8 +10,10 @@ import {
 import { courseCatalogue } from '$lib/data/courses';
 import {
 	studyMaterialService,
+	type MaterialAccessStatus,
 	type StudyMaterial
 } from '$lib/services/studyMaterial';
+import { resolveCourseAccess, type CourseAccessStatus } from '$lib/utils/courseAccess';
 
 export interface LearnerCourse {
 	id: string;
@@ -23,7 +25,10 @@ export interface LearnerCourse {
 	progress: number;
 	enrolledAt: string;
 	materials: StudyMaterial[];
+	accessStatus: CourseAccessStatus;
 }
+
+export type { CourseAccessStatus, MaterialAccessStatus };
 
 function catalogueMatch(slug: string) {
 	return courseCatalogue.find((course) => course.slug === slug);
@@ -48,7 +53,7 @@ export const enrollmentService = {
 				userId: params.userId,
 				courseSlug: params.courseSlug,
 				courseTitle: params.courseTitle,
-				status: 'active',
+				status: 'pending',
 				progress: 0,
 				enrolledAt: new Date().toISOString()
 			},
@@ -64,7 +69,7 @@ export const enrollmentService = {
 		});
 	},
 
-	async getMyCourses(userId: string): Promise<LearnerCourse[]> {
+	async getMyCourses(userId: string, legacyPaid = false): Promise<LearnerCourse[]> {
 		const enrollQuery = query(collection(db, 'enrollments'), where('userId', '==', userId));
 		const [enrollSnap, accessRecords, allMaterials] = await Promise.all([
 			getDocs(enrollQuery),
@@ -72,6 +77,7 @@ export const enrollmentService = {
 			studyMaterialService.getAllMaterials().catch(() => [] as StudyMaterial[])
 		]);
 
+		const accessBySlug = new Map(accessRecords.map((record) => [record.courseSlug, record]));
 		const bySlug = new Map<
 			string,
 			{ courseTitle: string; enrolledAt: string; progress: number }
@@ -107,9 +113,14 @@ export const enrollmentService = {
 			.map((courseSlug) => {
 				const course = catalogueMatch(courseSlug);
 				const enrollment = bySlug.get(courseSlug);
-				const materials = (materialsByCourse.get(courseSlug) || []).sort(
-					(a, b) => a.order - b.order
-				);
+				const accessStatus = resolveCourseAccess({
+					accessStatus: accessBySlug.get(courseSlug)?.status,
+					legacyPaid
+				});
+				const materials =
+					accessStatus === 'approved'
+						? (materialsByCourse.get(courseSlug) || []).sort((a, b) => a.order - b.order)
+						: [];
 				return {
 					id: enrollmentDocId(userId, courseSlug),
 					courseSlug,
@@ -117,9 +128,10 @@ export const enrollmentService = {
 					shortDescription: course?.short_description || '',
 					category: course?.category || 'Training',
 					image: course?.image || '/images/courses/firearm-training.png',
-					progress: enrollment?.progress || 0,
+					progress: accessStatus === 'approved' ? enrollment?.progress || 0 : 0,
 					enrolledAt: enrollment?.enrolledAt || '',
-					materials
+					materials,
+					accessStatus
 				};
 			})
 			.sort((a, b) => {
